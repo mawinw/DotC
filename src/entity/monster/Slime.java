@@ -20,6 +20,7 @@ public class Slime extends Entity {
 		super("Slime",DEFAULT_MAX_HP,DEFAULT_ATK,DEFAULT_DEF,DEFAULT_ACC,DEFAULT_EVA,DEFAULT_CRI_RATE,new Pair(1,1));
 		this.side=Side.MONSTER;
 		// อย่าลืม initial ขนาดรูปมานะ
+		// แก้ตำแหน่งเริ่มด้วย
 	}
 	
 	public void draw() {

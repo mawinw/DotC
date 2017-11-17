@@ -30,6 +30,7 @@ public class Novice extends Entity {
 		this.exp=0;
 		this.side=Side.HERO;
 		// อย่าลืม initial ขนาดรูปมานะ
+		// แก้ตำแหน่งเริ่มด้วย
 	}
 	public void draw() {
 	GraphicsContext 	gc=this.canvas.getGraphicsContext2D();
