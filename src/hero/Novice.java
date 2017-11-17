@@ -22,19 +22,28 @@ public class Novice extends Entity {
 	
 	public Novice(String name) {
 		super(name,DEFAULT_MAX_HP,DEFAULT_ATK,DEFAULT_DEF,DEFAULT_ACC,DEFAULT_EVA,DEFAULT_CRI_RATE,new Pair(1,1));
+		this.Hp=DEFAULT_MAX_HP;
 		this.lv=1;
 		this.exp=0;
 		this.side=Side.HERO;
 		// TODO Auto-generated constructor stub
 	}
-	public 
-	
-	
-	
-	
-	
-	
-	
+	public void draw() {
+		
+	}
+	public void move() {
+		
+	}
+	public void attack(Entity entity) {
+		double atkDmg=this.atk*(1-entity.defRate());
+		entity.takeDamage(atkDmg);
+	}
+	public void takeDamage(double dmg) {
+		if(hp<=dmg) {this.isDead=true;}
+		else {
+			hp-=dmg;
+		}
+	}
 	
 	
 	
