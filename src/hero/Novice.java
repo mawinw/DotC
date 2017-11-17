@@ -1,6 +1,12 @@
 package hero;
 
+import java.awt.Graphics2D;
+
 import entity.Entity;
+import environment.Map;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import utility.Pair;
 import utility.Side;
 
@@ -26,12 +32,17 @@ public class Novice extends Entity {
 		this.lv=1;
 		this.exp=0;
 		this.side=Side.HERO;
-		// TODO Auto-generated constructor stub
+		// อย่าลืม initial ขนาดรูปมานะ
 	}
 	public void draw() {
-		
+	GraphicsContext 	gc=this.canvas.getGraphicsContext2D();
+	gc.setFill(Color.AQUA);
+	gc.fillRect(position.first-picLength/2, position.second-picLength/2, picLength, picLength);
+	
 	}
-	public void move() {
+	public void move(int moveX,int moveY) {
+		position.first+=moveX*Map.BLOCK_SIZE;
+		position.second+=moveY*Map.BLOCK_SIZE;
 		
 	}
 	public void attack(Entity entity) {
@@ -44,6 +55,7 @@ public class Novice extends Entity {
 			Hp-=dmg;
 		}
 	}
+
 	
 	
 	

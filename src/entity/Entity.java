@@ -17,6 +17,7 @@ public abstract class Entity {
 	protected boolean isDead;
 	protected boolean canMove;
 	protected boolean canAttack;
+	protected int picLength;
 	
 	
 	public Entity(String name, int maxHp, int attack, int defense, 
@@ -38,9 +39,9 @@ public abstract class Entity {
 
 	public abstract void draw();
 	
-	public abstract void move();
+	public abstract void move(int moveX,int moveY);
 	
-	public abstract void attack();
+	public abstract void attack(Entity entity);
 	
 	public boolean isCollied(Entity entity) {
 		//x1y1 x2y2 equal ? true false
@@ -48,7 +49,7 @@ public abstract class Entity {
 		else return false;
 	}
 	
-	public abstract void takeDamage(Entity entity);
+	public abstract void takeDamage(double dmg);
 	
 	public void die() {
 		isDead=true;
