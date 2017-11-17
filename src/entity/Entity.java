@@ -17,7 +17,8 @@ public abstract class Entity {
 	protected boolean isDead;
 	protected boolean canMove;
 	protected boolean canAttack;
-	protected int picLength;
+	protected int picWidth;
+	protected int picHeight;
 	
 	
 	public Entity(String name, int maxHp, int attack, int defense, 
@@ -25,6 +26,7 @@ public abstract class Entity {
 		this.canvas=new Canvas();
 		this.name = name;
 		this.maxHp = maxHp;
+		Hp=maxHp;
 		this.atk = attack;
 		this.def = defense;
 		this.acc = accuracy;
@@ -59,8 +61,10 @@ public abstract class Entity {
 	public double defRate() {
 		return def/(def+100);
 	}
-	
-	
+
+	public boolean getIsDead() {
+		return isDead;
+	}
 	
 	
 	

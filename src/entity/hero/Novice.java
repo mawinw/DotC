@@ -1,6 +1,4 @@
-package hero;
-
-import java.awt.Graphics2D;
+package entity.hero;
 
 import entity.Entity;
 import environment.Map;
@@ -28,7 +26,6 @@ public class Novice extends Entity {
 	
 	public Novice(String name) {
 		super(name,DEFAULT_MAX_HP,DEFAULT_ATK,DEFAULT_DEF,DEFAULT_ACC,DEFAULT_EVA,DEFAULT_CRI_RATE,new Pair(1,1));
-		this.Hp=DEFAULT_MAX_HP;
 		this.lv=1;
 		this.exp=0;
 		this.side=Side.HERO;
@@ -37,7 +34,7 @@ public class Novice extends Entity {
 	public void draw() {
 	GraphicsContext 	gc=this.canvas.getGraphicsContext2D();
 	gc.setFill(Color.AQUA);
-	gc.fillRect(position.first-picLength/2, position.second-picLength/2, picLength, picLength);
+	gc.fillRect(position.first-picWidth/2, position.second-picHeight/2, picWidth, picHeight);
 	
 	}
 	public void move(int moveX,int moveY) {
