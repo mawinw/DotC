@@ -36,12 +36,12 @@ public class Novice extends Entity {
 	}
 	public void attack(Entity entity) {
 		double atkDmg=this.atk*(1-entity.defRate());
-		entity.takeDamage(atkDmg);
+		takeDamage(atkDmg);
 	}
 	public void takeDamage(double dmg) {
-		if(hp<=dmg) {this.isDead=true;}
+		if(Hp<=dmg) {this.isDead=true;}
 		else {
-			hp-=dmg;
+			Hp-=dmg;
 		}
 	}
 	
