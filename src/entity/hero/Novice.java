@@ -23,14 +23,24 @@ public class Novice extends Entity {
 	protected int lv;
 	protected int exp;
 	
+
+	public Novice() {
+		super("Novice",DEFAULT_MAX_HP,DEFAULT_ATK,DEFAULT_DEF,DEFAULT_ACC,DEFAULT_EVA,DEFAULT_CRI_RATE,new Pair(1,1));
+		this.lv=1;
+		this.exp=0;
+		this.side=Side.HERO;
+		// เธญเธขเน�เธฒเธฅเธทเธก initial เธ�เธ�เธฒเธ”เธฃเธนเธ�เธกเธฒเธ�เธฐ
+		// เน�เธ�เน�เธ•เธณเน�เธซเธ�เน�เธ�เน€เธฃเธดเน�เธกเธ”เน�เธงเธข
+	}
+	
 	
 	public Novice(String name) {
 		super(name,DEFAULT_MAX_HP,DEFAULT_ATK,DEFAULT_DEF,DEFAULT_ACC,DEFAULT_EVA,DEFAULT_CRI_RATE,new Pair(1,1));
 		this.lv=1;
 		this.exp=0;
 		this.side=Side.HERO;
-		// อย่าลืม initial ขนาดรูปมานะ
-		// แก้ตำแหน่งเริ่มด้วย
+		// เธญเธขเน�เธฒเธฅเธทเธก initial เธ�เธ�เธฒเธ”เธฃเธนเธ�เธกเธฒเธ�เธฐ
+		// เน�เธ�เน�เธ•เธณเน�เธซเธ�เน�เธ�เน€เธฃเธดเน�เธกเธ”เน�เธงเธข
 	}
 	public void draw() {
 	GraphicsContext 	gc=this.canvas.getGraphicsContext2D();
@@ -39,8 +49,8 @@ public class Novice extends Entity {
 	
 	}
 	public void move(int moveX,int moveY) {
-		position.first+=moveX*Map.BLOCK_SIZE;
-		position.second+=moveY*Map.BLOCK_SIZE;
+		position.first+=moveX*Map.TILE_SIZE;
+		position.second+=moveY*Map.TILE_SIZE;
 		
 	}
 	public void attack(Entity entity) {

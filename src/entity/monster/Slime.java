@@ -19,8 +19,6 @@ public class Slime extends Entity {
 	public Slime() {
 		super("Slime",DEFAULT_MAX_HP,DEFAULT_ATK,DEFAULT_DEF,DEFAULT_ACC,DEFAULT_EVA,DEFAULT_CRI_RATE,new Pair(1,1));
 		this.side=Side.MONSTER;
-		// อย่าลืม initial ขนาดรูปมานะ
-		// แก้ตำแหน่งเริ่มด้วย
 	}
 	
 	public void draw() {
@@ -30,21 +28,22 @@ public class Slime extends Entity {
 		}
 	
 	public void move(int moveX,int moveY) {
-		position.first+=moveX*Map.BLOCK_SIZE;
-		position.second+=moveY*Map.BLOCK_SIZE;
-		
+		position.first+=moveX*Map.TILE_SIZE;
+		position.second+=moveY*Map.TILE_SIZE;
 	}
 	
 	public void attack(Entity entity) {
 		double atkDmg=this.atk*(1-entity.defRate());
-		takeDamage(atkDmg);
+		entity.takeDamage(atkDmg); //it is the opponent entity to take damage naja
 	}
+	
 	public void takeDamage(double dmg) {
 		if(Hp<=dmg) {this.isDead=true;}
 		else {
 			Hp-=dmg;
 		}
 	}
+	
 	
 	
 }
