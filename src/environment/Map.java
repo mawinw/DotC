@@ -58,13 +58,17 @@ public class Map {
 	
 	private ActionResult tryAction(ActionType type,int clickX,int clickY) {
 		switch(type) {
-		case(ATTACK):
+		case ATTACK:
 			break;
+		case SKILL:
+			break;
+		case MOVE:
+			break;
+		default:
 		return new ActionResult(ActionType.ATTACK);
-		
 		}
-		
-		
+		return new ActionResult(ActionType.ATTACK);
+		// confused
 	}
 	
 	

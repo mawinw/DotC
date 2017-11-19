@@ -19,6 +19,7 @@ public class Slime extends Entity {
 	public Slime() {
 		super("Slime",DEFAULT_MAX_HP,DEFAULT_ATK,DEFAULT_DEF,DEFAULT_ACC,DEFAULT_EVA,DEFAULT_CRI_RATE,new Pair(1,1));
 		this.side=Side.MONSTER;
+		// don't forget to initial picture size and first time position
 	}
 	
 	public void draw() {
