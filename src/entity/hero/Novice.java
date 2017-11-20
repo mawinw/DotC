@@ -29,8 +29,9 @@ public class Novice extends Entity {
 		this.lv=1;
 		this.exp=0;
 		this.side=Side.HERO;
-		// เธญเธขเน�เธฒเธฅเธทเธก initial เธ�เธ�เธฒเธ”เธฃเธนเธ�เธกเธฒเธ�เธฐ
-		// เน�เธ�เน�เธ•เธณเน�เธซเธ�เน�เธ�เน€เธฃเธดเน�เธกเธ”เน�เธงเธข
+		picHeight=50;
+		picWidth=50;
+		// don't forget to initial picture size and first time position
 	}
 	
 	
@@ -39,13 +40,12 @@ public class Novice extends Entity {
 		this.lv=1;
 		this.exp=0;
 		this.side=Side.HERO;
-		// เธญเธขเน�เธฒเธฅเธทเธก initial เธ�เธ�เธฒเธ”เธฃเธนเธ�เธกเธฒเธ�เธฐ
-		// เน�เธ�เน�เธ•เธณเน�เธซเธ�เน�เธ�เน€เธฃเธดเน�เธกเธ”เน�เธงเธข
+		// don't forget to initial picture size and first time position
 	}
 	public void draw() {
 	GraphicsContext 	gc=this.canvas.getGraphicsContext2D();
 	gc.setFill(Color.AQUA);
-	gc.fillRect(position.first-picWidth/2, position.second-picHeight/2, picWidth, picHeight);
+	gc.fillRect(position.first*Map.TILE_SIZE, position.second*Map.TILE_SIZE, picWidth, picHeight);
 	
 	}
 	public void move(int moveX,int moveY) {

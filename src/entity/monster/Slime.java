@@ -19,13 +19,15 @@ public class Slime extends Entity {
 	public Slime() {
 		super("Slime",DEFAULT_MAX_HP,DEFAULT_ATK,DEFAULT_DEF,DEFAULT_ACC,DEFAULT_EVA,DEFAULT_CRI_RATE,new Pair(1,1));
 		this.side=Side.MONSTER;
+		picHeight=50;
+		picWidth=50;
 		// don't forget to initial picture size and first time position
 	}
 	
 	public void draw() {
 		GraphicsContext 	gc=this.canvas.getGraphicsContext2D();
 		gc.setFill(Color.YELLOW);
-		gc.fillRect(position.first-picWidth/2, position.second-picHeight/2, picWidth, picHeight);
+		gc.fillRect(position.first*Map.TILE_SIZE, position.second*Map.TILE_SIZE, picWidth, picHeight);
 		}
 	
 	public void move(int moveX,int moveY) {

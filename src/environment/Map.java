@@ -38,21 +38,29 @@ public class Map {
 				tileGroup.getChildren().add(tile);
 			}
 		}
-		/*
+		/* */
 		//add monsters below
-		Entity slime = createDefaultEntity("Slime");
-		board[2][4].setEntity(slime);
-		board[4][4].setEntity(slime);
-		board[7][1].setEntity(slime);
-		board[7][7].setEntity(slime);
+		Entity slime1 = createDefaultEntity("Slime");
+		Entity slime2 = createDefaultEntity("Slime");
+		Entity slime3 = createDefaultEntity("Slime");
+		Entity slime4 = createDefaultEntity("Slime");
+		board[2][4].setEntity(slime1); slime1.setPosition(2, 4); slime1.draw();
+		board[4][4].setEntity(slime2); slime2.setPosition(4, 4); slime2.draw();
+		board[7][1].setEntity(slime3); slime3.setPosition(7, 1); slime3.draw();
+		board[7][7].setEntity(slime4); slime4.setPosition(7, 7); slime4.draw();
+		entityGroup.getChildren().addAll(slime1.getCanvas(),slime2.getCanvas(),slime3.getCanvas(),slime4.getCanvas());
 		
 		//add monsters above
+		
+		 
 		
 		//add hero below
 		Entity novice = createDefaultEntity("Novice");
 		board[1][4].setEntity(novice);
+		novice.setPosition(1, 4);
+		novice.draw();
+		entityGroup.getChildren().add(novice.getCanvas());
 		//add hero above
-		 */
 		root.getChildren().addAll(tileGroup,entityGroup);
 		return root;
 	}
@@ -74,7 +82,7 @@ public class Map {
 	
 	
 	
-	private Entity createDefaultEntity(String entityType) {
+	private static Entity createDefaultEntity(String entityType) {
 		switch(entityType) {
 		case "Slime":
 			return new Slime();

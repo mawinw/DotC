@@ -1,4 +1,5 @@
 package entity;
+import environment.Map;
 import javafx.scene.canvas.Canvas;
 import utility.Pair;
 import utility.Side;
@@ -23,7 +24,7 @@ public abstract class Entity {
 	
 	public Entity(String name, int maxHp, int attack, int defense, 
 			double accuracy, double evasion,double criticalRate, Pair position) {
-		this.canvas=new Canvas();
+		this.canvas=new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		this.name = name;
 		this.maxHp = maxHp;
 		Hp=maxHp;
@@ -66,8 +67,13 @@ public abstract class Entity {
 		return isDead;
 	}
 	
+	public Canvas getCanvas() {
+		return canvas;
+	}
 	
-	
+	public void setPosition(int x,int y) {
+		position=new Pair(x,y);
+	}
 	
 	
 	
