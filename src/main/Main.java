@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import environment.Map;
 
 import java.util.LinkedList;
 
@@ -28,7 +29,7 @@ public class Main extends Application {
 		
 		//put all pane
 		
-		Scene scene = new Scene(allPane, SCREEN_SIZE, SCREEN_SIZE);
+		Scene scene = new Scene(Map.createContent());
 		
 		//set handler
 		

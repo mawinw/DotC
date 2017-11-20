@@ -21,15 +21,14 @@ public class Map {
 	public static final int WIDTH = 8;
 	public static final int HEIGHT = 8;
 	
-	private Tile[][] board = new Tile[WIDTH][HEIGHT];
+	private static Tile[][] board = new Tile[WIDTH][HEIGHT];
 	
-	private Group tileGroup = new Group();
-	private Group entityGroup = new Group();
+	private static Group tileGroup = new Group();
+	private static Group entityGroup = new Group();
 	
-	private Parent createContent() {
+	public static Parent createContent() {
 		Pane root = new Pane();
 		root.setPrefSize(WIDTH*TILE_SIZE, HEIGHT*TILE_SIZE);
-		root.getChildren().addAll(tileGroup,entityGroup);
 		for(int x=0;x<WIDTH;x++) {
 			for(int y=0;y<HEIGHT;y++) {
 				Tile tile = new Tile((x+y)%2==0,x,y);
@@ -39,6 +38,7 @@ public class Map {
 				tileGroup.getChildren().add(tile);
 			}
 		}
+		/*
 		//add monsters below
 		Entity slime = createDefaultEntity("Slime");
 		board[2][4].setEntity(slime);
@@ -52,6 +52,7 @@ public class Map {
 		Entity novice = createDefaultEntity("Novice");
 		board[1][4].setEntity(novice);
 		//add hero above
+		 */
 		root.getChildren().addAll(tileGroup,entityGroup);
 		return root;
 	}
