@@ -9,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import utility.ActionResult;
 import utility.ActionType;
 import utility.Tile;
+import utility.TileType;
 
 
 public class Handler {
@@ -67,40 +68,56 @@ public class Handler {
 	
 	private static void movePlayer() {
 		
-			//	System.out.println(Map.getNovice().getPosition().first+" "+Map.getNovice().getPosition().second);
-	//			Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].setEntity(null);;
-				
-				if(activeKey.contains(KeyCode.UP)&&Map.getHeroPosition().second>0
-						&&!Map.getBoard()[(int) Map.getHeroPosition().first][(int) (Map.getHeroPosition().second-1)].hasEntity()) {
-				//	Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].setEntity(null);;
+		Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.NONE);
+	//	System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second)].getTileType());
+	//	System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second)+1].getTileType());
+				if(activeKey.contains(KeyCode.UP)&&Map.getNovice().getPosition().second>0
+						&&!Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second-1)].hasEntity()) {
+					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.NONE);
 					activeKey.remove(KeyCode.UP);
 					Map.getNovice().move(0, -1);
-					System.out.println(Map.getNovice().getPosition().first+" "+Map.getNovice().getPosition().second);
-					//Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].setEntity(Map.getNovice());
+					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.HERO);
+
 					
 				
 				}
 				
-				if(activeKey.contains(KeyCode.DOWN)&&Map.getHeroPosition().second<=Map.HEIGHT-2
-						&&!Map.getBoard()[(int) Map.getHeroPosition().first][(int) (Map.getHeroPosition().second+1)].hasEntity()) {
+				if(activeKey.contains(KeyCode.DOWN)&&Map.getNovice().getPosition().second<=Map.HEIGHT-2
+						&&!Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second+1)].hasEntity()) {
+					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.NONE);
 					activeKey.remove(KeyCode.DOWN);
 					Map.getNovice().move(0, 1);
+					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.HERO);
+
+
 				}
 				
-				if(activeKey.contains(KeyCode.LEFT)&&Map.getHeroPosition().first>0
-						&&!Map.getBoard()[(int) Map.getHeroPosition().first-1][(int) (Map.getHeroPosition().second)].hasEntity()) {
+				if(activeKey.contains(KeyCode.LEFT)&&Map.getNovice().getPosition().first>0
+						&&!Map.getBoard()[(int) Map.getNovice().getPosition().first-1][(int) (Map.getNovice().getPosition().second)].hasEntity()) {
+					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.NONE);
 					activeKey.remove(KeyCode.LEFT);
 					Map.getNovice().move(-1, 0);
+					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.HERO);
+
+
 				}
 				
-				if(activeKey.contains(KeyCode.RIGHT)&&Map.getHeroPosition().first<=Map.WIDTH-2
-						&&!Map.getBoard()[(int) Map.getHeroPosition().first+1][(int) (Map.getHeroPosition().second)].hasEntity()) {
+				if(activeKey.contains(KeyCode.RIGHT)&&Map.getNovice().getPosition().first<=Map.WIDTH-2
+						&&!Map.getBoard()[(int) Map.getNovice().getPosition().first+1][(int) (Map.getNovice().getPosition().second)].hasEntity()) {
+					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.NONE);
 					activeKey.remove(KeyCode.RIGHT);
 					Map.getNovice().move(1, 0);
+					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.HERO);
+
 				}
-				// if run then goto out of map 
-		//		Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].setEntity(Map.getNovice());
 				
+		
+				// if run then goto out of map 
+		//		System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].getTileType());
+
+//				Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].setTileType(TileType.HERO);;
+//				System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].getTileType());
+
 		
 		
 	

@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Tile extends Rectangle{
-	private Entity entity;
+	private TileType tileType;
 	
 	public Tile(boolean lightColor, int x, int y) {
 		
@@ -23,14 +23,14 @@ public class Tile extends Rectangle{
 
 
 	public boolean hasEntity() {
-		return entity != null;
+		return tileType != TileType.NONE;
 	}
 	
-	public Entity getEntity() {
-		return this.entity;
+	public TileType getTileType() {
+		return this.tileType;
 	}
-	public void setEntity(Entity entity) {
-		this.entity=entity;
+	public void setTileType(TileType tileType) {
+		this.tileType=tileType;
 	}
 	
 	
