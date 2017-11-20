@@ -1,6 +1,7 @@
 package entity;
 import environment.Map;
 import javafx.scene.canvas.Canvas;
+import utility.Direction;
 import utility.Pair;
 import utility.Side;
 public abstract class Entity {
@@ -20,6 +21,8 @@ public abstract class Entity {
 	protected boolean canAttack;
 	protected int picWidth;
 	protected int picHeight;
+	protected Direction faceDirection;
+	
 	
 	
 	public Entity(String name, int maxHp, int attack, int defense, 
