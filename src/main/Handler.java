@@ -69,14 +69,10 @@ public class Handler {
 	private static void movePlayer() {
 		
 		Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.NONE);
-	//	System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second)].getTileType());
-	//	System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second)+1].getTileType());
-				if(activeKey.contains(KeyCode.UP)&&Map.getNovice().getPosition().second>0
+					if(activeKey.contains(KeyCode.UP)&&Map.getNovice().getPosition().second>0
 						&&!Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second-1)].hasEntity()) {
-					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.NONE);
 					activeKey.remove(KeyCode.UP);
 					Map.getNovice().move(0, -1);
-					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.HERO);
 
 					
 				
@@ -84,42 +80,30 @@ public class Handler {
 				
 				if(activeKey.contains(KeyCode.DOWN)&&Map.getNovice().getPosition().second<=Map.HEIGHT-2
 						&&!Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second+1)].hasEntity()) {
-					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.NONE);
 					activeKey.remove(KeyCode.DOWN);
 					Map.getNovice().move(0, 1);
-					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.HERO);
 
 
 				}
 				
 				if(activeKey.contains(KeyCode.LEFT)&&Map.getNovice().getPosition().first>0
 						&&!Map.getBoard()[(int) Map.getNovice().getPosition().first-1][(int) (Map.getNovice().getPosition().second)].hasEntity()) {
-					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.NONE);
 					activeKey.remove(KeyCode.LEFT);
 					Map.getNovice().move(-1, 0);
-					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.HERO);
-
+					
 
 				}
 				
 				if(activeKey.contains(KeyCode.RIGHT)&&Map.getNovice().getPosition().first<=Map.WIDTH-2
 						&&!Map.getBoard()[(int) Map.getNovice().getPosition().first+1][(int) (Map.getNovice().getPosition().second)].hasEntity()) {
-					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.NONE);
 					activeKey.remove(KeyCode.RIGHT);
 					Map.getNovice().move(1, 0);
-					Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.HERO);
 
 				}
 				
 		
 				// if run then goto out of map 
-		//		System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].getTileType());
 
-//				Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].setTileType(TileType.HERO);;
-//				System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].getTileType());
-
-		
-		
 	
 	}
 	

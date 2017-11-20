@@ -13,6 +13,7 @@ import main.Handler;
 import main.Main;
 import utility.Pair;
 import utility.Side;
+import utility.TileType;
 
 public class Novice extends Entity {
 
@@ -63,7 +64,7 @@ public class Novice extends Entity {
 		}));
 		timer.setCycleCount(Main.FPS / 10);
 		timer.play();
-
+		Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.HERO);
 	}
 
 	public void attack(Entity entity) {
