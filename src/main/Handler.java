@@ -67,13 +67,17 @@ public class Handler {
 	
 	private static void movePlayer() {
 		
-				System.out.println(Map.getNovice().getPosition().first+" "+Map.getNovice().getPosition().second);
-	//			Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second]=null;
+			//	System.out.println(Map.getNovice().getPosition().first+" "+Map.getNovice().getPosition().second);
+	//			Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].setEntity(null);;
 				
 				if(activeKey.contains(KeyCode.UP)&&Map.getHeroPosition().second>0
 						&&!Map.getBoard()[(int) Map.getHeroPosition().first][(int) (Map.getHeroPosition().second-1)].hasEntity()) {
+				//	Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].setEntity(null);;
 					activeKey.remove(KeyCode.UP);
 					Map.getNovice().move(0, -1);
+					System.out.println(Map.getNovice().getPosition().first+" "+Map.getNovice().getPosition().second);
+					//Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].setEntity(Map.getNovice());
+					
 				
 				}
 				
@@ -95,7 +99,7 @@ public class Handler {
 					Map.getNovice().move(1, 0);
 				}
 				// if run then goto out of map 
-//				Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].setEntity(Map.getNovice());
+		//		Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].setEntity(Map.getNovice());
 				
 		
 		

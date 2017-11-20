@@ -30,7 +30,7 @@ public class Slime extends Entity {
 		gc.fillRect(position.first*Map.TILE_SIZE, position.second*Map.TILE_SIZE, picWidth, picHeight);
 		}
 	
-	public void move(int moveX,int moveY) {
+	public void move(double moveX,double moveY) {
 		position.first+=moveX*Map.TILE_SIZE;
 		position.second+=moveY*Map.TILE_SIZE;
 	}
