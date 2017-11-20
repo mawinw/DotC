@@ -12,19 +12,22 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import utility.ActionResult;
 import utility.ActionType;
+import utility.Pair;
 import utility.Tile;
 
 public class Map {
 	private Canvas canvas;
 
 	public static final int TILE_SIZE = 50;
-	public static final int WIDTH = 8;
-	public static final int HEIGHT = 8;
+	public static final int WIDTH = 10;
+	public static final int HEIGHT = 10;
 	
 	private static Tile[][] board = new Tile[WIDTH][HEIGHT];
 	
 	private static Group tileGroup = new Group();
 	private static Group entityGroup = new Group();
+	private static Entity novice;
+	private static Pair heroPosition;
 	
 	public static Parent createContent() {
 		Pane root = new Pane();
@@ -55,16 +58,25 @@ public class Map {
 		 
 		
 		//add hero below
-		Entity novice = createDefaultEntity("Novice");
+		novice = createDefaultEntity("Novice");
 		board[1][4].setEntity(novice);
 		novice.setPosition(1, 4);
 		novice.draw();
+		heroPosition=novice.getPosition();
 		entityGroup.getChildren().add(novice.getCanvas());
 		//add hero above
 		root.getChildren().addAll(tileGroup,entityGroup);
 		return root;
 	}
 	
+	public static Pair getHeroPosition() {
+		return heroPosition;
+	}
+
+	public static Tile[][] getBoard() {
+		return board;
+	}
+
 	private ActionResult tryAction(ActionType type,int clickX,int clickY) {
 		switch(type) {
 		case ATTACK:
@@ -95,6 +107,10 @@ public class Map {
 	
 	private int toBoard(double pixel) {
 		return (int)(pixel+TILE_SIZE/2)/TILE_SIZE;
+	}
+	
+	public static Entity getNovice() {
+		return novice;
 	}
 	
 }

@@ -45,7 +45,7 @@ public abstract class Entity {
 
 	public abstract void draw();
 	
-	public abstract void move(int moveX,int moveY);
+	public abstract void move(double moveX,double moveY);
 	
 	public abstract void attack(Entity entity);
 	
@@ -76,6 +76,9 @@ public abstract class Entity {
 	
 	public void setPosition(int x,int y) {
 		position=new Pair(x,y);
+	}
+	public Pair getPosition() {
+		return position;
 	}
 	
 	

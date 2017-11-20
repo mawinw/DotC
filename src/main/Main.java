@@ -17,6 +17,7 @@ import java.util.LinkedList;
 public class Main extends Application {
 	
 	public static final int SCREEN_SIZE = 750;
+	public static final int FPS = 40;
 	private Pane allPane;
 	
 	public static void main(String[] args) {
@@ -31,6 +32,13 @@ public class Main extends Application {
 		
 		Scene scene = new Scene(Map.createContent());
 		
+		Timeline timer = new Timeline(new KeyFrame(new Duration(1000 / FPS), e -> {
+			Handler.update();
+		}));
+		timer.setCycleCount(Animation.INDEFINITE);
+		timer.play();
+		scene.setOnKeyPressed(event -> Handler.keyPressed(event));
+		scene.setOnKeyReleased(event -> Handler.keyReleased(event));
 		//set handler
 		
 		primaryStage.setScene(scene);
@@ -41,3 +49,5 @@ public class Main extends Application {
 	}
 
 }
+
+

@@ -1,5 +1,5 @@
 package utility;
 
 public enum ActionType {
-	MOVE,ATTACK,SKILL;
+	MOVE,ATTACK,SKILL,NONE;
 }
