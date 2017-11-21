@@ -37,6 +37,7 @@ public class Novice extends Entity {
 		this.side = Side.HERO;
 		picHeight = 50;
 		picWidth = 50;
+		this.faceDirection = Direction.RIGHT; 
 		// don't forget to initial picture size and first time position
 	}
 
@@ -46,7 +47,7 @@ public class Novice extends Entity {
 		this.lv = 1;
 		this.exp = 0;
 		this.side = Side.HERO;
-		this.faceDirection=Direction.RIGHT;
+		this.faceDirection = Direction.RIGHT;
 		// don't forget to initial picture size and first time position
 	}
 
@@ -55,12 +56,20 @@ public class Novice extends Entity {
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		gc.setFill(Color.AQUA);
 		gc.fillOval(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth, picHeight);
-		gc.setStroke(Color.ANTIQUEWHITE);
+		gc.setStroke(Color.RED);
 		gc.setLineWidth(2);
-		gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth, picHeight);
-		gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth, picHeight);
-		gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE, picWidth, picHeight);
-		gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE, picWidth, picHeight);
+		if(faceDirection==Direction.RIGHT) {	
+			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth, picHeight);
+		}
+		else if(faceDirection==Direction.LEFT) {	
+			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth, picHeight);
+		}
+		else if(faceDirection==Direction.DOWN) {		
+			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE, picWidth, picHeight);
+		}
+		else if(faceDirection==Direction.UP) {	
+			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE, picWidth, picHeight);
+		}
 
 	}
 
@@ -78,7 +87,7 @@ public class Novice extends Entity {
 
 	public void attack(Entity entity) {
 		double atkDmg = this.atk * (1 - entity.defRate());
-	//	System.out.println(atkDmg);
+		// System.out.println(atkDmg);
 		entity.takeDamage(atkDmg);
 		entity.draw();
 	}

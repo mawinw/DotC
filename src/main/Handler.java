@@ -78,6 +78,7 @@ public class Handler {
 				TileType.NONE, null);
 		if (activeKey.contains(KeyCode.UP)) {
 			Map.getNovice().setFaceDirection(Direction.UP);
+			Map.getNovice().draw();
 			if (Map.getNovice().getPosition().second > 0 && !Map
 					.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second
 							- 1)].hasEntity()) {
@@ -88,6 +89,7 @@ public class Handler {
 
 		if (activeKey.contains(KeyCode.DOWN)) {
 			Map.getNovice().setFaceDirection(Direction.DOWN);
+			Map.getNovice().draw();
 			if (Map.getNovice().getPosition().second <= Map.HEIGHT - 2 && !Map
 					.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second
 							+ 1)].hasEntity()) {
@@ -98,6 +100,7 @@ public class Handler {
 
 		if (activeKey.contains(KeyCode.LEFT)) {
 			Map.getNovice().setFaceDirection(Direction.LEFT);
+			Map.getNovice().draw();
 			if (Map.getNovice().getPosition().first > 0 && !Map.getBoard()[(int) Map.getNovice().getPosition().first
 					- 1][(int) (Map.getNovice().getPosition().second)].hasEntity()) {
 				Map.getNovice().move(-1, 0);
@@ -107,6 +110,7 @@ public class Handler {
 
 		if (activeKey.contains(KeyCode.RIGHT)) {
 			Map.getNovice().setFaceDirection(Direction.RIGHT);
+			Map.getNovice().draw();
 			if (Map.getNovice().getPosition().first <= Map.WIDTH - 2
 					&& !Map.getBoard()[(int) Map.getNovice().getPosition().first
 							+ 1][(int) (Map.getNovice().getPosition().second)].hasEntity()) {
