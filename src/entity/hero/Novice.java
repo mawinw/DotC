@@ -11,6 +11,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import main.Handler;
 import main.Main;
+import utility.Direction;
 import utility.Pair;
 import utility.Side;
 import utility.TileType;
@@ -18,7 +19,7 @@ import utility.TileType;
 public class Novice extends Entity {
 
 	private static final int DEFAULT_MAX_HP = 200;
-	private static final int DEFAULT_ATK = 50;
+	private static final int DEFAULT_ATK = 10;
 	private static final int DEFAULT_DEF = 20;
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 0.00;
@@ -45,6 +46,7 @@ public class Novice extends Entity {
 		this.lv = 1;
 		this.exp = 0;
 		this.side = Side.HERO;
+		this.faceDirection=Direction.RIGHT;
 		// don't forget to initial picture size and first time position
 	}
 
@@ -52,7 +54,13 @@ public class Novice extends Entity {
 		GraphicsContext gc = this.canvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		gc.setFill(Color.AQUA);
-		gc.fillRect(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth, picHeight);
+		gc.fillOval(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth, picHeight);
+		gc.setStroke(Color.ANTIQUEWHITE);
+		gc.setLineWidth(2);
+		gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth, picHeight);
+		gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth, picHeight);
+		gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE, picWidth, picHeight);
+		gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE, picWidth, picHeight);
 
 	}
 
@@ -64,17 +72,20 @@ public class Novice extends Entity {
 		}));
 		timer.setCycleCount(Main.FPS / 10);
 		timer.play();
-		Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second, TileType.HERO);
+		Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second,
+				TileType.HERO, this);
 	}
 
 	public void attack(Entity entity) {
 		double atkDmg = this.atk * (1 - entity.defRate());
-		takeDamage(atkDmg);
+	//	System.out.println(atkDmg);
+		entity.takeDamage(atkDmg);
+		entity.draw();
 	}
 
 	public void takeDamage(double dmg) {
 		if (Hp <= dmg) {
-			this.isDead = true;
+			die();
 		} else {
 			Hp -= dmg;
 		}

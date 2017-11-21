@@ -1,6 +1,7 @@
 package entity;
 import environment.Map;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import utility.Direction;
 import utility.Pair;
 import utility.Side;
@@ -60,6 +61,14 @@ public abstract class Entity {
 	public void die() {
 		isDead=true;
 		canvas.setOpacity(0);
+		Hp=0;
+		GraphicsContext 	gc=this.canvas.getGraphicsContext2D();
+		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		
+	}
+
+	public void setFaceDirection(Direction faceDirection) {
+		this.faceDirection = faceDirection;
 	}
 
 	public double defRate() {
@@ -79,6 +88,62 @@ public abstract class Entity {
 	}
 	public Pair getPosition() {
 		return position;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getMaxHp() {
+		return maxHp;
+	}
+
+	public int getHp() {
+		return Hp;
+	}
+
+	public int getAtk() {
+		return atk;
+	}
+
+	public int getDef() {
+		return def;
+	}
+
+	public double getAcc() {
+		return acc;
+	}
+
+	public double getEva() {
+		return eva;
+	}
+
+	public double getCriRate() {
+		return criRate;
+	}
+
+	public Side getSide() {
+		return side;
+	}
+
+	public boolean isCanMove() {
+		return canMove;
+	}
+
+	public boolean isCanAttack() {
+		return canAttack;
+	}
+
+	public int getPicWidth() {
+		return picWidth;
+	}
+
+	public int getPicHeight() {
+		return picHeight;
+	}
+
+	public Direction getFaceDirection() {
+		return faceDirection;
 	}
 	
 	
