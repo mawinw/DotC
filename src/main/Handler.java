@@ -125,36 +125,49 @@ public class Handler {
 
 	public static void playerAttact() {
 		if (activeKey.contains(KeyCode.Z)) {
-			if (Map.getBoard()[(int) Map.getNovice().getPosition().first
-					+ 1][(int) (Map.getNovice().getPosition().second)].getTileType() == TileType.MONSTER
-					&& Map.getNovice().getFaceDirection() == Direction.RIGHT) {
+			if ((int) Map.getNovice().getPosition().first + 1 < Map.WIDTH) {
+				if (Map.getBoard()[(int) Map.getNovice().getPosition().first
+						+ 1][(int) (Map.getNovice().getPosition().second)].getTileType() == TileType.MONSTER
+						&& Map.getNovice().getFaceDirection() == Direction.RIGHT) {
 
-				Map.getNovice().attack(Map.getBoard()[(int) Map.getNovice().getPosition().first
-						+ 1][(int) (Map.getNovice().getPosition().second)].entity);
+					Map.getNovice().attack(Map.getBoard()[(int) Map.getNovice().getPosition().first
+							+ 1][(int) (Map.getNovice().getPosition().second)].entity);
+				}
 			}
 
-			if (Map.getBoard()[(int) Map.getNovice().getPosition().first
-					- 1][(int) (Map.getNovice().getPosition().second)].getTileType() == TileType.MONSTER
-					&& Map.getNovice().getFaceDirection() == Direction.LEFT) {
+			if ((int) Map.getNovice().getPosition().first - 1 > 0) {
+				if (Map.getBoard()[(int) Map.getNovice().getPosition().first
+						- 1][(int) (Map.getNovice().getPosition().second)].getTileType() == TileType.MONSTER
+						&& Map.getNovice().getFaceDirection() == Direction.LEFT) {
 
-				Map.getNovice().attack(Map.getBoard()[(int) Map.getNovice().getPosition().first
-						- 1][(int) (Map.getNovice().getPosition().second)].entity);
+					Map.getNovice().attack(Map.getBoard()[(int) Map.getNovice().getPosition().first
+							- 1][(int) (Map.getNovice().getPosition().second)].entity);
+				}
 			}
 
-			if (Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second)
-					- 1].getTileType() == TileType.MONSTER && Map.getNovice().getFaceDirection() == Direction.UP) {
+			if ((int) Map.getNovice().getPosition().second - 1 > 0) {
+				if (Map.getBoard()[(int) Map.getNovice()
+						.getPosition().first][(int) (Map.getNovice().getPosition().second) - 1]
+								.getTileType() == TileType.MONSTER
+						&& Map.getNovice().getFaceDirection() == Direction.UP) {
 
-				Map.getNovice().attack(Map.getBoard()[(int) Map.getNovice()
-						.getPosition().first][(int) (Map.getNovice().getPosition().second) - 1].entity);
+					Map.getNovice().attack(Map.getBoard()[(int) Map.getNovice()
+							.getPosition().first][(int) (Map.getNovice().getPosition().second) - 1].entity);
+				}
 			}
 
-			if (Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second)
-					+ 1].getTileType() == TileType.MONSTER && Map.getNovice().getFaceDirection() == Direction.DOWN) {
+			if ((int) Map.getNovice().getPosition().second + 1 < Map.HEIGHT) {
+				if (Map.getBoard()[(int) Map.getNovice()
+						.getPosition().first][(int) (Map.getNovice().getPosition().second) + 1]
+								.getTileType() == TileType.MONSTER
+						&& Map.getNovice().getFaceDirection() == Direction.DOWN) {
 
-				Map.getNovice().attack(Map.getBoard()[(int) Map.getNovice()
-						.getPosition().first][(int) (Map.getNovice().getPosition().second) + 1].entity);
+					Map.getNovice().attack(Map.getBoard()[(int) Map.getNovice()
+							.getPosition().first][(int) (Map.getNovice().getPosition().second) + 1].entity);
+				}
 			}
 
+			System.out.println((int) Map.getNovice().getPosition().first + " " + (int)Map.getNovice().getPosition().second);
 			activeKey.remove(KeyCode.Z);
 
 		}
