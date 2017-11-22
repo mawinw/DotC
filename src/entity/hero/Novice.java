@@ -88,9 +88,9 @@ public class Novice extends Entity {
 		timer.play();
 		timer.setOnFinished(e -> {
 			isMoveFinished=true;
+			Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second,
+					TileType.HERO, this);
 		});
-		Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second,
-				TileType.HERO, this);
 	}
 
 	public void attack(Entity entity) {

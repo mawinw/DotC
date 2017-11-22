@@ -96,7 +96,7 @@ public class Map {
 	public static void setBoard(int x, int y, TileType tileType, Entity entity) {
 		Tile tile = new Tile((x + y) % 2 == 0, x, y, entity);
 		
-		//tile.setTileType(tileType);
+		tile.setTileType(tileType);
 		System.out.println(x + " " +y);
 		board[x][y] = tile;
 		

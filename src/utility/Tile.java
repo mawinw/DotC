@@ -19,18 +19,19 @@ public class Tile extends Rectangle {
 		relocate(x * Map.TILE_SIZE, y * Map.TILE_SIZE);
 
 		setFill(lightColor ? Color.GREENYELLOW : Color.GREEN);
-		if (entity instanceof Novice) {
-			this.entity = new Novice();
-			this.tileType = TileType.HERO;
-		} else if (entity instanceof Slime) {
-			this.entity = new Slime();
-			this.tileType = TileType.MONSTER;
-		} else if (entity == null) {
-			this.entity = null;
-			this.tileType = TileType.NONE;
-		}
+//		if (entity == null) {
+//			this.entity = null;
+////			this.tileType = TileType.NONE;
+//		}else if (entity instanceof Novice) {
+//			System.out.println("WTFFFFFF");
+//			this.entity = new Novice();
+////			this.tileType = TileType.HERO;
+//		} else if (entity instanceof Slime) {
+//			this.entity = new Slime();
+////			this.tileType = TileType.MONSTER;
+//		}
 		// can't initial entity
-//		this.entity = entity;
+		this.entity = entity;
 
 	}
 	
