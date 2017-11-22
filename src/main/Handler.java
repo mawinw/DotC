@@ -78,45 +78,47 @@ public class Handler {
 		if (Map.getNovice().isMoveFinished()) {
 			
 			if (activeKey.contains(KeyCode.UP)) {
-				Map.getNovice().setFaceDirection(Direction.UP);
-				Map.getNovice().draw();
 				if (Map.getNovice().getPosition().second > 0 && !Map
 						.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second
-								- 1)].hasEntity()) {
+								- 1)].hasEntity()&&Map.getNovice().getFaceDirection()==Direction.UP) {
 					Map.getNovice().move(0, -1);
 				}
+				Map.getNovice().setFaceDirection(Direction.UP);
 				activeKey.remove(KeyCode.UP);
+				Map.getNovice().draw();
 			}
 	
 			if (activeKey.contains(KeyCode.DOWN)) {
-				Map.getNovice().setFaceDirection(Direction.DOWN);
-				Map.getNovice().draw();
 				if (Map.getNovice().getPosition().second <= Map.HEIGHT - 2 && !Map
 						.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second
-								+ 1)].hasEntity()) {
+								+ 1)].hasEntity()&&Map.getNovice().getFaceDirection()==Direction.DOWN) {
 					Map.getNovice().move(0, 1);
 				}
+				Map.getNovice().setFaceDirection(Direction.DOWN);
+				Map.getNovice().draw();
 				activeKey.remove(KeyCode.DOWN);
 			}
 	
 			if (activeKey.contains(KeyCode.LEFT)) {
-				Map.getNovice().setFaceDirection(Direction.LEFT);
-				Map.getNovice().draw();
 				if (Map.getNovice().getPosition().first > 0 && !Map.getBoard()[(int) Map.getNovice().getPosition().first
-						- 1][(int) (Map.getNovice().getPosition().second)].hasEntity()) {
+						- 1][(int) (Map.getNovice().getPosition().second)].hasEntity()
+						&&Map.getNovice().getFaceDirection()==Direction.LEFT) {
 					Map.getNovice().move(-1, 0);
 				}
+				Map.getNovice().setFaceDirection(Direction.LEFT);
+				Map.getNovice().draw();
 				activeKey.remove(KeyCode.LEFT);
 			}
 	
 			if (activeKey.contains(KeyCode.RIGHT)) {
-				Map.getNovice().setFaceDirection(Direction.RIGHT);
-				Map.getNovice().draw();
 				if (Map.getNovice().getPosition().first <= Map.WIDTH - 2
 						&& !Map.getBoard()[(int) Map.getNovice().getPosition().first
-								+ 1][(int) (Map.getNovice().getPosition().second)].hasEntity()) {
+								+ 1][(int) (Map.getNovice().getPosition().second)].hasEntity()
+						&&Map.getNovice().getFaceDirection()==Direction.RIGHT) {
 					Map.getNovice().move(1, 0);
 				}
+				Map.getNovice().setFaceDirection(Direction.RIGHT);
+				Map.getNovice().draw();
 				activeKey.remove(KeyCode.RIGHT);
 			}
 			System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].getTileType());
