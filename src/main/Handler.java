@@ -74,13 +74,14 @@ public class Handler {
 
 	private static void movePlayer() {
 
+		int playerX=(int) Map.getNovice().getPosition().first;
+		int playerY=(int) Map.getNovice().getPosition().second;
+		Direction faceDirection= Map.getNovice().getFaceDirection();
 		
 		if (Map.getNovice().isMoveFinished()) {
 			
 			if (activeKey.contains(KeyCode.UP)) {
-				if (Map.getNovice().getPosition().second > 0 && !Map
-						.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second
-								- 1)].hasEntity()&&Map.getNovice().getFaceDirection()==Direction.UP) {
+				if (playerY > 0 && !Map.getBoard(playerX,playerY-1).hasEntity()&&faceDirection==Direction.UP) {
 					Map.getNovice().move(0, -1);
 				}
 				Map.getNovice().setFaceDirection(Direction.UP);
@@ -89,9 +90,7 @@ public class Handler {
 			}
 	
 			if (activeKey.contains(KeyCode.DOWN)) {
-				if (Map.getNovice().getPosition().second <= Map.HEIGHT - 2 && !Map
-						.getBoard()[(int) Map.getNovice().getPosition().first][(int) (Map.getNovice().getPosition().second
-								+ 1)].hasEntity()&&Map.getNovice().getFaceDirection()==Direction.DOWN) {
+				if (playerY <= Map.HEIGHT - 2 && !Map.getBoard(playerX,playerY+1).hasEntity()&&faceDirection==Direction.DOWN) {
 					Map.getNovice().move(0, 1);
 				}
 				Map.getNovice().setFaceDirection(Direction.DOWN);
@@ -100,9 +99,7 @@ public class Handler {
 			}
 	
 			if (activeKey.contains(KeyCode.LEFT)) {
-				if (Map.getNovice().getPosition().first > 0 && !Map.getBoard()[(int) Map.getNovice().getPosition().first
-						- 1][(int) (Map.getNovice().getPosition().second)].hasEntity()
-						&&Map.getNovice().getFaceDirection()==Direction.LEFT) {
+				if (playerX > 0 && !Map.getBoard(playerX-1,playerY).hasEntity()&&faceDirection==Direction.LEFT) {
 					Map.getNovice().move(-1, 0);
 				}
 				Map.getNovice().setFaceDirection(Direction.LEFT);
@@ -111,17 +108,14 @@ public class Handler {
 			}
 	
 			if (activeKey.contains(KeyCode.RIGHT)) {
-				if (Map.getNovice().getPosition().first <= Map.WIDTH - 2
-						&& !Map.getBoard()[(int) Map.getNovice().getPosition().first
-								+ 1][(int) (Map.getNovice().getPosition().second)].hasEntity()
-						&&Map.getNovice().getFaceDirection()==Direction.RIGHT) {
+				if (playerX <= Map.WIDTH - 2&& !Map.getBoard(playerX+1,playerY).hasEntity()&&faceDirection==Direction.RIGHT) {
 					Map.getNovice().move(1, 0);
 				}
 				Map.getNovice().setFaceDirection(Direction.RIGHT);
 				Map.getNovice().draw();
 				activeKey.remove(KeyCode.RIGHT);
 			}
-			System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].getTileType());
+			//System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].getTileType());
 		
 		}
 

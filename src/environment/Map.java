@@ -88,12 +88,18 @@ public class Map {
 	public static Tile[][] getBoard() {
 		return board;
 	}
+	
+	public static Tile getBoard(int x, int y) {
+		return board[x][y];
+	}
 
 	public static void setBoard(int x, int y, TileType tileType, Entity entity) {
 		Tile tile = new Tile((x + y) % 2 == 0, x, y, entity);
-
-		tile.setTileType(tileType);
+		
+		//tile.setTileType(tileType);
+		System.out.println(x + " " +y);
 		board[x][y] = tile;
+		
 	}
 
 	private ActionResult tryAction(ActionType type, int clickX, int clickY) {
