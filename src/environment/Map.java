@@ -27,7 +27,7 @@ public class Map {
 
 	private static Group tileGroup = new Group();
 	private static Group entityGroup = new Group();
-	private static Entity novice;
+	private static Novice novice;
 	private static Pair heroPosition;
 
 	public static Parent createContent() {
@@ -66,7 +66,7 @@ public class Map {
 		// add monsters above
 
 		// add hero below
-		novice = createDefaultEntity("Novice");
+		novice = (Novice) createDefaultEntity("Novice");
 		board[1][4].setTileType(TileType.HERO); board[1][4].setEntity(novice);
 		novice.setPosition(1, 4);
 		novice.draw();
@@ -125,7 +125,7 @@ public class Map {
 		return (int) (pixel + TILE_SIZE / 2) / TILE_SIZE;
 	}
 
-	public static Entity getNovice() {
+	public static Novice getNovice() {
 		return novice;
 	}
 

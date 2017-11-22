@@ -28,6 +28,7 @@ public class Novice extends Entity {
 
 	protected int lv;
 	protected int exp;
+	protected boolean isMoveFinished;
 
 	public Novice() {
 		super("Novice", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE,
@@ -37,7 +38,8 @@ public class Novice extends Entity {
 		this.side = Side.HERO;
 		picHeight = 50;
 		picWidth = 50;
-		this.faceDirection = Direction.RIGHT; 
+		this.faceDirection = Direction.RIGHT;
+		this.isMoveFinished=true;
 		// don't forget to initial picture size and first time position
 	}
 
@@ -74,6 +76,9 @@ public class Novice extends Entity {
 	}
 
 	public void move(double moveX, double moveY) {
+		isMoveFinished=false;
+		Map.setBoard((int) position.first, (int) position.second,
+				TileType.NONE, null);
 		Timeline timer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			position.first += moveX / Main.FPS * 10;
 			position.second += moveY / Main.FPS * 10;
@@ -81,6 +86,9 @@ public class Novice extends Entity {
 		}));
 		timer.setCycleCount(Main.FPS / 10);
 		timer.play();
+		timer.setOnFinished(e -> {
+			isMoveFinished=true;
+		});
 		Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second,
 				TileType.HERO, this);
 	}
@@ -99,5 +107,14 @@ public class Novice extends Entity {
 			Hp -= dmg;
 		}
 	}
+
+	public boolean isMoveFinished() {
+		return isMoveFinished;
+	}
+
+	public void setMoveFinished(boolean isMoveFinished) {
+		this.isMoveFinished = isMoveFinished;
+	}
+	
 
 }
