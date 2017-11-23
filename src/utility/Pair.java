@@ -34,6 +34,14 @@ public class Pair {
 		return false;
 	}
 	
+	public Pair add(Pair o){
+		if (o == null)
+			return null;
+		double x=first+o.first; double y=second+o.second;
+		return new Pair(x,y);
+		
+	}
+	
 	public double distance(Pair o) {
 		return Math.sqrt((first-o.first) * (first-o.first) + (second - o.second) * (second - o.second));
 	}

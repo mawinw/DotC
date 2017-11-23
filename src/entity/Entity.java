@@ -15,7 +15,7 @@ public abstract class Entity {
 	protected double acc;
 	protected double eva;
 	protected double criRate;
-	protected Pair position;
+	protected  Pair position;
 	protected Side side;
 	protected boolean isDead;
 	protected boolean canMove;
@@ -28,6 +28,7 @@ public abstract class Entity {
 	
 	public Entity(String name, int maxHp, int attack, int defense, 
 			double accuracy, double evasion,double criticalRate, Pair position) {
+//		System.out.println(position.first+" "+position.second);
 		this.canvas=new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		this.name = name;
 		this.maxHp = maxHp;

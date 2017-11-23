@@ -25,7 +25,7 @@ public class Novice extends Entity {
 	private static final int DEFAULT_DEF = 20;
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 0.00;
-	private static final double DEFAULT_CRI_RATE = 50;
+	private static final double DEFAULT_CRI_RATE = 30;
 	private static final int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500 };
 
 	protected int lv;
@@ -33,9 +33,10 @@ public class Novice extends Entity {
 	protected boolean isActionFinished;
 	
 
-	public Novice() {
+	public Novice(Pair pos) {
 		super("Novice", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE,
-				new Pair(1, 1));
+				pos);
+	//	System.out.println(this.position.first+" "+this.position.second);
 		this.lv = 1;
 		this.exp = 0;
 		this.side = Side.HERO;
@@ -46,9 +47,9 @@ public class Novice extends Entity {
 		// don't forget to initial picture size and first time position
 	}
 
-	public Novice(String name) {
+	public Novice(String name,Pair pos) {
 		super(name, DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE,
-				new Pair(1, 1));
+				pos);
 		this.lv = 1;
 		this.exp = 0;
 		this.side = Side.HERO;
@@ -80,8 +81,9 @@ public class Novice extends Entity {
 
 	public void move(double moveX, double moveY) {
 		isActionFinished=false;
-		Map.setBoard((int) position.first, (int) position.second,
-				TileType.NONE, null);
+		Map.setBoard(position,TileType.NONE, null);
+		Map.setBoard(position.add(new Pair(moveX,moveY)),TileType.MONSTER, this);
+		
 		Timeline timer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			position.first += moveX / Main.FPS * 10;
 			position.second += moveY / Main.FPS * 10;
@@ -91,8 +93,6 @@ public class Novice extends Entity {
 		timer.play();
 		timer.setOnFinished(e -> {
 			isActionFinished=true;
-			Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second,
-					TileType.HERO, this);
 		});
 	}
 
@@ -118,7 +118,7 @@ public class Novice extends Entity {
 		Random rn = new Random();
 		int atkSuccess = rn.nextInt(100);
 		int criSuccess = rn.nextInt(100);
-		System.out.println(atkSuccess+" "+criSuccess+" "+(this.atk - entity.getDef()));
+		//System.out.println(atkSuccess+" "+criSuccess+" "+(this.atk - entity.getDef()));
 		if(this.acc-entity.getEva()>atkSuccess) {
 			if(this.atk>entity.getDef()) {
 				if(this.criRate>criSuccess)

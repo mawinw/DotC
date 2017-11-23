@@ -2,7 +2,7 @@ package utility;
 
 import entity.Entity;
 import entity.hero.Novice;
-import entity.monster.Slime;
+import entity.monster.Monster;
 import environment.Map;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -42,7 +42,7 @@ public class Tile extends Rectangle {
 	
 
 	public boolean hasEntity() {
-		System.out.println(tileType);
+	//	System.out.println(tileType);
 		return tileType != TileType.NONE;
 	}
 
