@@ -10,7 +10,7 @@ import utility.Pair;
 import utility.Side;
 
 public class Slime extends Entity {
-	private static final int DEFAULT_MAX_HP = 100;
+	private static final int DEFAULT_MAX_HP = 500;
 	private static final int DEFAULT_ATK = 10;
 	private static final int DEFAULT_DEF = 10;
 	private static final double DEFAULT_ACC = 80.00;

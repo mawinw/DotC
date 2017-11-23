@@ -15,8 +15,7 @@ import utility.TileType;
 public class Handler {
 	// set all event
 	private static HashSet<KeyCode> activeKey = new HashSet<KeyCode>();
-	private static boolean autoshoot = false;
-	private static boolean skillUpgradable = false;
+	
 
 	public static void keyPressed(KeyEvent event) {
 		// if (activeKey.contains(event.getCode()))
@@ -41,7 +40,8 @@ public class Handler {
 			activeKey.add(KeyCode.RIGHT);
 		}
 		if (event.getCode() == KeyCode.Z) {
-			activeKey.add(KeyCode.Z);
+				activeKey.add(KeyCode.Z);
+				
 		}
 
 	}
@@ -67,7 +67,9 @@ public class Handler {
 			activeKey.remove(KeyCode.RIGHT);
 		}
 		if (event.getCode() == KeyCode.Z) {
+			Map.getNovice().setAttackFinished(true);
 			activeKey.remove(KeyCode.Z);
+			
 		}
 
 	}
@@ -123,8 +125,8 @@ public class Handler {
 
 	}
 
-	public static void playerAttact() {
-		if (activeKey.contains(KeyCode.Z)) {
+	public static void playerAttack() {
+		if (activeKey.contains(KeyCode.Z)&&Map.getNovice().isAttackFinished()==true) {
 			if ((int) Map.getNovice().getPosition().first + 1 < Map.WIDTH) {
 				if (Map.getBoard()[(int) Map.getNovice().getPosition().first
 						+ 1][(int) (Map.getNovice().getPosition().second)].getTileType() == TileType.MONSTER
@@ -188,7 +190,7 @@ public class Handler {
 
 	public static void update() {
 		movePlayer();
-		playerAttact();
+		playerAttack();
 		checkStatus();
 	}
 
