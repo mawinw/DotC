@@ -67,7 +67,6 @@ public class Handler {
 			activeKey.remove(KeyCode.RIGHT);
 		}
 		if (event.getCode() == KeyCode.Z) {
-			Map.getNovice().setAttackFinished(true);
 			activeKey.remove(KeyCode.Z);
 			
 		}
@@ -80,7 +79,7 @@ public class Handler {
 		int playerY=(int) Map.getNovice().getPosition().second;
 		Direction faceDirection= Map.getNovice().getFaceDirection();
 		
-		if (Map.getNovice().isMoveFinished()) {
+		if (Map.getNovice().isActionFinished()) {
 			
 			if (activeKey.contains(KeyCode.UP)) {
 				if (playerY > 0 && !Map.getBoard(playerX,playerY-1).hasEntity()&&faceDirection==Direction.UP) {
@@ -126,7 +125,7 @@ public class Handler {
 	}
 
 	public static void playerAttack() {
-		if (activeKey.contains(KeyCode.Z)&&Map.getNovice().isAttackFinished()==true) {
+		if (activeKey.contains(KeyCode.Z)&&Map.getNovice().isActionFinished()==true) {
 			if ((int) Map.getNovice().getPosition().first + 1 < Map.WIDTH) {
 				if (Map.getBoard()[(int) Map.getNovice().getPosition().first
 						+ 1][(int) (Map.getNovice().getPosition().second)].getTileType() == TileType.MONSTER
@@ -171,6 +170,7 @@ public class Handler {
 
 			System.out.println((int) Map.getNovice().getPosition().first + " " + (int)Map.getNovice().getPosition().second);
 			activeKey.remove(KeyCode.Z);
+			
 
 		}
 

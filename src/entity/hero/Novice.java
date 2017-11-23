@@ -30,8 +30,7 @@ public class Novice extends Entity {
 
 	protected int lv;
 	protected int exp;
-	protected boolean isMoveFinished;
-	protected boolean isAttackFinished;
+	protected boolean isActionFinished;
 	
 
 	public Novice() {
@@ -43,8 +42,7 @@ public class Novice extends Entity {
 		picHeight = 50;
 		picWidth = 50;
 		this.faceDirection = Direction.RIGHT;
-		this.isMoveFinished=true;
-		this.isAttackFinished=true;
+		this.isActionFinished=true;
 		// don't forget to initial picture size and first time position
 	}
 
@@ -81,7 +79,7 @@ public class Novice extends Entity {
 	}
 
 	public void move(double moveX, double moveY) {
-		isMoveFinished=false;
+		isActionFinished=false;
 		Map.setBoard((int) position.first, (int) position.second,
 				TileType.NONE, null);
 		Timeline timer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
@@ -92,31 +90,34 @@ public class Novice extends Entity {
 		timer.setCycleCount(Main.FPS / 10);
 		timer.play();
 		timer.setOnFinished(e -> {
-			isMoveFinished=true;
+			isActionFinished=true;
 			Map.setBoard((int) Map.getNovice().getPosition().first, (int) Map.getNovice().getPosition().second,
 					TileType.HERO, this);
 		});
 	}
 
 	public void attack(Entity entity) {
-		isAttackFinished=false;
+		isActionFinished=false;
 		
 		
-		Timeline timer = new Timeline(new KeyFrame(new Duration(500), e -> {
+		Timeline timer = new Timeline(new KeyFrame(new Duration(1000), e -> {
 			double atkDmg=calculateDamage(entity);
 			entity.takeDamage(atkDmg);
 			entity.draw();
 		}));
 		timer.setCycleCount(1);
 		timer.play();
+		timer.setOnFinished(e ->{
+			isActionFinished=true;
+		});
 		
 		
 	}
 
 	private double calculateDamage(Entity entity) {
 		Random rn = new Random();
-		int atkSuccess = rn.nextInt(101);
-		int criSuccess = rn.nextInt(101);
+		int atkSuccess = rn.nextInt(100);
+		int criSuccess = rn.nextInt(100);
 		System.out.println(atkSuccess+" "+criSuccess+" "+(this.atk - entity.getDef()));
 		if(this.acc-entity.getEva()>atkSuccess) {
 			if(this.atk>entity.getDef()) {
@@ -139,21 +140,14 @@ public class Novice extends Entity {
 		}
 	}
 
-	public boolean isMoveFinished() {
-		return isMoveFinished;
+	public boolean isActionFinished() {
+		return isActionFinished;
 	}
 
-	public void setMoveFinished(boolean isMoveFinished) {
-		this.isMoveFinished = isMoveFinished;
+	public void setActionFinished(boolean isActionFinished) {
+		this.isActionFinished = isActionFinished;
 	}
 
-	public boolean isAttackFinished() {
-		return isAttackFinished;
-	}
-
-	public void setAttackFinished(boolean isAttackFinished) {
-		this.isAttackFinished = isAttackFinished;
-	}
 	
 
 }
