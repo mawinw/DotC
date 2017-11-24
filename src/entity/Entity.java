@@ -1,15 +1,17 @@
 package entity;
+import entity.property.HpBar;
 import environment.Map;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import utility.Direction;
 import utility.Pair;
 import utility.Side;
 public abstract class Entity {
 	protected Canvas canvas;
 	protected String name;
-	protected int maxHp;
-	protected int Hp;
+	protected double maxHp;
+	protected double Hp;
 	protected int atk;
 	protected int def;
 	protected double acc;
@@ -23,6 +25,7 @@ public abstract class Entity {
 	protected int picWidth;
 	protected int picHeight;
 	protected Direction faceDirection;
+	protected HpBar hpBar;
 	
 	
 	
@@ -42,6 +45,8 @@ public abstract class Entity {
 		this.canAttack=true;
 		this.canMove=true;
 		this.isDead=false;
+		hpBar= new HpBar(this);
+		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
 		draw();
 	}
 
@@ -60,11 +65,18 @@ public abstract class Entity {
 	public abstract void takeDamage(double dmg);
 	
 	public void die() {
+		GraphicsContext gc=canvas.getGraphicsContext2D();
+		gc.setFill(Color.BLACK);
+		gc.fillRect(0, 0, 200, 200);
+	//	System.out.println(Map.getEntityGroup().getChildren().contains(canvas));
+		Map.getEntityGroup().getChildren().remove(canvas);
+	//	System.out.println(Map.getEntityGroup().getChildren().contains(canvas));
 		isDead=true;
-		canvas.setOpacity(0);
+	//	canvas.setOpacity(0);
 		Hp=0;
-		GraphicsContext 	gc=this.canvas.getGraphicsContext2D();
-		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		hpBar.die();
+	//	Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
+		
 		
 	}
 
@@ -95,11 +107,11 @@ public abstract class Entity {
 		return name;
 	}
 
-	public int getMaxHp() {
+	public double getMaxHp() {
 		return maxHp;
 	}
 
-	public int getHp() {
+	public double getHp() {
 		return Hp;
 	}
 
@@ -147,7 +159,10 @@ public abstract class Entity {
 		return faceDirection;
 	}
 	
-	
+	public HpBar getHpBar() {
+		return hpBar;
+	}
+
 	
 	
 

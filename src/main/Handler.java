@@ -86,9 +86,9 @@ public class Handler {
 		if (Map.getNovice().isActionFinished()) {
 			
 			if (activeKey.contains(KeyCode.UP)) {
-				System.out.println(!Map.getBoard(playerPosition.add(new Pair(0,-1))).hasEntity());
+			//	System.out.println(!Map.getBoard(playerPosition.add(new Pair(0,-1))).hasEntity());
 				if (playerPosition.second > 0 && !Map.getBoard(playerPosition.add(new Pair(0,-1))).hasEntity()&&faceDirection==Direction.UP) {
-					System.out.println(playerPosition.first+" "+playerPosition.second);
+					//System.out.println(playerPosition.first+" "+playerPosition.second);
 					Map.getNovice().move(0, -1);
 				}
 				
@@ -188,7 +188,9 @@ public class Handler {
 			for (int j = 0; j < 10; j++) {
 				if (Map.getBoard()[i][j].entity != null) {
 					if (Map.getBoard()[i][j].entity.getIsDead()) {
+						
 						Map.setBoard(new Pair(i,j), TileType.NONE, null);
+						
 					}
 				}
 			}

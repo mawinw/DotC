@@ -3,6 +3,7 @@ package entity.hero;
 import java.util.Random;
 
 import entity.Entity;
+import entity.property.HpBar;
 import environment.Map;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -21,7 +22,7 @@ import utility.TileType;
 public class Novice extends Entity {
 
 	private static final int DEFAULT_MAX_HP = 200;
-	private static final int DEFAULT_ATK = 50;
+	private static final int DEFAULT_ATK = 200;
 	private static final int DEFAULT_DEF = 20;
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 0.00;
@@ -31,6 +32,7 @@ public class Novice extends Entity {
 	protected int lv;
 	protected int exp;
 	protected boolean isActionFinished;
+	
 	
 
 	public Novice(Pair pos) {
@@ -44,6 +46,7 @@ public class Novice extends Entity {
 		picWidth = 50;
 		this.faceDirection = Direction.RIGHT;
 		this.isActionFinished=true;
+		draw();
 		// don't forget to initial picture size and first time position
 	}
 
@@ -58,7 +61,7 @@ public class Novice extends Entity {
 	}
 
 	public void draw() {
-		GraphicsContext gc = this.canvas.getGraphicsContext2D();
+		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		gc.setFill(Color.AQUA);
 		gc.fillOval(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth, picHeight);
@@ -76,8 +79,12 @@ public class Novice extends Entity {
 		else if(faceDirection==Direction.UP) {	
 			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE, picWidth, picHeight);
 		}
-
+		System.out.println(position.first+" "+position.second);
+		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
+		hpBar= new HpBar(this);
+		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
 	}
+
 
 	public void move(double moveX, double moveY) {
 		isActionFinished=false;

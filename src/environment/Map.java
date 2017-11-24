@@ -28,6 +28,7 @@ public class Map {
 
 	private static Group tileGroup = new Group();
 	private static Group entityGroup = new Group();
+	public static Group statusBarGroup = new Group();
 	private static Novice novice;
 	private static Pair heroPosition;
 	private static ArrayList<Monster> monsterList = new ArrayList<>();
@@ -46,33 +47,41 @@ public class Map {
 		}
 		/* */
 		// add monsters below
-		Monster slime1 = (Monster) createDefaultEntity("Slime",new Pair(2,4));
-		Monster slime2 = (Monster) createDefaultEntity("Slime",new Pair(4,4));
-		Monster slime3 = (Monster) createDefaultEntity("Slime",new Pair(7,1));
-		Monster slime4 = (Monster) createDefaultEntity("Slime",new Pair(7,7));
-		board[2][4].setTileType(TileType.MONSTER); board[2][4].setEntity(slime1);
-		slime1.draw();
-		board[4][4].setTileType(TileType.MONSTER); board[4][4].setEntity(slime2);
-		slime2.draw();
-		board[7][1].setTileType(TileType.MONSTER); board[7][1].setEntity(slime3);
-		slime3.draw();
-		board[7][7].setTileType(TileType.MONSTER); board[7][7].setEntity(slime4);
-		slime4.draw();
-		entityGroup.getChildren().addAll(slime1.getCanvas()
-				, slime2.getCanvas(), slime3.getCanvas(),slime4.getCanvas());
-		monsterList.add(slime1);monsterList.add(slime2);monsterList.add(slime3);monsterList.add(slime4);
+		Monster slime1 = (Monster) createDefaultEntity("Slime", new Pair(2, 4));
+//		Monster slime2 = (Monster) createDefaultEntity("Slime", new Pair(4, 4));
+//		Monster slime3 = (Monster) createDefaultEntity("Slime", new Pair(7, 1));
+//		Monster slime4 = (Monster) createDefaultEntity("Slime", new Pair(7, 7));
+		board[2][4].setTileType(TileType.MONSTER);
+		board[2][4].setEntity(slime1);
+//		board[4][4].setTileType(TileType.MONSTER);
+//		board[4][4].setEntity(slime2);
+//		board[7][1].setTileType(TileType.MONSTER);
+//		board[7][1].setEntity(slime3);
+//		board[7][7].setTileType(TileType.MONSTER);
+//		board[7][7].setEntity(slime4);
+////		statusBarGroup.getChildren().add(slime1.getHpBar().getCanvas());
+		entityGroup.getChildren().addAll(slime1.getCanvas());
+//				, slime2.getCanvas(), slime3.getCanvas(),
+//				slime4.getCanvas());
+		monsterList.add(slime1);
+//		monsterList.add(slime2);
+//		monsterList.add(slime3);
+//		monsterList.add(slime4);
 
-	//	System.out.println(slime1.getPosition().first+" "+slime1.getPosition().second);
+		// System.out.println(slime1.getPosition().first+"
+		// "+slime1.getPosition().second);
 		// add monsters above
 
 		// add hero below
-		novice = (Novice) createDefaultEntity("Novice",new Pair(1,4));
-		board[1][4].setTileType(TileType.HERO); board[1][4].setEntity(novice);
-		novice.draw();
+		novice = (Novice) createDefaultEntity("Novice", new Pair(1, 4));
+		board[1][4].setTileType(TileType.HERO);
+		board[1][4].setEntity(novice);
 		heroPosition = novice.getPosition();
+	//	statusBarGroup.getChildren().add(novice.getHpBar().getCanvas());
 		entityGroup.getChildren().add(novice.getCanvas());
+		
 		// add hero above
-		root.getChildren().addAll(tileGroup, entityGroup);
+		root.getChildren().addAll(tileGroup, entityGroup, statusBarGroup);
 		return root;
 	}
 
@@ -87,21 +96,21 @@ public class Map {
 	public static Tile[][] getBoard() {
 		return board;
 	}
-	
+
 	public static Tile getBoard(Pair position) {
 		return board[(int) position.first][(int) position.second];
 	}
 
 	public static void setBoard(Pair xy, TileType tileType, Entity entity) {
-		int x=(int) xy.first;
-		int y=(int) xy.second;
+		int x = (int) xy.first;
+		int y = (int) xy.second;
 		Tile tile = new Tile((x + y) % 2 == 0, x, y, entity);
-		
+
 		tile.setTileType(tileType);
-		//System.out.println(x + " " +y);
-	//	System.out.println(x + "." + y + "." + tileType);
+		// System.out.println(x + " " +y);
+		// System.out.println(x + "." + y + "." + tileType);
 		board[x][y] = tile;
-		
+
 	}
 
 	private ActionResult tryAction(ActionType type, int clickX, int clickY) {
@@ -119,7 +128,7 @@ public class Map {
 		// confused
 	}
 
-	private static Entity createDefaultEntity(String entityType,Pair position) {
+	private static Entity createDefaultEntity(String entityType, Pair position) {
 		switch (entityType) {
 		case "Slime":
 			return new Monster(position);

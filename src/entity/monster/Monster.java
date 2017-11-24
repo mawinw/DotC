@@ -3,6 +3,7 @@ package entity.monster;
 import java.util.Random;
 
 import entity.Entity;
+import entity.property.HpBar;
 import environment.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -40,6 +41,7 @@ public class Monster extends Entity {
 		picWidth=50;
 		areaHeight=3;
 		areaWidth=3;
+		draw();
 		// don't forget to initial picture size and first time position
 	}
 	
@@ -52,6 +54,12 @@ public class Monster extends Entity {
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.CENTER);
 		gc.fillText("" + this.Hp, position.first*Map.TILE_SIZE + picWidth/2, position.second*Map.TILE_SIZE + picHeight/2);
+		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
+		
+		hpBar= new HpBar(this);
+		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
+		System.out.println(Map.statusBarGroup.getChildren().contains(hpBar.getCanvas()));
+
 	}
 	
 	public void move(double moveX,double moveY) {
