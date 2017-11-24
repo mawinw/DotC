@@ -18,7 +18,7 @@ public class Tile extends Rectangle {
 
 		relocate(x * Map.TILE_SIZE, y * Map.TILE_SIZE);
 
-		setFill(lightColor ? Color.GREENYELLOW : Color.GREEN);
+		setFill(lightColor ? Color.WHITE : Color.BLACK);
 //		if (entity == null) {
 //			this.entity = null;
 ////			this.tileType = TileType.NONE;

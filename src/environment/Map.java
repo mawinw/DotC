@@ -2,6 +2,7 @@ package environment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import entity.Entity;
 import entity.hero.Novice;
@@ -21,7 +22,7 @@ public class Map {
 	private Canvas canvas;
 
 	public static final int TILE_SIZE = 50;
-	public static final int WIDTH = 10;
+	public static final int WIDTH = 20;
 	public static final int HEIGHT = 10;
 
 	private static Tile[][] board = new Tile[WIDTH][HEIGHT];
@@ -67,6 +68,30 @@ public class Map {
 		monsterList.add(slime2);
 		monsterList.add(slime3);
 		monsterList.add(slime4);
+		
+		Monster slime5 = (Monster) createDefaultEntity("Slime", new Pair(10,5));
+		monsterList.add(slime5);
+		board[10][5].setTileType(TileType.MONSTER);
+		board[10][5].setEntity(slime5);
+		entityGroup.getChildren().add(slime5.getCanvas());
+		Monster slime6 = (Monster) createDefaultEntity("Slime", new Pair(12,7));
+		monsterList.add(slime6);
+		board[12][7].setTileType(TileType.MONSTER);
+		board[12][7].setEntity(slime6);
+		entityGroup.getChildren().add(slime6.getCanvas());
+		
+		
+		// random n th  slime
+//		for(int i=0;i<5;i++) {
+//			int x= new Random().nextInt(Map.WIDTH); 
+//			int y= new Random().nextInt(Map.HEIGHT);
+//			if(Map.getBoard()[x][y].getTileType()!=null) { i--; continue;}
+//			Monster slime = (Monster) createDefaultEntity("Slime", new Pair(x,y));
+//			monsterList.add(slime);
+//			board[x][y].setTileType(TileType.MONSTER);
+//			board[x][y].setEntity(slime);
+//			entityGroup.getChildren().add(slime.getCanvas());
+//		}
 
 		// System.out.println(slime1.getPosition().first+"
 		// "+slime1.getPosition().second);

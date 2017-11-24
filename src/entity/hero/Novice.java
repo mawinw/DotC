@@ -3,6 +3,7 @@ package entity.hero;
 import java.util.Random;
 
 import entity.Entity;
+import entity.monster.Monster;
 import entity.property.HpBar;
 import environment.Map;
 import javafx.animation.Animation;
@@ -22,13 +23,14 @@ import utility.TileType;
 public class Novice extends Entity {
 
 	private static final int DEFAULT_MAX_HP = 200;
-	private static final int DEFAULT_ATK = 50;
+	private static final int DEFAULT_ATK = 200;
 	private static final int DEFAULT_DEF = 20;
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 0.00;
 	private static final double DEFAULT_CRI_RATE = 30;
 	private static final int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500 };
 
+	protected Timeline timer;
 	protected int lv;
 	protected int exp;
 	protected boolean isActionFinished;
@@ -79,7 +81,7 @@ public class Novice extends Entity {
 		else if(faceDirection==Direction.UP) {	
 			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE, picWidth, picHeight);
 		}
-		System.out.println(position.first+" "+position.second);
+	//	System.out.println(position.first+" "+position.second);
 		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
 		hpBar= new HpBar(this);
 		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
@@ -91,14 +93,14 @@ public class Novice extends Entity {
 		Map.setBoard(position,TileType.NONE, null);
 		Map.setBoard(position.add(new Pair(moveX,moveY)),TileType.MONSTER, this);
 		
-		Timeline timer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
+		Timeline timer2 = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			position.first += moveX / Main.FPS * 10;
 			position.second += moveY / Main.FPS * 10;
 			draw();
 		}));
-		timer.setCycleCount(Main.FPS / 10);
-		timer.play();
-		timer.setOnFinished(e -> {
+		timer2.setCycleCount(Main.FPS / 10);
+		timer2.play();
+		timer2.setOnFinished(e -> {
 			isActionFinished=true;
 		});
 	}
@@ -107,18 +109,30 @@ public class Novice extends Entity {
 		isActionFinished=false;
 		
 		
-		Timeline timer = new Timeline(new KeyFrame(new Duration(1000), e -> {
+		timer = new Timeline(new KeyFrame(new Duration(1000), e -> {
 			double atkDmg=calculateDamage(entity);
 			entity.takeDamage(atkDmg);
 			entity.draw();
+			if(entity.getIsDead()) {
+				exp += Monster.EXP_GAIN;
+				checkLevelUp();
+				System.out.println(lv+" "+exp);
+			}
 		}));
 		timer.setCycleCount(1);
 		timer.play();
 		timer.setOnFinished(e ->{
-			isActionFinished=true;
+			Timeline wait = new Timeline(new KeyFrame(Duration.millis(100), f -> {}));
+			wait.setCycleCount(1);
+			wait.play();
+			wait.setOnFinished(f -> isActionFinished=true);
 		});
 		
 		
+	}
+	
+	private void checkLevelUp() {
+		if(EXP_RATE[lv]<exp) lv++;
 	}
 
 	private double calculateDamage(Entity entity) {

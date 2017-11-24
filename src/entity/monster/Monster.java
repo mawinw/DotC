@@ -20,13 +20,13 @@ import utility.TileType;
 public class Monster extends Entity {
 	public static final int VISIBLE_RANGE = 3;
 	
-	private static final int DEFAULT_MAX_HP = 500;
+	private static final int DEFAULT_MAX_HP = 200;
 	private static final int DEFAULT_ATK = 10;
 	private static final int DEFAULT_DEF = 10;
 	private static final double DEFAULT_ACC = 80.00;
 	private static final double DEFAULT_EVA = 0.00;
 	private static final double DEFAULT_CRI_RATE = 0;
-	private static final int EXP_GAIN =40;
+	public static final int EXP_GAIN =40;
 	
 	protected Pair areaPosition; //ref from top left 
 	protected int areaWidth;
@@ -85,8 +85,8 @@ public class Monster extends Entity {
 		double moveX = new Random().nextInt(3) - 1;
 		double moveY = new Random().nextInt(3) - 1;
 	//	System.out.println(areaPosition.first+" "+areaWidth+" "+areaHeight+" "+areaPosition.second);
-		if(areaPosition.first<=position.first+moveX&& position.first+moveX<areaPosition.first+areaWidth &&
-		   areaPosition.second<=position.second+moveY&& position.second+moveY<areaPosition.second+areaHeight 
+		if(0<=position.first+moveX&& position.first+moveX<Map.WIDTH &&
+		   0<=position.second+moveY&& position.second+moveY<Map.HEIGHT 
 				) {
 			if(Map.getBoard(position.add(new Pair(moveX,moveY))).entity == null)
 				move(moveX, moveY);

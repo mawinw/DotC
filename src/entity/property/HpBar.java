@@ -36,6 +36,7 @@ public class HpBar {
 
 	//	System.out.println(maxWidth);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc.setLineWidth(2);
 		if (entity.getSide() == Side.MONSTER) {
 			gc.setStroke(Color.ORANGERED);
 			gc.setFill(Color.ORANGERED);
@@ -46,6 +47,7 @@ public class HpBar {
 			gc.setStroke(Color.GOLD);
 			gc.setFill(Color.GOLD);
 		}
+		gc.setStroke(Color.GREEN);
 		width = (entity.getHp() / entity.getMaxHp()) * maxWidth;
 	//	System.out.println(entity.getPosition().first+" "+entity.getPosition().second);
 		gc.strokeRoundRect(entity.getPosition().first * Map.TILE_SIZE, entity.getPosition().second * Map.TILE_SIZE - 10,
