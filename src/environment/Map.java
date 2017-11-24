@@ -48,25 +48,25 @@ public class Map {
 		/* */
 		// add monsters below
 		Monster slime1 = (Monster) createDefaultEntity("Slime", new Pair(2, 4));
-//		Monster slime2 = (Monster) createDefaultEntity("Slime", new Pair(4, 4));
-//		Monster slime3 = (Monster) createDefaultEntity("Slime", new Pair(7, 1));
-//		Monster slime4 = (Monster) createDefaultEntity("Slime", new Pair(7, 7));
+		Monster slime2 = (Monster) createDefaultEntity("Slime", new Pair(4, 4));
+		Monster slime3 = (Monster) createDefaultEntity("Slime", new Pair(7, 1));
+		Monster slime4 = (Monster) createDefaultEntity("Slime", new Pair(7, 7));
 		board[2][4].setTileType(TileType.MONSTER);
 		board[2][4].setEntity(slime1);
-//		board[4][4].setTileType(TileType.MONSTER);
-//		board[4][4].setEntity(slime2);
-//		board[7][1].setTileType(TileType.MONSTER);
-//		board[7][1].setEntity(slime3);
-//		board[7][7].setTileType(TileType.MONSTER);
-//		board[7][7].setEntity(slime4);
-////		statusBarGroup.getChildren().add(slime1.getHpBar().getCanvas());
-		entityGroup.getChildren().addAll(slime1.getCanvas());
-//				, slime2.getCanvas(), slime3.getCanvas(),
-//				slime4.getCanvas());
+		board[4][4].setTileType(TileType.MONSTER);
+		board[4][4].setEntity(slime2);
+		board[7][1].setTileType(TileType.MONSTER);
+		board[7][1].setEntity(slime3);
+		board[7][7].setTileType(TileType.MONSTER);
+		board[7][7].setEntity(slime4);
+//		statusBarGroup.getChildren().add(slime1.getHpBar().getCanvas());
+		entityGroup.getChildren().addAll(slime1.getCanvas()
+				, slime2.getCanvas(), slime3.getCanvas(),
+				slime4.getCanvas());
 		monsterList.add(slime1);
-//		monsterList.add(slime2);
-//		monsterList.add(slime3);
-//		monsterList.add(slime4);
+		monsterList.add(slime2);
+		monsterList.add(slime3);
+		monsterList.add(slime4);
 
 		// System.out.println(slime1.getPosition().first+"
 		// "+slime1.getPosition().second);

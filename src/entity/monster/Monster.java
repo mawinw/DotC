@@ -50,15 +50,16 @@ public class Monster extends Entity {
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		gc.setFill(Color.YELLOW);
 		gc.fillOval(position.first*Map.TILE_SIZE, position.second*Map.TILE_SIZE, picWidth, picHeight);
-		gc.setFill(Color.CORAL);
-		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setTextBaseline(VPos.CENTER);
-		gc.fillText("" + this.Hp, position.first*Map.TILE_SIZE + picWidth/2, position.second*Map.TILE_SIZE + picHeight/2);
+//		gc.setFill(Color.CORAL);
+//		gc.setTextAlign(TextAlignment.CENTER);
+//		gc.setTextBaseline(VPos.CENTER);
+//		gc.fillText("" + this.Hp, position.first*Map.TILE_SIZE + picWidth/2, position.second*Map.TILE_SIZE + picHeight/2);
+		if(isDead) return;
 		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
 		
 		hpBar= new HpBar(this);
 		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
-		System.out.println(Map.statusBarGroup.getChildren().contains(hpBar.getCanvas()));
+//		System.out.println(Map.statusBarGroup.getChildren().contains(hpBar.getCanvas()));
 
 	}
 	
