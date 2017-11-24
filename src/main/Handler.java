@@ -17,9 +17,9 @@ import utility.TileType;
 public class Handler {
 	// set all event
 	private static HashSet<KeyCode> activeKey = new HashSet<KeyCode>();
-	
+
 	private static int tick = 0;
-	
+	private static boolean isPaused;
 
 	public static void keyPressed(KeyEvent event) {
 		// if (activeKey.contains(event.getCode()))
@@ -44,8 +44,8 @@ public class Handler {
 			activeKey.add(KeyCode.RIGHT);
 		}
 		if (event.getCode() == KeyCode.Z) {
-				activeKey.add(KeyCode.Z);
-				
+			activeKey.add(KeyCode.Z);
+
 		}
 
 	}
@@ -72,59 +72,68 @@ public class Handler {
 		}
 		if (event.getCode() == KeyCode.Z) {
 			activeKey.remove(KeyCode.Z);
-			
+
 		}
 
 	}
 
 	private static void movePlayer() {
 
-		Pair playerPosition= Map.getNovice().getPosition();
-	
-		Direction faceDirection= Map.getNovice().getFaceDirection();
-		
+		Pair playerPosition = Map.getNovice().getPosition();
+
+		Direction faceDirection = Map.getNovice().getFaceDirection();
+
 		if (Map.getNovice().isActionFinished()) {
-			
+
 			if (activeKey.contains(KeyCode.UP)) {
-			//	System.out.println(!Map.getBoard(playerPosition.add(new Pair(0,-1))).hasEntity());
-				if (playerPosition.second > 0 && !Map.getBoard(playerPosition.add(new Pair(0,-1))).hasEntity()&&faceDirection==Direction.UP) {
-					//System.out.println(playerPosition.first+" "+playerPosition.second);
+				// System.out.println(!Map.getBoard(playerPosition.add(new
+				// Pair(0,-1))).hasEntity());
+				if (playerPosition.second > 0 && !Map.getBoard(playerPosition.add(new Pair(0, -1))).hasEntity()
+						&& faceDirection == Direction.UP) {
+					// System.out.println(playerPosition.first+" "+playerPosition.second);
 					Map.getNovice().move(0, -1);
 				}
-				
+
 				Map.getNovice().setFaceDirection(Direction.UP);
 				activeKey.remove(KeyCode.UP);
 				Map.getNovice().draw();
 			}
-	
+
 			if (activeKey.contains(KeyCode.DOWN)) {
-				if (playerPosition.second <= Map.HEIGHT - 2 && !Map.getBoard(playerPosition.add(new Pair(0,1))).hasEntity()&&faceDirection==Direction.DOWN) {
+				if (playerPosition.second <= Map.HEIGHT - 2
+						&& !Map.getBoard(playerPosition.add(new Pair(0, 1))).hasEntity()
+						&& faceDirection == Direction.DOWN) {
 					Map.getNovice().move(0, 1);
 				}
 				Map.getNovice().setFaceDirection(Direction.DOWN);
 				Map.getNovice().draw();
 				activeKey.remove(KeyCode.DOWN);
 			}
-	
+
 			if (activeKey.contains(KeyCode.LEFT)) {
-				if (playerPosition.first > 0 && !Map.getBoard(playerPosition.add(new Pair(-1,0))).hasEntity()&&faceDirection==Direction.LEFT) {
+				if (playerPosition.first > 0 && !Map.getBoard(playerPosition.add(new Pair(-1, 0))).hasEntity()
+						&& faceDirection == Direction.LEFT) {
 					Map.getNovice().move(-1, 0);
 				}
 				Map.getNovice().setFaceDirection(Direction.LEFT);
 				Map.getNovice().draw();
 				activeKey.remove(KeyCode.LEFT);
 			}
-	
+
 			if (activeKey.contains(KeyCode.RIGHT)) {
-				if (playerPosition.first <= Map.WIDTH - 2&& !Map.getBoard(playerPosition.add(new Pair(1,0))).hasEntity()&&faceDirection==Direction.RIGHT) {
+				if (playerPosition.first <= Map.WIDTH - 2
+						&& !Map.getBoard(playerPosition.add(new Pair(1, 0))).hasEntity()
+						&& faceDirection == Direction.RIGHT) {
 					Map.getNovice().move(1, 0);
 				}
 				Map.getNovice().setFaceDirection(Direction.RIGHT);
 				Map.getNovice().draw();
 				activeKey.remove(KeyCode.RIGHT);
 			}
-			//System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first][(int) Map.getNovice().getPosition().second].getTileType());
-		
+			// System.out.println(Map.getBoard()[(int)
+			// Map.getNovice().getPosition().first][(int)
+			// Map.getNovice().getPosition().second].getTileType());
+
 		}
 
 		// if run then goto out of map
@@ -132,7 +141,7 @@ public class Handler {
 	}
 
 	public static void playerAttack() {
-		if (activeKey.contains(KeyCode.Z)&&Map.getNovice().isActionFinished()==true) {
+		if (activeKey.contains(KeyCode.Z) && Map.getNovice().isActionFinished() == true) {
 			if ((int) Map.getNovice().getPosition().first + 1 < Map.WIDTH) {
 				if (Map.getBoard()[(int) Map.getNovice().getPosition().first
 						+ 1][(int) (Map.getNovice().getPosition().second)].getTileType() == TileType.MONSTER
@@ -175,9 +184,9 @@ public class Handler {
 				}
 			}
 
-	//		System.out.println((int) Map.getNovice().getPosition().first + " " + (int)Map.getNovice().getPosition().second);
+			// System.out.println((int) Map.getNovice().getPosition().first + " " +
+			// (int)Map.getNovice().getPosition().second);
 			activeKey.remove(KeyCode.Z);
-			
 
 		}
 
@@ -188,9 +197,9 @@ public class Handler {
 			for (int j = 0; j < 10; j++) {
 				if (Map.getBoard()[i][j].entity != null) {
 					if (Map.getBoard()[i][j].entity.getIsDead()) {
-						
-						Map.setBoard(new Pair(i,j), TileType.NONE, null);
-						
+
+						Map.setBoard(new Pair(i, j), TileType.NONE, null);
+
 					}
 				}
 			}
@@ -198,30 +207,82 @@ public class Handler {
 	}
 
 	public static void moveMonster() {
-		if (tick % (Main.FPS*2) != 0)
+		if (tick % (Main.FPS * 2) != 0)
 			return;
 		for (Monster monster : Map.getMonsterList()) {
-			if(Math.abs(Map.getHeroPosition().first-monster.getPosition().first) <= Monster.VISIBLE_RANGE &&
-				Math.abs(Map.getHeroPosition().second-monster.getPosition().second) <= Monster.VISIBLE_RANGE)
-					monster.moveToPlayer();
+			if (Math.abs(Map.getHeroPosition().first - monster.getPosition().first) <= Monster.VISIBLE_RANGE
+					&& Math.abs(Map.getHeroPosition().second - monster.getPosition().second) <= Monster.VISIBLE_RANGE)
+				monster.moveToPlayer();
 			else
 				monster.randomMove();
 		}
-//		for(int i=0;i<10;i++) {
-//			for(int j=0;j<10;j++) {
-//				if(Map.getBoard(new Pair(i,j)).entity instanceof Monster)
-//					((Monster) Map.getBoard(new Pair(i,j)).entity).randomMove();
-//			}
-//		}
-		
+		// for(int i=0;i<10;i++) {
+		// for(int j=0;j<10;j++) {
+		// if(Map.getBoard(new Pair(i,j)).entity instanceof Monster)
+		// ((Monster) Map.getBoard(new Pair(i,j)).entity).randomMove();
+		// }
+		// }
+
 	}
-	
+
+	public static void checkPause() {
+		if (activeKey.contains(KeyCode.SPACE)) {
+			isPaused = !isPaused;
+			activeKey.remove(KeyCode.SPACE);
+		}
+	}
+
+	public void setOpacity(int x) {
+
+	}
+
+	public static void monsterAttack() {
+		if (tick % (Main.FPS * 3) != 0)
+			return;
+		for (Monster monster : Map.getMonsterList()) {
+			if (monster.getFaceDirection() == Direction.UP&&(int) monster.getPosition().second - 1 > 0) {
+				if (Map.getBoard(monster.getPosition().add(new Pair(0, -1))).getTileType() == TileType.HERO) {
+					monster.attack(Map.getNovice());
+				}
+			}
+			if (monster.getFaceDirection() == Direction.DOWN&&(int) monster.getPosition().second + 1 < Map.HEIGHT) {
+				if (Map.getBoard(monster.getPosition().add(new Pair(0, 1))).getTileType() == TileType.HERO) {
+					monster.attack(Map.getNovice());
+				}
+			}
+			if (monster.getFaceDirection() == Direction.LEFT&&(int) monster.getPosition().first - 1 > 0) {
+				if (Map.getBoard(monster.getPosition().add(new Pair(-1, 0))).getTileType() == TileType.HERO) {
+					monster.attack(Map.getNovice());
+				}
+			}
+			if (monster.getFaceDirection() == Direction.RIGHT&&(int) monster.getPosition().first + 1 < Map.WIDTH) {
+				if (Map.getBoard(monster.getPosition().add(new Pair(1, 0))).getTileType() == TileType.HERO) {
+					monster.attack(Map.getNovice());
+				}
+			}
+		}
+	}
+
 	public static void update() {
-		movePlayer();
-		playerAttack();
-		moveMonster();
-		checkStatus();
-		tick ++;
+		if (!isPaused) {
+
+			movePlayer();
+			playerAttack();
+			moveMonster();
+			monsterAttack();
+			checkStatus();
+			tick++;
+		}
+		checkPause();
+
+	}
+
+	public static boolean isPaused() {
+		return isPaused;
+	}
+
+	public static void setPaused(boolean isPause) {
+		isPaused = isPause;
 	}
 
 }

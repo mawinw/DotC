@@ -34,6 +34,7 @@ public class Map {
 	private static Pair heroPosition;
 	private static ArrayList<Monster> monsterList = new ArrayList<>();
 
+
 	public static Parent createContent() {
 		Pane root = new Pane();
 		root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);

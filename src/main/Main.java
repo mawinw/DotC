@@ -19,6 +19,7 @@ public class Main extends Application {
 	public static final int SCREEN_SIZE = 750;
 	public static final int FPS = 40;
 	private Pane allPane;
+	public static Timeline timer;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -31,8 +32,8 @@ public class Main extends Application {
 		//put all pane
 		
 		Scene scene = new Scene(Map.createContent());
-		
-		Timeline timer = new Timeline(new KeyFrame(new Duration(1000 / FPS), e -> {
+		Handler.setPaused(false);
+		timer = new Timeline(new KeyFrame(new Duration(1000 / FPS), e -> {
 			Handler.update();
 		}));
 		timer.setCycleCount(Animation.INDEFINITE);

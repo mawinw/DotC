@@ -1,5 +1,6 @@
 package entity.hero;
 
+import java.awt.Graphics2D;
 import java.util.Random;
 
 import entity.Entity;
@@ -67,6 +68,16 @@ public class Novice extends Entity {
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		gc.setFill(Color.AQUA);
 		gc.fillOval(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth, picHeight);
+		drawDirection();
+	//	System.out.println(position.first+" "+position.second);
+		if(isDead) return;
+		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
+		hpBar= new HpBar(this);
+		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
+	}
+	
+	private void drawDirection() {
+		GraphicsContext gc =canvas.getGraphicsContext2D();
 		gc.setStroke(Color.RED);
 		gc.setLineWidth(2);
 		if(faceDirection==Direction.RIGHT) {	
@@ -81,17 +92,14 @@ public class Novice extends Entity {
 		else if(faceDirection==Direction.UP) {	
 			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE, picWidth, picHeight);
 		}
-	//	System.out.println(position.first+" "+position.second);
-		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
-		hpBar= new HpBar(this);
-		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
-	}
 
+	}
+	
 
 	public void move(double moveX, double moveY) {
 		isActionFinished=false;
 		Map.setBoard(position,TileType.NONE, null);
-		Map.setBoard(position.add(new Pair(moveX,moveY)),TileType.MONSTER, this);
+		Map.setBoard(position.add(new Pair(moveX,moveY)),TileType.HERO, this);
 		
 		Timeline timer2 = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			position.first += moveX / Main.FPS * 10;
@@ -116,7 +124,7 @@ public class Novice extends Entity {
 			if(entity.getIsDead()) {
 				exp += Monster.EXP_GAIN;
 				checkLevelUp();
-				System.out.println(lv+" "+exp);
+			//	System.out.println(lv+" "+exp);
 			}
 		}));
 		timer.setCycleCount(1);
