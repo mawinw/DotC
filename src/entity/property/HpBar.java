@@ -3,6 +3,7 @@ package entity.property;
 import entity.Entity;
 import entity.hero.Novice;
 import entity.monster.Monster;
+import entity.monster.SlimeKing;
 import environment.Map;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,14 +21,15 @@ public class HpBar {
 
 		if (entity instanceof Novice) {
 			maxWidth = 50;
-		} else if (entity instanceof Monster) {
+		} else if (entity instanceof SlimeKing) {
+			maxWidth = 100;
+		} else if(entity instanceof Monster)
 			maxWidth = 50;
-		}
 		this.canvas = new Canvas();
-		draw();
+	//	draw();
 	}
 
-	private void draw() {
+	public void draw() {
 		canvas.setWidth(entity.getCanvas().getWidth());
 		canvas.setHeight(entity.getCanvas().getHeight());
 		canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());

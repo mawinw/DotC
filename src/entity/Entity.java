@@ -32,22 +32,8 @@ public abstract class Entity {
 	public Entity(String name, int maxHp, int attack, int defense, 
 			double accuracy, double evasion,double criticalRate, Pair position) {
 //		System.out.println(position.first+" "+position.second);
-		this.canvas=new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
-		this.name = name;
-		this.maxHp = maxHp;
-		Hp=maxHp;
-		this.atk = attack;
-		this.def = defense;
-		this.acc = accuracy;
-		this.eva = evasion;
-		this.criRate = criticalRate;
-		this.position = position;
-		this.canAttack=true;
-		this.canMove=true;
-		this.isDead=false;
-		hpBar= new HpBar(this);
-		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
-		draw();
+		
+		setValue(name,maxHp,attack,defense,accuracy,evasion,criticalRate,position);
 	}
 
 	public abstract void draw();
@@ -78,6 +64,26 @@ public abstract class Entity {
 	//	Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
 		
 		
+	}
+	
+	protected void setValue(String name, int maxHp, int attack, int defense, 
+			double accuracy, double evasion,double criticalRate, Pair position) {
+		this.canvas=new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		this.name = name;
+		this.maxHp = maxHp;
+		Hp=maxHp;
+		this.atk = attack;
+		this.def = defense;
+		this.acc = accuracy;
+		this.eva = evasion;
+		this.criRate = criticalRate;
+		this.position = position;
+		this.canAttack=true;
+		this.canMove=true;
+		this.isDead=false;
+		hpBar= new HpBar(this);
+		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
+		//draw();
 	}
 
 	public void setFaceDirection(Direction faceDirection) {

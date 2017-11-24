@@ -8,6 +8,7 @@ import environment.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.VPos;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
@@ -33,23 +34,23 @@ public class Monster extends Entity {
 
 	public Monster(Pair pos) {
 		super("Slime",DEFAULT_MAX_HP,DEFAULT_ATK,DEFAULT_DEF,DEFAULT_ACC,DEFAULT_EVA,DEFAULT_CRI_RATE,pos);
+		if(this instanceof SlimeKing) return;
 		this.side=Side.MONSTER;
-		//this.areaPosition=pos;
 		this.areaPosition = new Pair(pos.first, pos.second);
-	//	System.out.println(this.position.first+" "+this.position.second);
-		picHeight=50;
-		picWidth=50;
-
+		picHeight=1;
+		picWidth=1;
 		faceDirection=Direction.LEFT;
 		draw();
 		// don't forget to initial picture size and first time position
 	}
 	
+	
+	
 	public void draw() {
 		GraphicsContext 	gc=this.canvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		gc.setFill(Color.YELLOW);
-		gc.fillOval(position.first*Map.TILE_SIZE, position.second*Map.TILE_SIZE, picWidth, picHeight);
+		gc.fillOval(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
 		drawDirection();
 //		gc.setFill(Color.CORAL);
 //		gc.setTextAlign(TextAlignment.CENTER);
@@ -59,26 +60,28 @@ public class Monster extends Entity {
 		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
 		
 		hpBar= new HpBar(this);
+		hpBar.draw();
 		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
 //		System.out.println(Map.statusBarGroup.getChildren().contains(hpBar.getCanvas()));
 
 	}
 	
-	private void drawDirection() {
+	protected void drawDirection() {
 		GraphicsContext gc =canvas.getGraphicsContext2D();
 		gc.setStroke(Color.BLUE);
 		gc.setLineWidth(4);
-		if(faceDirection==Direction.RIGHT) {	
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth, picHeight);
-		}
-		else if(faceDirection==Direction.LEFT) {	
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth, picHeight);
-		}
-		else if(faceDirection==Direction.DOWN) {		
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE, picWidth, picHeight);
-		}
-		else if(faceDirection==Direction.UP) {	
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE, picWidth, picHeight);
+		if (faceDirection == Direction.RIGHT) {
+			gc.strokeRect((position.first + picWidth) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, Map.TILE_SIZE,
+					picHeight * Map.TILE_SIZE);
+		} else if (faceDirection == Direction.LEFT) {
+			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE,
+					Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+		} else if (faceDirection == Direction.DOWN) {
+			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + picHeight) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, Map.TILE_SIZE);
+		} else if (faceDirection == Direction.UP) {
+			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, Map.TILE_SIZE);
 		}
 
 	}
@@ -98,8 +101,18 @@ public class Monster extends Entity {
 		}
 		double x = moveX;
 		double y = moveY;
-		Map.setBoard(position,TileType.NONE, null);
-		Map.setBoard(position.add(new Pair(x,y)),TileType.MONSTER, this);
+		for(int i=0;i<picWidth;i++) {
+			for(int j=0;j<picHeight;j++) {
+				Map.setBoard(position.add(new Pair(i,j)),TileType.NONE, null);
+			}
+		}
+		for(int i=0;i<picWidth;i++) {
+			for(int j=0;j<picHeight;j++) {
+				Map.setBoard(position.add(new Pair(x+i,y+j)),TileType.MONSTER, this);
+	//			System.out.println(position.add(new Pair(x+i,y+j)).first+" "+position.add(new Pair(x+i,y+j)).second);
+			}
+		}
+//		System.out.println();
 		changeDirection(x, y);
 		Timeline timer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			position.first += x / Main.FPS * 10;
@@ -114,7 +127,7 @@ public class Monster extends Entity {
 		});
 	}
 	
-	private void changeDirection(double x, double y) {
+	protected void changeDirection(double x, double y) {
 		if(x>0) faceDirection=Direction.RIGHT;
 		else if(x<0) faceDirection=Direction.LEFT;
 		else if(y>0) faceDirection=Direction.DOWN;
@@ -146,7 +159,7 @@ public class Monster extends Entity {
 			moveY = 1;
 		else if (moveY < 0)
 			moveY = -1;
-		
+	//	System.out.println(moveX+" "+moveY);
 		move(moveX, moveY);
 	}
 	

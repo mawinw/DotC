@@ -7,6 +7,7 @@ import java.util.Random;
 import entity.Entity;
 import entity.hero.Novice;
 import entity.monster.Monster;
+import entity.monster.SlimeKing;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -23,7 +24,7 @@ public class Map {
 
 	public static final int TILE_SIZE = 50;
 	public static final int WIDTH = 20;
-	public static final int HEIGHT = 10;
+	public static final int HEIGHT = 12;
 
 	private static Tile[][] board = new Tile[WIDTH][HEIGHT];
 
@@ -33,7 +34,7 @@ public class Map {
 	private static Novice novice;
 	private static Pair heroPosition;
 	private static ArrayList<Monster> monsterList = new ArrayList<>();
-
+	
 
 	public static Parent createContent() {
 		Pane root = new Pane();
@@ -49,38 +50,38 @@ public class Map {
 		}
 		/* */
 		// add monsters below
-		Monster slime1 = (Monster) createDefaultEntity("Slime", new Pair(2, 4));
-		Monster slime2 = (Monster) createDefaultEntity("Slime", new Pair(4, 4));
-		Monster slime3 = (Monster) createDefaultEntity("Slime", new Pair(7, 1));
-		Monster slime4 = (Monster) createDefaultEntity("Slime", new Pair(7, 7));
-		board[2][4].setTileType(TileType.MONSTER);
-		board[2][4].setEntity(slime1);
-		board[4][4].setTileType(TileType.MONSTER);
-		board[4][4].setEntity(slime2);
-		board[7][1].setTileType(TileType.MONSTER);
-		board[7][1].setEntity(slime3);
-		board[7][7].setTileType(TileType.MONSTER);
-		board[7][7].setEntity(slime4);
-//		statusBarGroup.getChildren().add(slime1.getHpBar().getCanvas());
-		entityGroup.getChildren().addAll(slime1.getCanvas()
-				, slime2.getCanvas(), slime3.getCanvas(),
-				slime4.getCanvas());
-		monsterList.add(slime1);
-		monsterList.add(slime2);
-		monsterList.add(slime3);
-		monsterList.add(slime4);
+//		Monster slime1 = (Monster) createDefaultEntity("Slime", new Pair(2, 4));
+//		Monster slime2 = (Monster) createDefaultEntity("Slime", new Pair(4, 4));
+//		Monster slime3 = (Monster) createDefaultEntity("Slime", new Pair(7, 1));
+//		Monster slime4 = (Monster) createDefaultEntity("Slime", new Pair(7, 7));
+//		board[2][4].setTileType(TileType.MONSTER);
+//		board[2][4].setEntity(slime1);
+//		board[4][4].setTileType(TileType.MONSTER);
+//		board[4][4].setEntity(slime2);
+//		board[7][1].setTileType(TileType.MONSTER);
+//		board[7][1].setEntity(slime3);
+//		board[7][7].setTileType(TileType.MONSTER);
+//		board[7][7].setEntity(slime4);
+////		statusBarGroup.getChildren().add(slime1.getHpBar().getCanvas());
+//		entityGroup.getChildren().addAll(slime1.getCanvas()
+//				, slime2.getCanvas(), slime3.getCanvas(),
+//				slime4.getCanvas());
+//		monsterList.add(slime1);
+//		monsterList.add(slime2);
+//		monsterList.add(slime3);
+//		monsterList.add(slime4);
+//		
+//		Monster slime5 = (Monster) createDefaultEntity("Slime", new Pair(10,5));
+//		monsterList.add(slime5);
+//		board[10][5].setTileType(TileType.MONSTER);
+//		board[10][5].setEntity(slime5);
+//		entityGroup.getChildren().add(slime5.getCanvas());
+//		Monster slime6 = new Monster(new Pair(12,7)); 
+//		createDefaultEntity(slime6,"Slime", slime6.getPosition());
+		SlimeKing king = new SlimeKing(new Pair(3,5)); 
+		createDefaultEntity(king,"SlimeKing", king.getPosition());
 		
-		Monster slime5 = (Monster) createDefaultEntity("Slime", new Pair(10,5));
-		monsterList.add(slime5);
-		board[10][5].setTileType(TileType.MONSTER);
-		board[10][5].setEntity(slime5);
-		entityGroup.getChildren().add(slime5.getCanvas());
-		Monster slime6 = (Monster) createDefaultEntity("Slime", new Pair(12,7));
-		monsterList.add(slime6);
-		board[12][7].setTileType(TileType.MONSTER);
-		board[12][7].setEntity(slime6);
-		entityGroup.getChildren().add(slime6.getCanvas());
-		
+	
 		
 		// random n th  slime
 //		for(int i=0;i<5;i++) {
@@ -98,13 +99,12 @@ public class Map {
 		// "+slime1.getPosition().second);
 		// add monsters above
 
-		// add hero below
-		novice = (Novice) createDefaultEntity("Novice", new Pair(1, 4));
-		board[1][4].setTileType(TileType.HERO);
-		board[1][4].setEntity(novice);
-		heroPosition = novice.getPosition();
+		// add hero below;
+		novice = new Novice(new Pair(1,4));
+		createDefaultEntity(novice,"Novice", novice.getPosition());
+		
 	//	statusBarGroup.getChildren().add(novice.getHpBar().getCanvas());
-		entityGroup.getChildren().add(novice.getCanvas());
+	//	entityGroup.getChildren().add(novice.getCanvas());
 		
 		// add hero above
 		root.getChildren().addAll(tileGroup, entityGroup, statusBarGroup);
@@ -154,14 +154,31 @@ public class Map {
 		// confused
 	}
 
-	private static Entity createDefaultEntity(String entityType, Pair position) {
+	private static void createDefaultEntity(Entity entity, String entityType, Pair position) {
 		switch (entityType) {
 		case "Slime":
-			return new Monster(position);
+			monsterList.add((Monster) entity);
+			board[(int) position.first][(int) position.second].setTileType(TileType.MONSTER);
+			board[(int) position.first][(int) position.second].setEntity(entity);
+			entityGroup.getChildren().add(entity.getCanvas());
+			return ;
 		case "Novice":
-			return new Novice(position);
+			board[(int) position.first][(int) position.second].setTileType(TileType.HERO);
+			board[(int) position.first][(int) position.second].setEntity(novice);
+			heroPosition = novice.getPosition();
+			entityGroup.getChildren().add(entity.getCanvas());
+			return ;
+		case "SlimeKing":
+			monsterList.add((SlimeKing) entity);
+			for(int i=0;i<2;i++) {
+				for(int j=0;j<2;j++) {
+					board[(int) position.first+i][(int) position.second+j].setTileType(TileType.MONSTER);
+					board[(int) position.first+i][(int) position.second+j].setEntity(entity);	
+				}
+			}
+			entityGroup.getChildren().add(entity.getCanvas());
+			return;
 		}
-		return null;
 	}
 
 	private int toBoard(double pixel) {

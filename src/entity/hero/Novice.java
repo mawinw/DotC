@@ -24,7 +24,7 @@ import utility.TileType;
 public class Novice extends Entity {
 
 	private static final int DEFAULT_MAX_HP = 200;
-	private static final int DEFAULT_ATK = 200;
+	private static final int DEFAULT_ATK = 50;
 	private static final int DEFAULT_DEF = 20;
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 0.00;
@@ -45,8 +45,8 @@ public class Novice extends Entity {
 		this.lv = 1;
 		this.exp = 0;
 		this.side = Side.HERO;
-		picHeight = 50;
-		picWidth = 50;
+		picHeight = 1;
+		picWidth = 1;
 		this.faceDirection = Direction.RIGHT;
 		this.isActionFinished=true;
 		draw();
@@ -67,12 +67,13 @@ public class Novice extends Entity {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		gc.setFill(Color.AQUA);
-		gc.fillOval(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth, picHeight);
+		gc.fillOval(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
 		drawDirection();
 	//	System.out.println(position.first+" "+position.second);
 		if(isDead) return;
 		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
 		hpBar= new HpBar(this);
+		hpBar.draw();
 		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
 	}
 	
@@ -81,16 +82,16 @@ public class Novice extends Entity {
 		gc.setStroke(Color.RED);
 		gc.setLineWidth(2);
 		if(faceDirection==Direction.RIGHT) {	
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth, picHeight);
+			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
 		}
 		else if(faceDirection==Direction.LEFT) {	
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth, picHeight);
+			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
 		}
 		else if(faceDirection==Direction.DOWN) {		
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE, picWidth, picHeight);
+			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
 		}
 		else if(faceDirection==Direction.UP) {	
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE, picWidth, picHeight);
+			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
 		}
 
 	}
