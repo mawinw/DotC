@@ -166,7 +166,6 @@ public class Monster extends Entity {
 			wait.setCycleCount(1);
 			wait.play();
 		});
-		System.out.println(entity.getHp());
 	}
 	
 	public void takeDamage(double dmg) {
