@@ -148,7 +148,7 @@ public class Handler {
 						&& Map.getNovice().getFaceDirection() == Direction.RIGHT) {
 
 					Map.getNovice().attack(Map.getBoard()[(int) Map.getNovice().getPosition().first
-							+ 1][(int) (Map.getNovice().getPosition().second)].entity);
+							+ 1][(int) (Map.getNovice().getPosition().second)].getEntity());
 				}
 			}
 
@@ -158,7 +158,7 @@ public class Handler {
 						&& Map.getNovice().getFaceDirection() == Direction.LEFT) {
 
 					Map.getNovice().attack(Map.getBoard()[(int) Map.getNovice().getPosition().first
-							- 1][(int) (Map.getNovice().getPosition().second)].entity);
+							- 1][(int) (Map.getNovice().getPosition().second)].getEntity());
 				}
 			}
 
@@ -169,7 +169,7 @@ public class Handler {
 						&& Map.getNovice().getFaceDirection() == Direction.UP) {
 
 					Map.getNovice().attack(Map.getBoard()[(int) Map.getNovice()
-							.getPosition().first][(int) (Map.getNovice().getPosition().second) - 1].entity);
+							.getPosition().first][(int) (Map.getNovice().getPosition().second) - 1].getEntity());
 				}
 			}
 
@@ -180,7 +180,7 @@ public class Handler {
 						&& Map.getNovice().getFaceDirection() == Direction.DOWN) {
 
 					Map.getNovice().attack(Map.getBoard()[(int) Map.getNovice()
-							.getPosition().first][(int) (Map.getNovice().getPosition().second) + 1].entity);
+							.getPosition().first][(int) (Map.getNovice().getPosition().second) + 1].getEntity());
 				}
 			}
 
@@ -195,8 +195,8 @@ public class Handler {
 	public static void checkStatus() {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				if (Map.getBoard()[i][j].entity != null) {
-					if (Map.getBoard()[i][j].entity.getIsDead()) {
+				if (Map.getBoard()[i][j].getEntity() != null) {
+					if (Map.getBoard()[i][j].getEntity().getIsDead()) {
 
 						Map.setBoard(new Pair(i, j), TileType.NONE, null);
 
@@ -240,24 +240,24 @@ public class Handler {
 		if (tick % (Main.FPS * 3) != 0)
 			return;
 		for (Monster monster : Map.getMonsterList()) {
-			if (monster.getFaceDirection() == Direction.UP&&(int) monster.getPosition().second - 1 > 0) {
+			if (monster.getFaceDirection() == Direction.UP && (int) monster.getPosition().second - 1 > 0) {
 				if (Map.getBoard(monster.getPosition().add(new Pair(0, -1))).getTileType() == TileType.HERO) {
-					monster.attack(Map.getNovice());
+					monster.attack(Map.getBoard(monster.getPosition().add(new Pair(0, -1))).getEntity());
 				}
 			}
-			if (monster.getFaceDirection() == Direction.DOWN&&(int) monster.getPosition().second + 1 < Map.HEIGHT) {
+			if (monster.getFaceDirection() == Direction.DOWN && (int) monster.getPosition().second + 1 < Map.HEIGHT) {
 				if (Map.getBoard(monster.getPosition().add(new Pair(0, 1))).getTileType() == TileType.HERO) {
-					monster.attack(Map.getNovice());
+					monster.attack(Map.getBoard(monster.getPosition().add(new Pair(0, 1))).getEntity());
 				}
 			}
-			if (monster.getFaceDirection() == Direction.LEFT&&(int) monster.getPosition().first - 1 > 0) {
+			if (monster.getFaceDirection() == Direction.LEFT && (int) monster.getPosition().first - 1 > 0) {
 				if (Map.getBoard(monster.getPosition().add(new Pair(-1, 0))).getTileType() == TileType.HERO) {
-					monster.attack(Map.getNovice());
+					monster.attack(Map.getBoard(monster.getPosition().add(new Pair(-1, 0))).getEntity());
 				}
 			}
-			if (monster.getFaceDirection() == Direction.RIGHT&&(int) monster.getPosition().first + 1 < Map.WIDTH) {
+			if (monster.getFaceDirection() == Direction.RIGHT && (int) monster.getPosition().first + 1 < Map.WIDTH) {
 				if (Map.getBoard(monster.getPosition().add(new Pair(1, 0))).getTileType() == TileType.HERO) {
-					monster.attack(Map.getNovice());
+					monster.attack(Map.getBoard(monster.getPosition().add(new Pair(1, 0))).getEntity());
 				}
 			}
 		}

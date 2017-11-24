@@ -84,13 +84,13 @@ public class Monster extends Entity {
 	}
 	
 	public void move(double moveX,double moveY) {
-		if(Map.getBoard(position.add(new Pair(moveX,moveY))).entity != null) {
+		if(Map.getBoard(position.add(new Pair(moveX,moveY))).getEntity() != null) {
 			if (moveX == 0 || moveY == 0) {
 				changeDirection(moveX, moveY);
 				return;
-			} else if (Map.getBoard(position.add(new Pair(moveX,0))).entity == null) {
+			} else if (Map.getBoard(position.add(new Pair(moveX,0))).getEntity() == null) {
 				moveY = 0;
-			} else if (Map.getBoard(position.add(new Pair(0,moveY))).entity == null) {
+			} else if (Map.getBoard(position.add(new Pair(0,moveY))).getEntity() == null) {
 				moveX = 0;
 			} else {
 				return;
@@ -129,7 +129,7 @@ public class Monster extends Entity {
 		if(0<=position.first+moveX&& position.first+moveX<Map.WIDTH &&
 		   0<=position.second+moveY&& position.second+moveY<Map.HEIGHT 
 				) {
-			if(Map.getBoard(position.add(new Pair(moveX,moveY))).entity == null)
+			if(Map.getBoard(position.add(new Pair(moveX,moveY))).getEntity() == null)
 				move(moveX, moveY);
 		}
 	}

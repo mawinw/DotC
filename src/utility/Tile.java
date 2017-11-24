@@ -9,7 +9,7 @@ import javafx.scene.shape.Rectangle;
 
 public class Tile extends Rectangle {
 	private TileType tileType;
-	public Entity entity;
+	private Entity entity;
 
 	public Tile(boolean lightColor, int x, int y, Entity entity) {
 
@@ -57,6 +57,10 @@ public class Tile extends Rectangle {
 	public void setEntity(Entity entity) {
 		this.entity=entity;
 		
+	}
+
+	public Entity getEntity() {
+		return entity;
 	}
 
 }
