@@ -31,58 +31,13 @@ public class SlimeKing extends Monster {
 		this.side=Side.MONSTER;
 		this.areaPosition = new Pair(pos.first, pos.second);
 		picHeight = 2;
-		picWidth = 2;
+		picWidth = 3;
 		// TODO Auto-generated constructor stub
 	}
 
-//	public void move(double moveX,double moveY) {
-//		boolean checkX=false;
-//		boolean checkY=false;
-//		for(int i=0;i<picWidth;i++) {
-//			for(int j=0;j<picHeight;j++) {
-//				if(Map.getBoard(position.add(new Pair(moveX+i,moveY+j))).getEntity() != null) {
-//					if (moveX == 0 || moveY == 0) {
-//						changeDirection(moveX, moveY);
-//						return;
-//					} else if (Map.getBoard(position.add(new Pair(moveX+i,0))).getEntity() == null) {
-//						checkX=true;
-//					} else if (Map.getBoard(position.add(new Pair(0,moveY+j))).getEntity() == null) {
-//						checkY=true;
-//					} else {
-//						return;
-//					}
-//				}
-//			}
-//		}
-//		if(checkX) moveY=0;
-//		if(checkY) moveX=0;
-//		
-//		double x = moveX;
-//		double y = moveY;
-//		for(int i=0;i<picWidth;i++) {
-//			for(int j=0;j<picHeight;j++) {
-//				Map.setBoard(position.add(new Pair(i,j)),TileType.NONE, null);
-//			}
-//		}
-//		for(int i=0;i<picWidth;i++) {
-//			for(int j=0;j<picHeight;j++) {
-//				Map.setBoard(position.add(new Pair(x+i,y+j)),TileType.MONSTER, this);
-//				System.out.println(position.add(new Pair(x+i,y+j)).first+" "+position.add(new Pair(x+i,y+j)).second);
-//			}
-//		}
-//		System.out.println();
-//		changeDirection(x, y);
-//		Timeline timer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
-//			position.first += x / Main.FPS * 10;
-//			position.second += y / Main.FPS * 10;
-//			draw();
-//		}));
-//		timer.setCycleCount(Main.FPS / 10);
-//		timer.play();
-//		timer.setOnFinished(e -> {
-//		//	isActionFinished=true;
-//			
-//		});
-//	}
-
+	
+	
+	
+	
+	
 }

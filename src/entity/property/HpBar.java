@@ -18,13 +18,7 @@ public class HpBar {
 
 	public HpBar(Entity entity) {
 		this.entity = entity;
-
-		if (entity instanceof Novice) {
-			maxWidth = 50;
-		} else if (entity instanceof SlimeKing) {
-			maxWidth = 100;
-		} else if(entity instanceof Monster)
-			maxWidth = 50;
+		maxWidth = entity.getPicWidth()*50;
 		this.canvas = new Canvas();
 	//	draw();
 	}

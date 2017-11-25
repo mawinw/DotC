@@ -254,27 +254,36 @@ public class Handler {
 	}
 
 	public static void monsterAttack() {
-		if (tick % (Main.FPS * 3) != 0)
+		if (tick % (Main.FPS *2) != 0)
 			return;
 		for (Monster monster : Map.getMonsterList()) {
 			if (monster.getFaceDirection() == Direction.UP && (int) monster.getPosition().second - 1 > 0) {
-				if (Map.getBoard(monster.getPosition().add(new Pair(0, -1))).getTileType() == TileType.HERO) {
-					monster.attack(Map.getBoard(monster.getPosition().add(new Pair(0, -1))).getEntity());
+				for(int i=0;i<monster.getPicWidth();i++) {
+					if (Map.getBoard(monster.getPosition().add(new Pair(i, -1))).getTileType() == TileType.HERO) {
+						monster.attack(Map.getBoard(monster.getPosition().add(new Pair(i, -1))).getEntity());
+					}
 				}
+				
 			}
 			if (monster.getFaceDirection() == Direction.DOWN && (int) monster.getPosition().second + 1 < Map.HEIGHT) {
-				if (Map.getBoard(monster.getPosition().add(new Pair(0, 1))).getTileType() == TileType.HERO) {
-					monster.attack(Map.getBoard(monster.getPosition().add(new Pair(0, 1))).getEntity());
+				for(int i=0;i<monster.getPicWidth();i++) {
+					if (Map.getBoard(monster.getPosition().add(new Pair(i, monster.getPicHeight()))).getTileType() == TileType.HERO) {		
+						monster.attack(Map.getBoard(monster.getPosition().add(new Pair(i, monster.getPicHeight()))).getEntity());
+					}
 				}
 			}
 			if (monster.getFaceDirection() == Direction.LEFT && (int) monster.getPosition().first - 1 > 0) {
-				if (Map.getBoard(monster.getPosition().add(new Pair(-1, 0))).getTileType() == TileType.HERO) {
-					monster.attack(Map.getBoard(monster.getPosition().add(new Pair(-1, 0))).getEntity());
+				for(int i=0;i<monster.getPicHeight();i++) {
+					if (Map.getBoard(monster.getPosition().add(new Pair(-1, i))).getTileType() == TileType.HERO) {
+						monster.attack(Map.getBoard(monster.getPosition().add(new Pair(-1, i))).getEntity());
+					}
 				}
 			}
 			if (monster.getFaceDirection() == Direction.RIGHT && (int) monster.getPosition().first + 1 < Map.WIDTH) {
-				if (Map.getBoard(monster.getPosition().add(new Pair(1, 0))).getTileType() == TileType.HERO) {
-					monster.attack(Map.getBoard(monster.getPosition().add(new Pair(1, 0))).getEntity());
+				for(int i=0;i<monster.getPicHeight();i++) {
+					if (Map.getBoard(monster.getPosition().add(new Pair(monster.getPicWidth(), i))).getTileType() == TileType.HERO) {
+						monster.attack(Map.getBoard(monster.getPosition().add(new Pair(monster.getPicWidth(), i))).getEntity());
+					}
 				}
 			}
 		}

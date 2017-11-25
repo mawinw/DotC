@@ -19,12 +19,10 @@ import utility.Pair;
 import utility.Tile;
 import utility.TileType;
 
-public class Map {
-	private Canvas canvas;
-
+public class Map extends Canvas {
 	public static final int TILE_SIZE = 50;
-	public static final int WIDTH = 20;
-	public static final int HEIGHT = 12;
+	public static final int WIDTH = 10;
+	public static final int HEIGHT = 10;
 
 	private static Tile[][] board = new Tile[WIDTH][HEIGHT];
 
@@ -78,7 +76,7 @@ public class Map {
 //		entityGroup.getChildren().add(slime5.getCanvas());
 //		Monster slime6 = new Monster(new Pair(12,7)); 
 //		createDefaultEntity(slime6,"Slime", slime6.getPosition());
-		SlimeKing king = new SlimeKing(new Pair(3,5)); 
+		SlimeKing king = new SlimeKing(new Pair(5,5)); 
 		createDefaultEntity(king,"SlimeKing", king.getPosition());
 		
 	

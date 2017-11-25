@@ -20,7 +20,7 @@ import utility.Side;
 import utility.TileType;
 
 public class Monster extends Entity {
-	public static final int VISIBLE_RANGE = 3;
+	public static final int VISIBLE_RANGE = 5;
 	
 	private static final int DEFAULT_MAX_HP = 200;
 	private static final int DEFAULT_ATK = 30;
@@ -86,18 +86,10 @@ public class Monster extends Entity {
 
 	}
 	
-	public void move(double moveX,double moveY) {
-		if(Map.getBoard(position.add(new Pair(moveX,moveY))).getEntity() != null) {
-			if (moveX == 0 || moveY == 0) {
-				changeDirection(moveX, moveY);
-				return;
-			} else if (Map.getBoard(position.add(new Pair(moveX,0))).getEntity() == null) {
-				moveY = 0;
-			} else if (Map.getBoard(position.add(new Pair(0,moveY))).getEntity() == null) {
-				moveX = 0;
-			} else {
-				return;
-			}
+public void move(double moveX,double moveY) {
+		
+		if(!checkMove(moveX, moveY)) {
+			return;
 		}
 		double x = moveX;
 		double y = moveY;
@@ -126,6 +118,47 @@ public class Monster extends Entity {
 			
 		});
 	}
+
+	protected boolean checkMove(double moveX,double moveY) {
+		//System.out.println(moveX+" "+moveY);
+		if(moveX==1) {
+			for(int i=0;i<picHeight;i++) {
+		//		System.out.println((moveX+picWidth-1)+" "+i);
+				if(Map.getBoard(position.add(new Pair(moveX+picWidth-1,i))).getEntity()!=null) {
+					changeDirection(1,0);
+					return false;
+				}
+			}
+		}
+		
+		if(moveX==-1) {
+			for(int i=0;i<picHeight;i++) {
+				if(Map.getBoard(position.add(new Pair(moveX,i))).getEntity()!=null) {
+					changeDirection(-1,0);
+					return false;
+				}
+			}
+		}
+		
+		if(moveY==1) {
+			for(int i=0;i<picWidth;i++) {
+				if(Map.getBoard(position.add(new Pair(i,moveY+picHeight-1))).getEntity()!=null) {
+					changeDirection(0,1);
+					return false;
+				}
+			}
+		}
+		
+		if(moveY==-1) {
+			for(int i=0;i<picWidth;i++) {
+				if(Map.getBoard(position.add(new Pair(i,moveY))).getEntity()!=null) {
+					changeDirection(0,-1);
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 	
 	protected void changeDirection(double x, double y) {
 		if(x>0) faceDirection=Direction.RIGHT;
@@ -136,8 +169,18 @@ public class Monster extends Entity {
 	}
 	
 	public void randomMove() {
-		double moveX = new Random().nextInt(3) - 1;
-		double moveY = new Random().nextInt(3) - 1;
+		int moveRandom =new Random().nextInt(4);
+		double moveX=0,moveY=0;
+		switch (moveRandom) {
+		case 0:
+			moveX=1; moveY=0; break;
+		case 1:
+			moveX=-1; moveY=0; break;
+		case 2:
+			moveX=0; moveY=1; break;
+		case 3:
+			moveX=0; moveY=-1; break;
+		}
 	//	System.out.println(areaPosition.first+" "+areaWidth+" "+areaHeight+" "+areaPosition.second);
 		if(0<=position.first+moveX&& position.first+moveX<Map.WIDTH &&
 		   0<=position.second+moveY&& position.second+moveY<Map.HEIGHT 
@@ -149,16 +192,39 @@ public class Monster extends Entity {
 	
 	public void moveToPlayer() {
 		double moveX = Map.getHeroPosition().first - position.first;
+		double moveY = Map.getHeroPosition().second - position.second;
+//		System.out.println(" "+moveX+" "+moveY);
+		for(int i=1;i<picWidth;i++) {
+			if(moveX>0) {
+				moveX=Math.min(moveX, moveX-1);
+				
+			}
+			else if(moveX<0) {
+				moveX=Math.max(moveX, moveX-1);
+			}
+		}
+		for(int i=1;i<picHeight;i++) {
+			if(moveY>0) { 
+				moveY=Math.min(moveY, moveY-1);
+			}
+			else if(moveY<0) {
+				moveY=Math.max(moveY, moveY-1);
+			}
+		}
+		if(Math.abs(moveX)>Math.abs(moveY)) {
 		if (moveX > 0)
 			moveX = 1;
 		else if (moveX < 0)
 			moveX = -1;
-		
-		double moveY = Map.getHeroPosition().second - position.second;
-		if (moveY > 0)
-			moveY = 1;
-		else if (moveY < 0)
-			moveY = -1;
+		moveY=0;
+		}
+		else {
+			if (moveY > 0)
+				moveY = 1;
+			else if (moveY < 0)
+				moveY = -1;
+		moveX=0;
+		} 
 	//	System.out.println(moveX+" "+moveY);
 		move(moveX, moveY);
 	}
