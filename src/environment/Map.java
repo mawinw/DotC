@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import entity.Entity;
+import entity.hero.Fighter;
 import entity.hero.Novice;
 import entity.monster.Monster;
 import entity.monster.SlimeKing;
@@ -29,7 +30,7 @@ public class Map extends Canvas {
 	private static Group tileGroup = new Group();
 	private static Group entityGroup = new Group();
 	public static Group statusBarGroup = new Group();
-	private static Novice novice;
+	private static Fighter hero;
 	private static Pair heroPosition;
 	private static ArrayList<Monster> monsterList = new ArrayList<>();
 	
@@ -74,9 +75,9 @@ public class Map extends Canvas {
 //		board[10][5].setTileType(TileType.MONSTER);
 //		board[10][5].setEntity(slime5);
 //		entityGroup.getChildren().add(slime5.getCanvas());
-		Monster slime6 = new Monster(new Pair(8,7)); 
-		createDefaultEntity(slime6,"Slime", slime6.getPosition());
-		SlimeKing king = new SlimeKing(new Pair(5,5)); 
+//		Monster slime6 = new Monster(new Pair(8,7)); 
+//		createDefaultEntity(slime6,"Slime", slime6.getPosition());
+		SlimeKing king = new SlimeKing(new Pair(5,5));
 		createDefaultEntity(king,"SlimeKing", king.getPosition());
 		
 	
@@ -98,8 +99,8 @@ public class Map extends Canvas {
 		// add monsters above
 
 		// add hero below;
-		novice = new Novice(new Pair(1,4));
-		createDefaultEntity(novice,"Novice", novice.getPosition());
+		hero = new Fighter(new Pair(1,4));
+		createDefaultEntity(hero,"Novice", hero.getPosition());
 		
 	//	statusBarGroup.getChildren().add(novice.getHpBar().getCanvas());
 	//	entityGroup.getChildren().add(novice.getCanvas());
@@ -174,8 +175,8 @@ public class Map extends Canvas {
 			return;
 		case "Novice":
 			board[(int) position.first][(int) position.second].setTileType(TileType.HERO);
-			board[(int) position.first][(int) position.second].setEntity(novice);
-			heroPosition = novice.getPosition();
+			board[(int) position.first][(int) position.second].setEntity(hero);
+			heroPosition = hero.getPosition();
 			entityGroup.getChildren().add(entity.getCanvas());
 			entity.draw();
 			return ;
@@ -186,8 +187,8 @@ public class Map extends Canvas {
 		return (int) (pixel + TILE_SIZE / 2) / TILE_SIZE;
 	}
 
-	public static Novice getNovice() {
-		return novice;
+	public static Fighter getHero() {
+		return hero;
 	}
 
 	public static ArrayList<Monster> getMonsterList() {

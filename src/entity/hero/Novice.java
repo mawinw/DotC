@@ -35,36 +35,33 @@ public class Novice extends Entity {
 	protected Timeline timer;
 	protected int lv;
 	protected int exp;
-	
-	
 
 	public Novice(Pair pos) {
-		super("Novice", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE,
-				pos);
-	//	System.out.println(this.position.first+" "+this.position.second);
+		super("Novice", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
+		// System.out.println(this.position.first+" "+this.position.second);
 		this.lv = 1;
 		this.exp = 0;
 		this.side = Side.HERO;
 		picHeight = 1;
 		picWidth = 1;
 		this.faceDirection = Direction.RIGHT;
-		this.isAttackFinished=true;
-		this.isMoveFinished=true;
+		this.isAttackFinished = true;
+		this.isMoveFinished = true;
 		// don't forget to initial picture size and first time position
 	}
 
-	public Novice(String name,Pair pos) {
-		super(name, DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE,
-				pos);
-		if(this instanceof Fighter) return;
+	public Novice(String name, Pair pos) {
+		super(name, DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
+		if (this instanceof Fighter)
+			return;
 		this.lv = 1;
 		this.exp = 0;
 		this.side = Side.HERO;
 		picHeight = 1;
 		picWidth = 1;
 		this.faceDirection = Direction.RIGHT;
-		this.isAttackFinished=true;
-		this.isMoveFinished=true;
+		this.isAttackFinished = true;
+		this.isMoveFinished = true;
 		// don't forget to initial picture size and first time position
 	}
 
@@ -72,41 +69,43 @@ public class Novice extends Entity {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		gc.setFill(Color.AQUA);
-		gc.fillOval(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
+		gc.fillOval(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth * Map.TILE_SIZE,
+				picHeight * Map.TILE_SIZE);
 		drawDirection();
-	//	System.out.println(position.first+" "+position.second);
-		if(isDead) return;
+		// System.out.println(position.first+" "+position.second);
+		if (isDead)
+			return;
 		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
-		hpBar= new HpBar(this);
+		hpBar = new HpBar(this);
 		hpBar.draw();
 		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
 	}
-	
-	private void drawDirection() {
-		GraphicsContext gc =canvas.getGraphicsContext2D();
+
+	protected void drawDirection() {
+		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setStroke(Color.RED);
 		gc.setLineWidth(2);
-		if(faceDirection==Direction.RIGHT) {	
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
-		}
-		else if(faceDirection==Direction.LEFT) {	
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
-		}
-		else if(faceDirection==Direction.DOWN) {		
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
-		}
-		else if(faceDirection==Direction.UP) {	
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
+		if (faceDirection == Direction.RIGHT) {
+			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+		} else if (faceDirection == Direction.LEFT) {
+			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+		} else if (faceDirection == Direction.DOWN) {
+			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+		} else if (faceDirection == Direction.UP) {
+			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
 		}
 
 	}
-	
 
 	public void move(double moveX, double moveY) {
-		isMoveFinished=false;
-		Map.setBoard(position,TileType.NONE, null);
-		Map.setBoard(position.add(new Pair(moveX,moveY)),TileType.HERO, this);
-		
+		isMoveFinished = false;
+		Map.setBoard(position, TileType.NONE, null);
+		Map.setBoard(position.add(new Pair(moveX, moveY)), TileType.HERO, this);
+
 		Timeline timer2 = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			position.first += moveX / Main.FPS * 10;
 			position.second += moveY / Main.FPS * 10;
@@ -115,61 +114,95 @@ public class Novice extends Entity {
 		timer2.setCycleCount(Main.FPS / 10);
 		timer2.play();
 		timer2.setOnFinished(e -> {
-			isMoveFinished=true;
+			isMoveFinished = true;
 		});
 	}
 
 	public void attack(Entity entity) {
-		isMoveFinished=false;
-		isAttackFinished=false;
-		
+		isMoveFinished = false;
+		isAttackFinished = false;
+		entity.setMoveFinished(false);
 		timer = new Timeline(new KeyFrame(new Duration(1000), e -> {
-			double atkDmg=calculateDamage(entity);
+			double atkDmg = calculateDamage(entity);
 			entity.takeDamage(atkDmg);
 			entity.draw();
-			if(entity.getIsDead()) {
+			if (entity.getIsDead()) {
 				exp += Monster.EXP_GAIN;
 				checkLevelUp();
-			//	System.out.println(lv+" "+exp);
+				// System.out.println(lv+" "+exp);
 			}
 		}));
 		timer.setCycleCount(1);
 		timer.play();
-		timer.setOnFinished(e ->{
-			Timeline wait = new Timeline(new KeyFrame(Duration.millis(100), f -> {}));
+		timer.setOnFinished(e -> {
+			Timeline wait = new Timeline(new KeyFrame(Duration.millis(100), f -> {
+			}));
 			wait.setCycleCount(1);
 			wait.play();
 			wait.setOnFinished(f -> {
-				isMoveFinished=true;
-				isAttackFinished=true;
+				isMoveFinished = true;
+				isAttackFinished = true;
+				entity.setMoveFinished(false);
 			});
 		});
-		
-		
-	}
-	
-	private void checkLevelUp() {
-		if(EXP_RATE[lv]<exp) lv++;
+
 	}
 
-	private double calculateDamage(Entity entity) {
+	public void normalAttack() {
+		if ((int) position.first + 1 < Map.WIDTH) {
+			if (Map.getBoard()[(int) position.first + 1][(int) (position.second)].getTileType() == TileType.MONSTER
+					&& faceDirection == Direction.RIGHT)	{
+				attack(Map.getBoard()[(int) position.first + 1][(int) position.second].getEntity());
+			}
+		}
+
+		if ((int) position.first - 1 > 0) {
+			if (Map.getBoard()[(int) position.first - 1][(int) (position.second)].getTileType() == TileType.MONSTER
+					&& faceDirection == Direction.LEFT) {
+				attack(Map.getBoard()[(int) position.first - 1][(int) (position.second)].getEntity());
+			}
+		}
+
+		if ((int) position.second - 1 > 0) {
+			if (Map.getBoard()[(int) position.first][(int) (position.second) - 1].getTileType() == TileType.MONSTER
+					&& faceDirection == Direction.UP) {
+				attack(Map.getBoard()[(int) position.first][(int) (position.second) - 1].getEntity());
+			}
+		}
+
+		if ((int) position.second + 1 < Map.HEIGHT) {
+			if (Map.getBoard()[(int) Map.getHero().getPosition().first][(int) (position.second) + 1]
+					.getTileType() == TileType.MONSTER && faceDirection == Direction.DOWN) {
+				attack(Map.getBoard()[(int) Map.getHero().getPosition().first][(int) (position.second) + 1]
+								.getEntity());
+			}
+		}
+
+	}
+
+	protected void checkLevelUp() {
+		if (EXP_RATE[lv] < exp)
+			lv++;
+	}
+
+	protected double calculateDamage(Entity entity) {
 		Random rn = new Random();
 		int atkSuccess = rn.nextInt(100);
 		int criSuccess = rn.nextInt(100);
-		//System.out.println(atkSuccess+" "+criSuccess+" "+(this.atk - entity.getDef()));
-		if(this.acc-entity.getEva()>atkSuccess) {
-			if(this.atk>entity.getDef()) {
-				if(this.criRate>criSuccess)
-					return 2*(this.atk - entity.getDef());		
+		// System.out.println(atkSuccess+" "+criSuccess+" "+(this.atk -
+		// entity.getDef()));
+		if (this.acc - entity.getEva() > atkSuccess) {
+			if (this.atk > entity.getDef()) {
+				if (this.criRate > criSuccess)
+					return 2 * (this.atk - entity.getDef());
 				else
 					return this.atk - entity.getDef();
-			}
-			else
+			} else
 				return 1;
-			}
-		else return 0;
+		} else
+			return 0;
 	}
-	
+
 	public void takeDamage(double dmg) {
 		if (Hp <= dmg) {
 			die();
@@ -177,10 +210,5 @@ public class Novice extends Entity {
 			Hp -= dmg;
 		}
 	}
-
-	
-	
-
-	
 
 }

@@ -34,12 +34,16 @@ public class Monster extends Entity {
 
 	public Monster(Pair pos) {
 		super("Slime",DEFAULT_MAX_HP,DEFAULT_ATK,DEFAULT_DEF,DEFAULT_ACC,DEFAULT_EVA,DEFAULT_CRI_RATE,pos);
+		isMoveFinished = true;
+		isAttackFinished = true;
 		if(this instanceof SlimeKing) return;
 		this.side=Side.MONSTER;
 		this.areaPosition = new Pair(pos.first, pos.second);
 		picHeight=1;
 		picWidth=1;
 		faceDirection=Direction.LEFT;
+		
+		
 	//	draw();
 		// don't forget to initial picture size and first time position
 	}
@@ -87,8 +91,13 @@ public class Monster extends Entity {
 	}
 	
 public void move(double moveX,double moveY) {
+		if (!isMoveFinished()) {
+			changeDirection(moveX, moveY);
+			return;
+		}
 		
 		if(!checkMove(moveX, moveY)) {
+			System.out.println(moveX+" "+moveY);
 			return;
 		}
 		double x = moveX;
@@ -101,10 +110,8 @@ public void move(double moveX,double moveY) {
 		for(int i=0;i<picWidth;i++) {
 			for(int j=0;j<picHeight;j++) {
 				Map.setBoard(position.add(new Pair(x+i,y+j)),TileType.MONSTER, this);
-	//			System.out.println(position.add(new Pair(x+i,y+j)).first+" "+position.add(new Pair(x+i,y+j)).second);
 			}
 		}
-//		System.out.println();
 		changeDirection(x, y);
 		Timeline timer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			position.first += x / Main.FPS * 10;
