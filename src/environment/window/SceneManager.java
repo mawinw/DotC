@@ -1,15 +1,14 @@
-package window;
+package environment.window;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import menu.MainMenu;
 
 public final class SceneManager {
 
 	private static Stage primaryStage;
-	private static Canvas mainMenuCanvas = new MainMenu();
+	private static Canvas mainMenuCanvas = new environment.menu.MainMenu();
 	private static Scene mainMenuScene = new Scene(new Pane(mainMenuCanvas));
 	public static final int SCENE_WIDTH = 800;
 	public static final int SCENE_HEIGHT = 600;

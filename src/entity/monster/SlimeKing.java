@@ -31,7 +31,7 @@ public class SlimeKing extends Monster {
 		this.side=Side.MONSTER;
 		this.areaPosition = new Pair(pos.first, pos.second);
 		picHeight = 2;
-		picWidth = 3;
+		picWidth = 2;
 		// TODO Auto-generated constructor stub
 	}
 

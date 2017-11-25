@@ -40,7 +40,7 @@ public class Monster extends Entity {
 		picHeight=1;
 		picWidth=1;
 		faceDirection=Direction.LEFT;
-		draw();
+	//	draw();
 		// don't forget to initial picture size and first time position
 	}
 	
@@ -230,6 +230,7 @@ public void move(double moveX,double moveY) {
 	}
 	
 	public void attack(Entity entity) {
+		entity.setMoveFinished(false);
 		
 		
 		Timeline timer = new Timeline(new KeyFrame(new Duration(1000), e -> {
@@ -244,6 +245,7 @@ public void move(double moveX,double moveY) {
 			Timeline wait = new Timeline(new KeyFrame(Duration.millis(100), f -> {}));
 			wait.setCycleCount(1);
 			wait.play();
+			entity.setMoveFinished(true);
 		});
 	}
 	

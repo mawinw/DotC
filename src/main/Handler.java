@@ -83,7 +83,7 @@ public class Handler {
 
 		Direction faceDirection = Map.getNovice().getFaceDirection();
 
-		if (Map.getNovice().isActionFinished()) {
+		if (Map.getNovice().isMoveFinished()) {
 
 			if (activeKey.contains(KeyCode.UP)) {
 				// System.out.println(!Map.getBoard(playerPosition.add(new
@@ -141,7 +141,7 @@ public class Handler {
 	}
 
 	public static void playerAttack() {
-		if (activeKey.contains(KeyCode.Z) && Map.getNovice().isActionFinished() == true) {
+		if (activeKey.contains(KeyCode.Z) && Map.getNovice().isMoveFinished() == true&&Map.getNovice().isAttackFinished()) {
 			if ((int) Map.getNovice().getPosition().first + 1 < Map.WIDTH) {
 			//	System.out.println(Map.getBoard()[(int) Map.getNovice().getPosition().first
 			//			+ 1][(int) (Map.getNovice().getPosition().second)].getTileType());

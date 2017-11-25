@@ -5,6 +5,7 @@ import java.util.Random;
 
 import entity.Entity;
 import entity.monster.Monster;
+import entity.monster.SlimeKing;
 import entity.property.HpBar;
 import environment.Map;
 import javafx.animation.Animation;
@@ -34,7 +35,6 @@ public class Novice extends Entity {
 	protected Timeline timer;
 	protected int lv;
 	protected int exp;
-	protected boolean isActionFinished;
 	
 	
 
@@ -48,18 +48,23 @@ public class Novice extends Entity {
 		picHeight = 1;
 		picWidth = 1;
 		this.faceDirection = Direction.RIGHT;
-		this.isActionFinished=true;
-		draw();
+		this.isAttackFinished=true;
+		this.isMoveFinished=true;
 		// don't forget to initial picture size and first time position
 	}
 
 	public Novice(String name,Pair pos) {
 		super(name, DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE,
 				pos);
+		if(this instanceof Fighter) return;
 		this.lv = 1;
 		this.exp = 0;
 		this.side = Side.HERO;
+		picHeight = 1;
+		picWidth = 1;
 		this.faceDirection = Direction.RIGHT;
+		this.isAttackFinished=true;
+		this.isMoveFinished=true;
 		// don't forget to initial picture size and first time position
 	}
 
@@ -98,7 +103,7 @@ public class Novice extends Entity {
 	
 
 	public void move(double moveX, double moveY) {
-		isActionFinished=false;
+		isMoveFinished=false;
 		Map.setBoard(position,TileType.NONE, null);
 		Map.setBoard(position.add(new Pair(moveX,moveY)),TileType.HERO, this);
 		
@@ -110,13 +115,13 @@ public class Novice extends Entity {
 		timer2.setCycleCount(Main.FPS / 10);
 		timer2.play();
 		timer2.setOnFinished(e -> {
-			isActionFinished=true;
+			isMoveFinished=true;
 		});
 	}
 
 	public void attack(Entity entity) {
-		isActionFinished=false;
-		
+		isMoveFinished=false;
+		isAttackFinished=false;
 		
 		timer = new Timeline(new KeyFrame(new Duration(1000), e -> {
 			double atkDmg=calculateDamage(entity);
@@ -134,7 +139,10 @@ public class Novice extends Entity {
 			Timeline wait = new Timeline(new KeyFrame(Duration.millis(100), f -> {}));
 			wait.setCycleCount(1);
 			wait.play();
-			wait.setOnFinished(f -> isActionFinished=true);
+			wait.setOnFinished(f -> {
+				isMoveFinished=true;
+				isAttackFinished=true;
+			});
 		});
 		
 		
@@ -170,13 +178,8 @@ public class Novice extends Entity {
 		}
 	}
 
-	public boolean isActionFinished() {
-		return isActionFinished;
-	}
-
-	public void setActionFinished(boolean isActionFinished) {
-		this.isActionFinished = isActionFinished;
-	}
+	
+	
 
 	
 

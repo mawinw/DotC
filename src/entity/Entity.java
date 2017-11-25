@@ -26,6 +26,8 @@ public abstract class Entity {
 	protected int picHeight;
 	protected Direction faceDirection;
 	protected HpBar hpBar;
+	protected boolean isAttackFinished;
+	protected boolean isMoveFinished;
 	
 	
 	
@@ -169,7 +171,22 @@ public abstract class Entity {
 		return hpBar;
 	}
 
-	
+	public boolean isAttackFinished() {
+		return isAttackFinished;
+	}
+
+	public void setAttackFinished(boolean isAttackFinished) {
+		this.isAttackFinished = isAttackFinished;
+	}
+
+	public boolean isMoveFinished() {
+		return isMoveFinished;
+	}
+
+	public void setMoveFinished(boolean isMoveFinished) {
+		this.isMoveFinished = isMoveFinished;
+	}
+
 	
 
 	

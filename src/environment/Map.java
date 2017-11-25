@@ -74,8 +74,8 @@ public class Map extends Canvas {
 //		board[10][5].setTileType(TileType.MONSTER);
 //		board[10][5].setEntity(slime5);
 //		entityGroup.getChildren().add(slime5.getCanvas());
-//		Monster slime6 = new Monster(new Pair(12,7)); 
-//		createDefaultEntity(slime6,"Slime", slime6.getPosition());
+		Monster slime6 = new Monster(new Pair(8,7)); 
+		createDefaultEntity(slime6,"Slime", slime6.getPosition());
 		SlimeKing king = new SlimeKing(new Pair(5,5)); 
 		createDefaultEntity(king,"SlimeKing", king.getPosition());
 		
@@ -159,12 +159,7 @@ public class Map extends Canvas {
 			board[(int) position.first][(int) position.second].setTileType(TileType.MONSTER);
 			board[(int) position.first][(int) position.second].setEntity(entity);
 			entityGroup.getChildren().add(entity.getCanvas());
-			return ;
-		case "Novice":
-			board[(int) position.first][(int) position.second].setTileType(TileType.HERO);
-			board[(int) position.first][(int) position.second].setEntity(novice);
-			heroPosition = novice.getPosition();
-			entityGroup.getChildren().add(entity.getCanvas());
+			entity.draw();
 			return ;
 		case "SlimeKing":
 			monsterList.add((SlimeKing) entity);
@@ -175,7 +170,15 @@ public class Map extends Canvas {
 				}
 			}
 			entityGroup.getChildren().add(entity.getCanvas());
+			entity.draw();
 			return;
+		case "Novice":
+			board[(int) position.first][(int) position.second].setTileType(TileType.HERO);
+			board[(int) position.first][(int) position.second].setEntity(novice);
+			heroPosition = novice.getPosition();
+			entityGroup.getChildren().add(entity.getCanvas());
+			entity.draw();
+			return ;
 		}
 	}
 
