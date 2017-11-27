@@ -1,14 +1,21 @@
 package entity.hero;
 
+import entity.Entity;
+import entity.monster.Monster;
+import entity.property.HpBar;
 import environment.Map;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import utility.Direction;
 import utility.Pair;
+import utility.TileType;
 
 public class Fighter extends Novice {
 	private static final int DEFAULT_MAX_HP = 500;
-	private static final int DEFAULT_ATK = 100;
+	private static final int DEFAULT_ATK = 50;
 	private static final int DEFAULT_DEF = 30;
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 30.00;
@@ -18,36 +25,62 @@ public class Fighter extends Novice {
 		super(pos);
 		setValue("Fighter", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
 	}
-	
-	public Fighter(String name,Pair pos) {
-		super(name,pos);
+
+	public Fighter(String name, Pair pos) {
+		super(name, pos);
 		setValue(name, DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
 	}
-	
-	
-	
-	
-	private void drawDirection() {
-		GraphicsContext gc =canvas.getGraphicsContext2D();
-		gc.setStroke(Color.RED);
-		gc.setLineWidth(2);
-		if(faceDirection==Direction.RIGHT) {	
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second-1) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second+1) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
-		}
-		else if(faceDirection==Direction.LEFT) {	
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
-		}
-		else if(faceDirection==Direction.DOWN) {		
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
-		}
-		else if(faceDirection==Direction.UP) {	
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE, picWidth* Map.TILE_SIZE, picHeight* Map.TILE_SIZE);
+
+	public void groundSmash() {
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				if (position.first + i - 1 >= 0 && position.first + i + 1 < Map.WIDTH && position.second + j - 1 >= 0
+						&& position.second + j + 1 < Map.HEIGHT) {
+					if (Map.getBoard()[(int) position.first + i][(int) (position.second) + j]
+							.getTileType() == TileType.MONSTER) {
+						attack(Map.getBoard()[(int) position.first + i][(int) position.second + j].getEntity());
+					}
+				}
+			}
 		}
 
 	}
-	
-	
-	
+
+	protected void drawSkillDirection() {
+		System.out.println("x");
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc.setStroke(Color.RED);
+		gc.setLineWidth(2);
+		if (faceDirection == Direction.RIGHT) {
+			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+		} else if (faceDirection == Direction.LEFT) {
+			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+		} else if (faceDirection == Direction.DOWN) {
+			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+		} else if (faceDirection == Direction.UP) {
+			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
+					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+		}
+
+	}
+
 }

@@ -40,6 +40,8 @@ public abstract class Entity {
 
 	public abstract void draw();
 	
+	protected abstract void drawDirection() ;
+	
 	public abstract void move(double moveX,double moveY);
 	
 	public abstract void attack(Entity entity);
@@ -56,16 +58,10 @@ public abstract class Entity {
 		GraphicsContext gc=canvas.getGraphicsContext2D();
 		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, 200, 200);
-	//	System.out.println(Map.getEntityGroup().getChildren().contains(canvas));
 		Map.getEntityGroup().getChildren().remove(canvas);
-	//	System.out.println(Map.getEntityGroup().getChildren().contains(canvas));
 		isDead=true;
-	//	canvas.setOpacity(0);
 		Hp=0;
-		hpBar.die();
-	//	Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
-		
-		
+		hpBar.die();		
 	}
 	
 	protected void setValue(String name, int maxHp, int attack, int defense, 
@@ -186,6 +182,8 @@ public abstract class Entity {
 	public void setMoveFinished(boolean isMoveFinished) {
 		this.isMoveFinished = isMoveFinished;
 	}
+
+	
 
 	
 

@@ -7,9 +7,12 @@ import entity.property.HpBar;
 import environment.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.VPos;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import main.Main;
 import utility.Direction;
@@ -18,18 +21,18 @@ import utility.Side;
 import utility.TileType;
 
 public class Monster extends Entity {
-	public static int VISIBLE_RANGE = 3;
+	public static final int VISIBLE_RANGE = 3;
 	
-	private static int DEFAULT_MAX_HP = 100;
-	private static int DEFAULT_ATK = 20;
-	private static  int DEFAULT_DEF = 10;
-	private static  double DEFAULT_ACC = 100.00;
-	private static  double DEFAULT_EVA = 0.00;
-	private static double DEFAULT_CRI_RATE = 0;
-	public static int EXP_GAIN =10;
+	private static final int DEFAULT_MAX_HP = 100;
+	private static final int DEFAULT_ATK = 20;
+	private static final int DEFAULT_DEF = 10;
+	private static final double DEFAULT_ACC = 100.00;
+	private static final double DEFAULT_EVA = 0.00;
+	private static final double DEFAULT_CRI_RATE = 0;
+	public static final int EXP_GAIN =20;
 	
 
-	private static Image[] images = new Image[6];
+	private static final Image[] images = new Image[6];
 	static {
 		for(int i=1; i<=6; ++i) {
 			images[i-1]=new Image("images/monster/slimer ("+i+").png");
@@ -41,19 +44,9 @@ public class Monster extends Entity {
 	protected Pair areaPosition; //ref from top left 
 
 	public Monster(String name, int maxHp, int attack, int defense, 
-			double accuracy, double evasion,double criticalRate, Pair position) {
-		super(name,maxHp,attack,defense,accuracy,evasion,criticalRate,position);
-		this.side=Side.MONSTER;
-		this.areaPosition = new Pair(position.first, position.second);
-		picHeight=1;
-		picWidth=1;
-		faceDirection=Direction.LEFT;
-	//	draw();
-		// don't forget to initial picture size and first time position
-	}
-	
-	public Monster(Pair pos) {
-		super("",DEFAULT_MAX_HP,DEFAULT_ATK,DEFAULT_DEF,DEFAULT_ACC,DEFAULT_EVA,DEFAULT_CRI_RATE,pos);
+			double accuracy, double evasion,double criticalRate, Pair pos) {
+		super(name,maxHp,attack,defense,accuracy,evasion,criticalRate,pos);
+		if(this instanceof SlimeKing) return;
 		this.side=Side.MONSTER;
 		this.areaPosition = new Pair(pos.first, pos.second);
 		picHeight=1;
@@ -67,6 +60,7 @@ public class Monster extends Entity {
 	
 	public void draw() {
 		GraphicsContext 	gc=this.canvas.getGraphicsContext2D();
+		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 
 		currentAnimation%=6;
 		gc.drawImage(images[currentAnimation],position.first * Map.TILE_SIZE,
