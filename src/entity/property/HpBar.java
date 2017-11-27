@@ -2,7 +2,7 @@ package entity.property;
 
 import entity.Entity;
 import entity.hero.Novice;
-import entity.monster.Monster;
+import entity.monster.Slime;
 import entity.monster.SlimeKing;
 import environment.Map;
 import javafx.scene.canvas.Canvas;

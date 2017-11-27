@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 import entity.Entity;
-import entity.monster.Monster;
+import entity.monster.Slime;
 import entity.monster.SlimeKing;
 import entity.property.HpBar;
 import environment.Map;
@@ -128,7 +128,7 @@ public class Novice extends Entity {
 			entity.takeDamage(atkDmg);
 			entity.draw();
 			if(entity.getIsDead()) {
-				exp += Monster.EXP_GAIN;
+				exp += Slime.EXP_GAIN;
 				checkLevelUp();
 			//	System.out.println(lv+" "+exp);
 			}

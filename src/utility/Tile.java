@@ -2,7 +2,7 @@ package utility;
 
 import entity.Entity;
 import entity.hero.Novice;
-import entity.monster.Monster;
+import entity.monster.Slime;
 import environment.Map;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

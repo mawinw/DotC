@@ -6,6 +6,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import main.Main;
@@ -14,7 +15,7 @@ import utility.Pair;
 import utility.Side;
 import utility.TileType;
 
-public class SlimeKing extends Monster {
+public class SlimeKing extends Slime {
 	public static final int VISIBLE_RANGE = 5;
 
 	private static final int DEFAULT_MAX_HP = 500;
@@ -25,6 +26,17 @@ public class SlimeKing extends Monster {
 	private static final double DEFAULT_CRI_RATE = 0;
 	public static final int EXP_GAIN = 40;
 
+	
+	private static final Image[] images = new Image[6];
+	static {
+		for(int i=1; i<=6; ++i) {
+			images[i-1]=new Image("images/monster/slimer ("+i+").png");
+		}
+	}
+	private static int currentAnimation=0;
+	
+	
+	
 	public SlimeKing(Pair pos) {
 		super(pos);
 		setValue("SlimeKing", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
@@ -34,10 +46,33 @@ public class SlimeKing extends Monster {
 		picWidth = 2;
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
+	public void draw() {
+		GraphicsContext 	gc=this.canvas.getGraphicsContext2D();
+		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		
+		currentAnimation%=6;
+		gc.drawImage(images[currentAnimation],position.first * Map.TILE_SIZE,
+				position.second * Map.TILE_SIZE, 
+				picWidth* Map.TILE_SIZE,
+				picHeight* Map.TILE_SIZE);
 
-	
-	
-	
-	
-	
+		drawDirection();
+
+		if(isDead) return;
+		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
+		
+		hpBar= new HpBar(this);
+		hpBar.draw();
+		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
+//		System.out.println(Map.statusBarGroup.getChildren().contains(hpBar.getCanvas()));
+
+	}
+	public void updateAnimation() {
+		currentAnimation++;
+		draw();
+	}
+
 }

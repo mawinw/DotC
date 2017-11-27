@@ -297,11 +297,21 @@ public class Handler {
 			moveMonster();
 			monsterAttack();
 			checkStatus();
+			animateAll();
 			tick++;
 		}
 		checkPause();
 
 	}
+	
+	public static void animateAll() {
+		if(tick%(Main.FPS/10)==0) {
+			for(Monster Monster: Map.getMonsterList()) {
+				Monster.updateAnimation();
+				}
+		}
+	}
+	
 
 	public static boolean isPaused() {
 		return isPaused;

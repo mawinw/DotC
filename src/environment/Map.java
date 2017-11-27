@@ -6,7 +6,7 @@ import java.util.Random;
 
 import entity.Entity;
 import entity.hero.Novice;
-import entity.monster.Monster;
+import entity.monster.Slime;
 import entity.monster.SlimeKing;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -31,7 +31,7 @@ public class Map extends Canvas {
 	public static Group statusBarGroup = new Group();
 	private static Novice novice;
 	private static Pair heroPosition;
-	private static ArrayList<Monster> monsterList = new ArrayList<>();
+	private static ArrayList<Slime> monsterList = new ArrayList<>();
 	
 
 	public static Parent createContent() {
@@ -74,7 +74,7 @@ public class Map extends Canvas {
 //		board[10][5].setTileType(TileType.MONSTER);
 //		board[10][5].setEntity(slime5);
 //		entityGroup.getChildren().add(slime5.getCanvas());
-		Monster slime6 = new Monster(new Pair(8,7)); 
+		Slime slime6 = new Slime(new Pair(8,7)); 
 		createDefaultEntity(slime6,"Slime", slime6.getPosition());
 		SlimeKing king = new SlimeKing(new Pair(5,5)); 
 		createDefaultEntity(king,"SlimeKing", king.getPosition());
@@ -155,7 +155,7 @@ public class Map extends Canvas {
 	private static void createDefaultEntity(Entity entity, String entityType, Pair position) {
 		switch (entityType) {
 		case "Slime":
-			monsterList.add((Monster) entity);
+			monsterList.add((Slime) entity);
 			board[(int) position.first][(int) position.second].setTileType(TileType.MONSTER);
 			board[(int) position.first][(int) position.second].setEntity(entity);
 			entityGroup.getChildren().add(entity.getCanvas());
@@ -190,7 +190,7 @@ public class Map extends Canvas {
 		return novice;
 	}
 
-	public static ArrayList<Monster> getMonsterList() {
+	public static ArrayList<Slime> getMonsterList() {
 		return monsterList;
 	}
 }
