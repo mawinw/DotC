@@ -44,6 +44,7 @@ public class SlimeKing extends Slime {
 		this.areaPosition = new Pair(pos.first, pos.second);
 		picHeight = 2;
 		picWidth = 2;
+		lastLRFaceDirection=Direction.LEFT;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -54,11 +55,19 @@ public class SlimeKing extends Slime {
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		
 		currentAnimation%=6;
-		gc.drawImage(images[currentAnimation],position.first * Map.TILE_SIZE,
-				position.second * Map.TILE_SIZE, 
-				picWidth* Map.TILE_SIZE,
-				picHeight* Map.TILE_SIZE);
-
+				if(lastLRFaceDirection==Direction.RIGHT) {
+					gc.drawImage(images[currentAnimation],position.first * Map.TILE_SIZE-Map.TILE_SIZE*0.5,
+							position.second * Map.TILE_SIZE-Map.TILE_SIZE*0.5, 
+							picWidth* Map.TILE_SIZE+Map.TILE_SIZE*0.5,
+							picHeight* Map.TILE_SIZE+Map.TILE_SIZE*0.5);
+					}
+					else if (lastLRFaceDirection==Direction.LEFT) {
+					gc.drawImage(images[currentAnimation],
+							position.first * Map.TILE_SIZE-Map.TILE_SIZE*0.5+picWidth* Map.TILE_SIZE+Map.TILE_SIZE,
+							position.second * Map.TILE_SIZE-Map.TILE_SIZE*0.5, 
+							-picWidth* Map.TILE_SIZE-Map.TILE_SIZE*0.5,
+							picHeight* Map.TILE_SIZE+Map.TILE_SIZE*0.5);
+					}
 		drawDirection();
 
 		if(isDead) return;

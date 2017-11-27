@@ -25,6 +25,7 @@ public abstract class Entity {
 	protected int picWidth;
 	protected int picHeight;
 	protected Direction faceDirection;
+	protected Direction lastLRFaceDirection;
 	protected HpBar hpBar;
 	protected boolean isAttackFinished;
 	protected boolean isMoveFinished;

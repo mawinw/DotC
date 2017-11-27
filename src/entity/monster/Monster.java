@@ -52,6 +52,7 @@ public class Monster extends Entity {
 		picHeight=1;
 		picWidth=1;
 		faceDirection=Direction.LEFT;
+		lastLRFaceDirection=Direction.LEFT;
 	//	draw();
 		// don't forget to initial picture size and first time position
 	}
@@ -132,6 +133,8 @@ public void move(double moveX,double moveY) {
 		}
 //		System.out.println();
 		changeDirection(x, y);
+		if(x<0&&lastLRFaceDirection==Direction.RIGHT) {lastLRFaceDirection=Direction.LEFT;}
+		if(x>0&&lastLRFaceDirection==Direction.LEFT) {lastLRFaceDirection=Direction.RIGHT;}
 		Timeline timer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			position.first += x / Main.FPS * 10;
 			position.second += y / Main.FPS * 10;

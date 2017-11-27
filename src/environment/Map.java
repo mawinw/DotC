@@ -75,7 +75,7 @@ public class Map extends Canvas {
 //		board[10][5].setTileType(TileType.MONSTER);
 //		board[10][5].setEntity(slime5);
 //		entityGroup.getChildren().add(slime5.getCanvas());
-//		Monster slime6 = new Monster(new Pair(8,7)); 
+//		Slime slime6 = new Slime(new Pair(4,1)); 
 //		createDefaultEntity(slime6,"Slime", slime6.getPosition());
 		SlimeKing king = new SlimeKing(new Pair(5,5));
 		createDefaultEntity(king,"SlimeKing", king.getPosition());
