@@ -26,59 +26,54 @@ public class SlimeKing extends Slime {
 	private static final double DEFAULT_CRI_RATE = 0;
 	public static final int EXP_GAIN = 40;
 
-	
 	private static final Image[] images = new Image[6];
 	static {
-		for(int i=1; i<=6; ++i) {
-			images[i-1]=new Image("images/monster/slimer ("+i+").png");
+		for (int i = 1; i <= 6; ++i) {
+			images[i - 1] = new Image("images/monster/slimer (" + i + ").png");
 		}
 	}
-	private static int currentAnimation=0;
-	
-	
-	
+	private static int currentAnimation = 0;
+
 	public SlimeKing(Pair pos) {
 		super(pos);
-		setValue("SlimeKing", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
-		this.side=Side.MONSTER;
+		setValue("SlimeKing", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE,
+				pos);
+		this.side = Side.MONSTER;
 		this.areaPosition = new Pair(pos.first, pos.second);
 		picHeight = 2;
 		picWidth = 2;
-		lastLRFaceDirection=Direction.LEFT;
+		lastLRFaceDirection = Direction.LEFT;
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
+
 	public void draw() {
-		GraphicsContext 	gc=this.canvas.getGraphicsContext2D();
+		GraphicsContext gc = this.canvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
-		
-		currentAnimation%=6;
-				if(lastLRFaceDirection==Direction.RIGHT) {
-					gc.drawImage(images[currentAnimation],position.first * Map.TILE_SIZE-Map.TILE_SIZE*0.5,
-							position.second * Map.TILE_SIZE-Map.TILE_SIZE*0.5, 
-							picWidth* Map.TILE_SIZE+Map.TILE_SIZE*0.5,
-							picHeight* Map.TILE_SIZE+Map.TILE_SIZE*0.5);
-					}
-					else if (lastLRFaceDirection==Direction.LEFT) {
-					gc.drawImage(images[currentAnimation],
-							position.first * Map.TILE_SIZE-Map.TILE_SIZE*0.5+picWidth* Map.TILE_SIZE+Map.TILE_SIZE,
-							position.second * Map.TILE_SIZE-Map.TILE_SIZE*0.5, 
-							-picWidth* Map.TILE_SIZE-Map.TILE_SIZE*0.5,
-							picHeight* Map.TILE_SIZE+Map.TILE_SIZE*0.5);
-					}
+
+		currentAnimation %= 6;
+		if (lastLRFaceDirection == Direction.RIGHT) {
+			gc.drawImage(images[currentAnimation], position.first * Map.TILE_SIZE - Map.TILE_SIZE * 0.5,
+					position.second * Map.TILE_SIZE - Map.TILE_SIZE * 0.5,
+					picWidth * Map.TILE_SIZE + Map.TILE_SIZE * 0.5, picHeight * Map.TILE_SIZE + Map.TILE_SIZE * 0.5);
+		} else if (lastLRFaceDirection == Direction.LEFT) {
+			gc.drawImage(images[currentAnimation],
+					position.first * Map.TILE_SIZE - Map.TILE_SIZE * 0.5 + picWidth * Map.TILE_SIZE + Map.TILE_SIZE,
+					position.second * Map.TILE_SIZE - Map.TILE_SIZE * 0.5,
+					-picWidth * Map.TILE_SIZE - Map.TILE_SIZE * 0.5, picHeight * Map.TILE_SIZE + Map.TILE_SIZE * 0.5);
+		}
 		drawDirection();
 
-		if(isDead) return;
+		if (isDead)
+			return;
 		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
-		
-		hpBar= new HpBar(this);
+
+		hpBar = new HpBar(this);
 		hpBar.draw();
 		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
-//		System.out.println(Map.statusBarGroup.getChildren().contains(hpBar.getCanvas()));
+		// System.out.println(Map.statusBarGroup.getChildren().contains(hpBar.getCanvas()));
 
 	}
+
 	public void updateAnimation() {
 		currentAnimation++;
 		draw();

@@ -13,36 +13,34 @@ public class Tile extends Rectangle {
 
 	public Tile(boolean lightColor, int x, int y, Entity entity) {
 
-		setWidth(Map.WIDTH * Map.TILE_SIZE);
-		setHeight(Map.HEIGHT * Map.TILE_SIZE);
+		setWidth(Map.TILE_SIZE);
+		setHeight(Map.TILE_SIZE);
 
 		relocate(x * Map.TILE_SIZE, y * Map.TILE_SIZE);
 
 		setFill(lightColor ? Color.WHITE : Color.BLACK);
-//		if (entity == null) {
-//			this.entity = null;
-////			this.tileType = TileType.NONE;
-//		}else if (entity instanceof Novice) {
-//			System.out.println("WTFFFFFF");
-//			this.entity = new Novice();
-////			this.tileType = TileType.HERO;
-//		} else if (entity instanceof Slime) {
-//			this.entity = new Slime();
-////			this.tileType = TileType.MONSTER;
-//		}
+		// if (entity == null) {
+		// this.entity = null;
+		//// this.tileType = TileType.NONE;
+		// }else if (entity instanceof Novice) {
+		// System.out.println("WTFFFFFF");
+		// this.entity = new Novice();
+		//// this.tileType = TileType.HERO;
+		// } else if (entity instanceof Slime) {
+		// this.entity = new Slime();
+		//// this.tileType = TileType.MONSTER;
+		// }
 		// can't initial entity
 		this.entity = entity;
 
 	}
-	
+
 	public void setTileFill(Color color) {
 		setFill(color);
 	}
-	
-	
 
 	public boolean hasEntity() {
-	//	System.out.println(tileType);
+		// System.out.println(tileType);
 		return tileType != TileType.NONE;
 	}
 
@@ -55,8 +53,8 @@ public class Tile extends Rectangle {
 	}
 
 	public void setEntity(Entity entity) {
-		this.entity=entity;
-		
+		this.entity = entity;
+
 	}
 
 	public Entity getEntity() {

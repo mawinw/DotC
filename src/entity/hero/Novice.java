@@ -12,6 +12,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
@@ -35,6 +36,16 @@ public class Novice extends Entity {
 	protected Timeline timer;
 	protected int lv;
 	protected int exp;
+
+	private static final Image[] attackImages = new Image[5];
+	static {
+		for (int i = 1; i <= 5; ++i) {
+			attackImages[i - 1] = new Image("images/effect/hit5 (" + i + ").png");
+		}
+	}
+	private static int currentAttackAnimation = 0;
+
+	private static int currentAnimation = 0;
 
 	public Novice(Pair pos) {
 		super("Novice", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
@@ -122,10 +133,14 @@ public class Novice extends Entity {
 		isMoveFinished = false;
 		isAttackFinished = false;
 		entity.setMoveFinished(false);
+		currentAttackAnimation = 0;
+
 		timer = new Timeline(new KeyFrame(new Duration(1000), e -> {
 			double atkDmg = calculateDamage(entity);
 			entity.takeDamage(atkDmg);
 			entity.draw();
+			drawAttackAnimation();
+			currentAttackAnimation++;
 			if (entity.getIsDead()) {
 				exp += Monster.EXP_GAIN;
 				checkLevelUp();
@@ -148,10 +163,61 @@ public class Novice extends Entity {
 
 	}
 
+	public void drawAttackAnimation() {
+		GraphicsContext gc = this.canvas.getGraphicsContext2D();
+		if (currentAttackAnimation == 0) {
+			attackDirection = faceDirection;
+		}
+		double playerX=position.first;
+		double playerY=position.second;
+		int tSize=Map.TILE_SIZE;
+
+		if (currentAttackAnimation <= 4) {
+			if (attackDirection == Direction.RIGHT) {
+				gc.clearRect((playerX + 1) * tSize, (playerY-0.15) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15 + 1) * tSize,
+						(playerY-0.15) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			} else if (attackDirection == Direction.LEFT) {
+				gc.clearRect((playerX-0.3 - 1) * tSize, (playerY-0.15) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15 - 1) * tSize,
+						(playerY-0.15) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			} else if (attackDirection == Direction.DOWN) {
+				gc.clearRect((playerX-0.15) * tSize, (playerY+0.3 + 1) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15) * tSize,
+						(playerY-0.15 + 1) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			} else if (attackDirection == Direction.UP) {
+				gc.clearRect((playerX-0.3) * tSize, (playerY-0.3 - 1) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15) * tSize,
+						(playerY-0.15 - 1) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			}
+		}
+
+		if (currentAttackAnimation == 5) {
+			if (attackDirection == Direction.RIGHT) {
+				gc.clearRect((playerX + 1) * tSize, (playerY-0.15) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			} else if (attackDirection == Direction.LEFT) {
+				gc.clearRect((playerX-0.3 - 1) * tSize, (playerY-0.15) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			} else if (attackDirection == Direction.DOWN) {
+				gc.clearRect((playerX-0.15) * tSize, (playerY + 1) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			} else if (attackDirection == Direction.UP) {
+				gc.clearRect((playerX-0.15) * tSize, (playerY-0.3 - 1) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			}
+		}
+
+	}
+
 	public void normalAttack() {
 		if ((int) position.first + 1 < Map.WIDTH) {
 			if (Map.getBoard()[(int) position.first + 1][(int) (position.second)].getTileType() == TileType.MONSTER
-					&& faceDirection == Direction.RIGHT)	{
+					&& faceDirection == Direction.RIGHT) {
 				attack(Map.getBoard()[(int) position.first + 1][(int) position.second].getEntity());
 			}
 		}
@@ -174,10 +240,9 @@ public class Novice extends Entity {
 			if (Map.getBoard()[(int) Map.getHero().getPosition().first][(int) (position.second) + 1]
 					.getTileType() == TileType.MONSTER && faceDirection == Direction.DOWN) {
 				attack(Map.getBoard()[(int) Map.getHero().getPosition().first][(int) (position.second) + 1]
-								.getEntity());
+						.getEntity());
 			}
 		}
-
 	}
 
 	protected void checkLevelUp() {
@@ -209,6 +274,13 @@ public class Novice extends Entity {
 		} else {
 			Hp -= dmg;
 		}
+	}
+
+	public void updateAnimation() {
+		// TODO Auto-generated method stub
+		// draw();
+		drawAttackAnimation();
+		currentAttackAnimation++;
 	}
 
 }

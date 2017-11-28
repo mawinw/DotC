@@ -30,18 +30,18 @@ public class MainMenu extends Canvas {
 		gc.fillText("Typing Game", SceneManager.SCENE_WIDTH / 2, SceneManager.SCENE_HEIGHT / 4);
 		gc.setFont(MENU_FONT);
 		gc.fillText("Press Enter to start", SceneManager.SCENE_WIDTH / 2, SceneManager.SCENE_HEIGHT * 3 / 4);
-		
+
 		this.addKeyEventHandler();
 	}
-	
+
 	private void addKeyEventHandler() {
-		//TODO Fill Cod
-		setOnKeyPressed(e ->{
-			if(e.getCode()==KeyCode.ENTER) {
-				
+		// TODO Fill Cod
+		setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.ENTER) {
+
 			}
-			if(e.getCode()==KeyCode.ESCAPE) {
-				
+			if (e.getCode() == KeyCode.ESCAPE) {
+
 				Platform.exit();
 			}
 		});

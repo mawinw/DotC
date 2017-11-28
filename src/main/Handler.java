@@ -3,6 +3,8 @@ package main;
 import java.util.HashSet;
 
 import entity.Entity;
+import entity.hero.Fighter;
+import entity.hero.Novice;
 import entity.monster.Monster;
 import environment.Map;
 import javafx.scene.input.KeyCode;
@@ -154,7 +156,7 @@ public class Handler {
 
 		else if (activeKey.contains(KeyCode.X) && Map.getHero().isMoveFinished() == true
 				&& Map.getHero().isAttackFinished()) {
-			Map.getHero().groundSmash();
+			((Fighter) Map.getHero()).groundSmash();
 		}
 
 	}
@@ -169,6 +171,7 @@ public class Handler {
 				}
 			}
 		}
+		Map.getMonsterList().removeIf(m -> m.getIsDead());
 		if (Map.getHero().getIsDead()) {
 			Map.setBoard(Map.getHeroPosition(), TileType.NONE, null);
 		}
@@ -178,13 +181,12 @@ public class Handler {
 		if (tick % (Main.FPS * 2) != 0)
 			return;
 		for (Monster monster : Map.getMonsterList()) {
-			//System.out.println(monster.isMoveFinished());
-				if (Math.abs(Map.getHeroPosition().first - monster.getPosition().first) <= Monster.VISIBLE_RANGE && Math
-						.abs(Map.getHeroPosition().second - monster.getPosition().second) <= Monster.VISIBLE_RANGE) {
-					monster.moveToPlayer();
-				} else
-					monster.randomMove();
-			
+			// System.out.println(monster.isMoveFinished());
+			if (Math.abs(Map.getHeroPosition().first - monster.getPosition().first) <= Monster.VISIBLE_RANGE
+					&& Math.abs(Map.getHeroPosition().second - monster.getPosition().second) <= Monster.VISIBLE_RANGE) {
+				monster.moveToPlayer();
+			} else
+				monster.randomMove();
 		}
 
 	}
@@ -254,15 +256,17 @@ public class Handler {
 		checkPause();
 
 	}
-	
+
 	public static void animateAll() {
-		if(tick%(Main.FPS/10)==0) {
-			for(Monster Monster: Map.getMonsterList()) {
+		if (tick % (Main.FPS / 10) == 0) {
+			for (Monster Monster : Map.getMonsterList()) {
 				Monster.updateAnimation();
-				}
+			}
+		}
+		if (tick % (Main.FPS / 20) == 0) {
+			Map.getHero().updateAnimation();
 		}
 	}
-	
 
 	public static boolean isPaused() {
 		return isPaused;

@@ -19,14 +19,14 @@ public final class SceneManager {
 	}
 
 	public static void gotoMainMenu() {
-		//TODO Fill Code
-		
+		// TODO Fill Code
+
 		primaryStage.setScene(mainMenuScene);
 		mainMenuCanvas.requestFocus();
 	}
 
 	public static void gotoSceneOf(Canvas canvas) {
-		//TODO Fill Code
+		// TODO Fill Code
 		primaryStage.setScene(new Scene(new Pane(canvas)));
 		canvas.requestFocus();
 	}
