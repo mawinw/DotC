@@ -139,8 +139,6 @@ public void move(double moveX,double moveY) {
 		}
 //		System.out.println();
 		changeDirection(x, y);
-		if(x<0&&lastLRFaceDirection==Direction.RIGHT) {lastLRFaceDirection=Direction.LEFT;}
-		if(x>0&&lastLRFaceDirection==Direction.LEFT) {lastLRFaceDirection=Direction.RIGHT;}
 		
 		Timeline timer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			position.first += x / Main.FPS * 10;
@@ -197,8 +195,8 @@ public void move(double moveX,double moveY) {
 	}
 	
 	protected void changeDirection(double x, double y) {
-		if(x>0) faceDirection=Direction.RIGHT;
-		else if(x<0) faceDirection=Direction.LEFT;
+		if(x>0) {faceDirection=Direction.RIGHT;lastLRFaceDirection=Direction.RIGHT;}
+		else if(x<0) {faceDirection=Direction.LEFT;lastLRFaceDirection=Direction.LEFT;}
 		else if(y>0) faceDirection=Direction.DOWN;
 		else if(y<0) faceDirection=Direction.UP;
 		draw();
