@@ -43,7 +43,7 @@ public class Novice extends Entity {
 			attackImages[i - 1] = new Image("images/effect/hit5 (" + i + ").png");
 		}
 	}
-	private static int currentAttackAnimation = 0;
+	private static int currentAttackAnimation = 7;
 
 	private static int currentAnimation = 0;
 
@@ -134,13 +134,18 @@ public class Novice extends Entity {
 		isAttackFinished = false;
 		entity.setMoveFinished(false);
 		currentAttackAnimation = 0;
+		
+		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(150), attack -> {
+			drawAttackAnimation();
+			currentAttackAnimation ++;
+		}));
+		attackTimeline.setCycleCount(6);
+		attackTimeline.play();
 
-		timer = new Timeline(new KeyFrame(new Duration(1000), e -> {
+		timer = new Timeline(new KeyFrame(new Duration(750), e -> {
 			double atkDmg = calculateDamage(entity);
 			entity.takeDamage(atkDmg);
 			entity.draw();
-			drawAttackAnimation();
-			currentAttackAnimation++;
 			if (entity.getIsDead()) {
 				exp += Monster.EXP_GAIN;
 				checkLevelUp();
@@ -160,7 +165,6 @@ public class Novice extends Entity {
 				entity.setMoveFinished(false);
 			});
 		});
-
 	}
 
 	public void drawAttackAnimation() {
@@ -279,8 +283,9 @@ public class Novice extends Entity {
 	public void updateAnimation() {
 		// TODO Auto-generated method stub
 		// draw();
-		drawAttackAnimation();
-		currentAttackAnimation++;
+//		currentAttackAnimation++;
+//		currentAttackAnimation %= 5;
+//		drawAttackAnimation();
 	}
 
 }

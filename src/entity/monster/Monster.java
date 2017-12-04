@@ -20,7 +20,8 @@ import utility.Pair;
 import utility.Side;
 import utility.TileType;
 
-public class Monster extends Entity {
+public abstract class Monster extends Entity {
+
 	public static final int VISIBLE_RANGE = 3;
 
 	private static final int DEFAULT_MAX_HP = 100;
@@ -29,16 +30,19 @@ public class Monster extends Entity {
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 0.00;
 	private static final double DEFAULT_CRI_RATE = 0;
+	
 	public static final int EXP_GAIN = 20;
 
-	private static final Image[] images = new Image[6];
-	static {
-		for (int i = 1; i <= 6; ++i) {
-			images[i - 1] = new Image("images/monster/slimer (" + i + ").png");
-		}
-	}
-	private static int currentAnimation = 0;
 
+
+	private static int currentAnimation = 0;
+	private final static int maxImage = 6;
+	private static Image[] images;
+
+	private static int currentAttackAnimation=0;
+	private static final int maxAttackImage = 4;
+	private static Image[] attackImages;
+	
 	protected Pair areaPosition; // ref from top left
 
 	public Monster(String name, int maxHp, int attack, int defense, double accuracy, double evasion,
@@ -61,15 +65,19 @@ public class Monster extends Entity {
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 
 		currentAnimation %= 6;
-		gc.drawImage(images[currentAnimation], position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE,
-				picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+		if (lastLRFaceDirection == Direction.RIGHT) {
+			gc.drawImage(images[currentAnimation], position.first * Map.TILE_SIZE - Map.TILE_SIZE * 0.25,
+					position.second * Map.TILE_SIZE - Map.TILE_SIZE * 0.25,
+					picWidth * Map.TILE_SIZE + Map.TILE_SIZE * 0.25, picHeight * Map.TILE_SIZE + Map.TILE_SIZE * 0.25);
+		} else if (lastLRFaceDirection == Direction.LEFT) {
+			gc.drawImage(images[currentAnimation],
+					position.first * Map.TILE_SIZE - Map.TILE_SIZE * 0.25 + picWidth * Map.TILE_SIZE
+							+ Map.TILE_SIZE * 0.5,
+					position.second * Map.TILE_SIZE - Map.TILE_SIZE * 0.25,
+					-picWidth * Map.TILE_SIZE - Map.TILE_SIZE * 0.25, picHeight * Map.TILE_SIZE + Map.TILE_SIZE * 0.25);
+		}
 
 		drawDirection();
-		// gc.setFill(Color.CORAL);
-		// gc.setTextAlign(TextAlignment.CENTER);
-		// gc.setTextBaseline(VPos.CENTER);
-		// gc.fillText("" + this.Hp, position.first*Map.TILE_SIZE + picWidth/2,
-		// position.second*Map.TILE_SIZE + picHeight/2);
 		if (isDead)
 			return;
 		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
@@ -77,15 +85,70 @@ public class Monster extends Entity {
 		hpBar = new HpBar(this);
 		hpBar.draw();
 		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
-		// System.out.println(Map.statusBarGroup.getChildren().contains(hpBar.getCanvas()));
 
 	}
 
 	public void updateAnimation() {
 		currentAnimation++;
 		draw();
+	}	
+	public void updateAttackAnimation() {
+		currentAttackAnimation++;
+		drawAttackAnimation();
 	}
 
+	public void drawAttackAnimation() {
+		GraphicsContext gc = this.canvas.getGraphicsContext2D();
+		if (currentAttackAnimation == 0) {
+			attackDirection = faceDirection;
+		}
+		double monsterX=position.first;
+		double monsterY=position.second;
+		int tSize=Map.TILE_SIZE;
+
+		if (currentAttackAnimation <= (maxAttackImage-1)) {
+			if (attackDirection == Direction.RIGHT) {
+				gc.clearRect((monsterX + 1) * tSize, (monsterY-0.15) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15 + 1) * tSize,
+						(monsterY-0.15) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			} else if (attackDirection == Direction.LEFT) {
+				gc.clearRect((monsterX-0.3 - 1) * tSize, (monsterY-0.15) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15 - 1) * tSize,
+						(monsterY-0.15) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			} else if (attackDirection == Direction.DOWN) {
+				gc.clearRect((monsterX-0.15) * tSize, (monsterY+0.3 + 1) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15) * tSize,
+						(monsterY-0.15 + 1) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			} else if (attackDirection == Direction.UP) {
+				gc.clearRect((monsterX-0.3) * tSize, (monsterY-0.3 - 1) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15) * tSize,
+						(monsterY-0.15 - 1) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			}
+		}
+
+		if (currentAttackAnimation == maxAttackImage) {
+			if (attackDirection == Direction.RIGHT) {
+				gc.clearRect((monsterX + 1) * tSize, (monsterY-0.15) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			} else if (attackDirection == Direction.LEFT) {
+				gc.clearRect((monsterX-0.3 - 1) * tSize, (monsterY-0.15) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			} else if (attackDirection == Direction.DOWN) {
+				gc.clearRect((monsterX-0.15) * tSize, (monsterY + 1) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			} else if (attackDirection == Direction.UP) {
+				gc.clearRect((monsterX-0.15) * tSize, (monsterY-0.3 - 1) * tSize,
+						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+			}
+		}
+
+	}
+	
+	
 	protected void drawDirection() {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setStroke(Color.BLUE);

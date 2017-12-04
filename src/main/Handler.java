@@ -264,7 +264,10 @@ public class Handler {
 			}
 		}
 		if (tick % (Main.FPS / 20) == 0) {
-			Map.getHero().updateAnimation();
+			Map.getHero().updateAnimation();			
+			for (Monster Monster : Map.getMonsterList()) {
+				Monster.updateAttackAnimation();
+			}
 		}
 	}
 

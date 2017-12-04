@@ -26,6 +26,7 @@ public class SlimeKing extends Slime {
 	private static final double DEFAULT_CRI_RATE = 0;
 	public static final int EXP_GAIN = 40;
 
+	
 	private static final Image[] images = new Image[6];
 	static {
 		for (int i = 1; i <= 6; ++i) {
