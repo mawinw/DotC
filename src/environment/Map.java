@@ -23,8 +23,8 @@ import utility.TileType;
 
 public class Map extends Canvas {
 	public static final int TILE_SIZE = 50;
-	public static final int WIDTH = 10;
-	public static final int HEIGHT = 10;
+	public static final int WIDTH = 14;
+	public static final int HEIGHT = 14;
 
 	private static Tile[][] board = new Tile[WIDTH][HEIGHT];
 
@@ -192,4 +192,5 @@ public class Map extends Canvas {
 	public static ArrayList<Monster> getMonsterList() {
 		return monsterList;
 	}
+	
 }
