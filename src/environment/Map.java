@@ -35,7 +35,7 @@ public class Map extends Canvas {
 	private static Pair heroPosition;
 	private static ArrayList<Monster> monsterList = new ArrayList<>();
 
-	public static Parent createContent() {
+	public static Parent createContent(String name) {
 		Pane root = new Pane();
 		root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 		for (int x = 0; x < WIDTH; x++) {
@@ -97,7 +97,7 @@ public class Map extends Canvas {
 		// add monsters above
 
 		// add hero below;
-		hero = new Fighter(new Pair(1, 4));
+		hero = new Fighter (name,new Pair(1, 4));
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 
 		// statusBarGroup.getChildren().add(novice.getHpBar().getCanvas());

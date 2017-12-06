@@ -42,7 +42,7 @@ public final class SceneManager {
 
 		// put all pane
 
-		Scene scene = new Scene(Map.createContent());
+		Scene scene = new Scene(Map.createContent(name));
 		Handler.setPaused(false);
 		Timeline timer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			Handler.update();

@@ -63,8 +63,6 @@ public class Novice extends Entity {
 
 	public Novice(String name, Pair pos) {
 		super(name, DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
-		if (this instanceof Fighter)
-			return;
 		this.lv = 1;
 		this.exp = 0;
 		this.side = Side.HERO;
