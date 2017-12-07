@@ -17,6 +17,7 @@ import javafx.scene.text.TextAlignment;
 import main.Main;
 import environment.window.*;
 import exception.DeleteNullException;
+import exception.EmptyNameException;
 import exception.LongNameException;
 import exception.UnsupportedCharacterException;
 
@@ -50,7 +51,12 @@ public class MainMenu extends Pane {
 		this.setOnKeyPressed(e -> {
 			try {
 				if(e.getCode() == KeyCode.ENTER) {
-					moveToGameScene();
+					if(!name.isEmpty()) {
+						moveToGameScene();
+					}
+					else {
+						throw new EmptyNameException();
+					}
 				} else if (e.getCode() == KeyCode.ESCAPE) {
 					Platform.exit();
 				} else {

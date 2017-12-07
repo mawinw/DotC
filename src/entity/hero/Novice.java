@@ -12,6 +12,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.VPos;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -39,6 +40,7 @@ public class Novice extends Entity {
 	protected Timeline timer;
 	protected int lv;
 	protected int exp;
+	protected Canvas nameCanvas;
 
 	private static final Image[] attackImages = new Image[5];
 	static {
@@ -61,6 +63,8 @@ public class Novice extends Entity {
 		this.faceDirection = Direction.RIGHT;
 		this.isAttackFinished = true;
 		this.isMoveFinished = true;
+		this.nameCanvas = new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+
 		// don't forget to initial picture size and first time position
 	}
 
@@ -74,6 +78,7 @@ public class Novice extends Entity {
 		this.faceDirection = Direction.RIGHT;
 		this.isAttackFinished = true;
 		this.isMoveFinished = true;
+		this.nameCanvas = new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		// don't forget to initial picture size and first time position
 	}
 
@@ -83,11 +88,6 @@ public class Novice extends Entity {
 		gc.setFill(Color.AQUA);
 		gc.fillOval(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth * Map.TILE_SIZE,
 				picHeight * Map.TILE_SIZE);
-		gc.setTextBaseline(VPos.BOTTOM);
-		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setFont(NAMEFONT);
-		gc.setFill(Color.GRAY);
-		gc.fillText(name, (position.first+0.5) * Map.TILE_SIZE, position.second * Map.TILE_SIZE - 10);
 		drawDirection();
 		// System.out.println(position.first+" "+position.second);
 		if (isDead)
@@ -96,8 +96,20 @@ public class Novice extends Entity {
 		hpBar = new HpBar(this);
 		hpBar.draw();
 		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
-	}
+		drawNameAndLv();
 
+	}
+	
+	public void drawNameAndLv() {
+		GraphicsContext gc = nameCanvas.getGraphicsContext2D();
+		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		gc.setTextBaseline(VPos.BOTTOM);
+		gc.setTextAlign(TextAlignment.CENTER);
+		gc.setFont(NAMEFONT);
+		gc.setFill(Color.GRAY);
+		gc.fillText(name+" lv. "+lv, (position.first+0.5) * Map.TILE_SIZE, position.second * Map.TILE_SIZE - 10);
+		
+	}
 	
 	protected void drawDirection() {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -154,7 +166,8 @@ public class Novice extends Entity {
 			entity.takeDamage(atkDmg);
 			entity.draw();
 			if (entity.getIsDead()) {
-				exp += Monster.EXP_GAIN;
+				exp += ((Monster)entity).getExpGain();
+				System.out.println(exp);
 				checkLevelUp();
 				// System.out.println(lv+" "+exp);
 			}
@@ -257,8 +270,10 @@ public class Novice extends Entity {
 	}
 
 	protected void checkLevelUp() {
-		if (EXP_RATE[lv] < exp)
+		if (EXP_RATE[lv] < exp) {
 			lv++;
+			drawNameAndLv();
+		}
 	}
 
 	protected double calculateDamage(Entity entity) {
@@ -293,6 +308,10 @@ public class Novice extends Entity {
 //		currentAttackAnimation++;
 //		currentAttackAnimation %= 5;
 //		drawAttackAnimation();
+	}
+
+	public Canvas getNameCanvas() {
+		return nameCanvas;
 	}
 
 }

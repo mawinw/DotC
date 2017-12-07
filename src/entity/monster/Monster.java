@@ -31,12 +31,17 @@ public abstract class Monster extends Entity {
 	private static final double DEFAULT_EVA = 0.00;
 	private static final double DEFAULT_CRI_RATE = 0;
 	
-	public static final int EXP_GAIN = 20;
+	private static final int EXP_GAIN = 20;
 
 
 
 	private static int currentAnimation = 0;
 	private final static int maxImage = 6;
+	
+	public int getExpGain() {
+		return EXP_GAIN;
+	}
+
 	private static Image[] images;
 
 	private static int currentAttackAnimation=0;

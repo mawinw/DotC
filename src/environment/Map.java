@@ -31,6 +31,7 @@ public class Map extends Canvas {
 	private static Group tileGroup = new Group();
 	private static Group entityGroup = new Group();
 	public static Group statusBarGroup = new Group();
+	private static Pane namePane = new Pane();
 	private static Fighter hero;
 	private static Pair heroPosition;
 	private static ArrayList<Monster> monsterList = new ArrayList<>();
@@ -99,12 +100,13 @@ public class Map extends Canvas {
 		// add hero below;
 		hero = new Fighter(name, new Pair(1, 4));
 		createDefaultEntity(hero, "Novice", hero.getPosition());
-
+		namePane.getChildren().add(hero.getNameCanvas());
+	//	System.out.println(hero.getNameCanvas().);
 		// statusBarGroup.getChildren().add(novice.getHpBar().getCanvas());
 		// entityGroup.getChildren().add(novice.getCanvas());
 
 		// add hero above
-		root.getChildren().addAll(tileGroup, statusBarGroup, entityGroup);
+		root.getChildren().addAll(tileGroup, statusBarGroup, entityGroup,namePane);
 		return root;
 	}
 

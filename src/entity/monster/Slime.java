@@ -29,9 +29,13 @@ public class Slime extends Monster {
 	private static final double DEFAULT_ACC = 80.00;
 	private static final double DEFAULT_EVA = 0.00;
 	private static final double DEFAULT_CRI_RATE = 0;
-	public static final int EXP_GAIN = 40;
+	private static final int EXP_GAIN = 40;
 
-	
+	@Override
+	public int getExpGain() {
+		return EXP_GAIN;
+	}
+
 	private static int currentAnimation = 0;
 	private final static int maxImage = 6;
 	private static final Image[] images = new Image[maxImage];

@@ -188,4 +188,9 @@ public abstract class Entity {
 		this.isMoveFinished = isMoveFinished;
 	}
 
+	public int getExpGain() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
