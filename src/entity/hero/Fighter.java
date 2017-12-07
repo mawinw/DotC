@@ -51,34 +51,39 @@ public class Fighter extends Novice {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setStroke(Color.RED);
 		gc.setLineWidth(2);
+		
+		int tileSize = Map.TILE_SIZE;
+		double playerX = position.first;
+		double playerY = playerY;
+		
 		if (faceDirection == Direction.RIGHT) {
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((playerX + 1) * tileSize, (playerY - 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX + 1) * tileSize, (playerY) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX + 1) * tileSize, (playerY + 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
 		} else if (faceDirection == Direction.LEFT) {
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((playerX - 1) * tileSize, (playerY - 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX - 1) * tileSize, (playerY) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX - 1) * tileSize, (playerY + 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
 		} else if (faceDirection == Direction.DOWN) {
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((playerX - 1) * tileSize, (playerY + 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX) * tileSize, (playerY + 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX + 1) * tileSize, (playerY + 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
 		} else if (faceDirection == Direction.UP) {
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((playerX - 1) * tileSize, (playerY - 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX) * tileSize, (playerY - 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX + 1) * tileSize, (playerY - 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
 		}
 
 	}

@@ -1,5 +1,6 @@
 package entity.monster;
 
+import entity.Entity;
 import entity.property.HpBar;
 import environment.Map;
 import javafx.animation.KeyFrame;
@@ -33,7 +34,27 @@ public class SlimeKing extends Slime {
 			images[i - 1] = new Image("images/monster/slimer (" + i + ").png");
 		}
 	}
-	private static int currentAnimation = 0;
+	private int currentAnimation = 0;
+	private int currentAttackAnimation=0;
+	private static final int maxAttackImage = 4;
+	private static final Image[] attackImages = new Image[maxAttackImage];
+	static {
+		for (int i = 1; i <= maxAttackImage; ++i) {
+			attackImages[i - 1] = new Image("images/effect/hit2 (" + i + ").png");
+		}
+	}
+	
+
+	double monsterX=position.first;
+	double monsterY=position.second;
+	int tileSize=Map.TILE_SIZE;
+	
+	
+	private double oldStartX=0;
+	private double oldStartY=0;
+	private double oldSizeX=Map.WIDTH * tileSize;
+	private double oldSizeY=Map.HEIGHT * tileSize;
+
 
 	public SlimeKing(Pair pos) {
 		super(pos);
@@ -48,19 +69,26 @@ public class SlimeKing extends Slime {
 	}
 
 	public void draw() {
+		double monsterX=position.first;
+		double monsterY=position.second;
+		int tileSize=Map.TILE_SIZE;
+		
 		GraphicsContext gc = this.canvas.getGraphicsContext2D();
-		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		gc.clearRect(0, 0, Map.WIDTH*tileSize, Map.HEIGHT*tileSize);
 
 		currentAnimation %= 6;
 		if (lastLRFaceDirection == Direction.RIGHT) {
-			gc.drawImage(images[currentAnimation], position.first * Map.TILE_SIZE - Map.TILE_SIZE * 0.5,
-					position.second * Map.TILE_SIZE - Map.TILE_SIZE * 0.5,
-					picWidth * Map.TILE_SIZE + Map.TILE_SIZE * 0.5, picHeight * Map.TILE_SIZE + Map.TILE_SIZE * 0.5);
+			gc.drawImage(images[currentAnimation], 
+					oldStartX=monsterX * tileSize - tileSize * 0.9,
+					oldStartY=monsterY * tileSize - tileSize * 0.9,
+					oldSizeX=picWidth * tileSize + tileSize * 0.9,
+					oldSizeY=picHeight * tileSize + tileSize * 0.9);
 		} else if (lastLRFaceDirection == Direction.LEFT) {
 			gc.drawImage(images[currentAnimation],
-					position.first * Map.TILE_SIZE - Map.TILE_SIZE * 0.5 + picWidth * Map.TILE_SIZE + Map.TILE_SIZE,
-					position.second * Map.TILE_SIZE - Map.TILE_SIZE * 0.5,
-					-picWidth * Map.TILE_SIZE - Map.TILE_SIZE * 0.5, picHeight * Map.TILE_SIZE + Map.TILE_SIZE * 0.5);
+					oldStartX=monsterX * tileSize - tileSize * 0 + picWidth * tileSize + tileSize,
+					oldStartY=monsterY * tileSize - tileSize * 0.9,
+					oldSizeX=-picWidth * tileSize - tileSize * 0.9,
+					oldSizeY=picHeight * tileSize + tileSize * 0.9);
 		}
 		drawDirection();
 
@@ -73,7 +101,89 @@ public class SlimeKing extends Slime {
 		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
 		// System.out.println(Map.statusBarGroup.getChildren().contains(hpBar.getCanvas()));
 
+	}	
+	public void drawAttackAnimation() {
+		GraphicsContext gc = this.canvas.getGraphicsContext2D();
+		double monsterX=position.first;
+		double monsterY=position.second;
+		int tileSize=Map.TILE_SIZE;
+		if (currentAttackAnimation == 0) {
+			attackDirection = faceDirection;
+		}
+
+		if (currentAttackAnimation <= (maxAttackImage-1)) {
+			System.out.println(currentAttackAnimation);
+			if (attackDirection == Direction.RIGHT) {
+				gc.clearRect((monsterX + 2) * tileSize, (monsterY-0.15-0.5) * tileSize,
+						(picWidth+0.3) * tileSize/2, (picHeight+0.3+1) * tileSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15 + 2) * tileSize,
+						(monsterY-0.15-0.5) * tileSize, (picWidth+0.3) * tileSize/2, (picHeight+0.3+1) * tileSize);
+			} else if (attackDirection == Direction.LEFT) {
+				gc.clearRect((monsterX-0.3 - 1) * tileSize, (monsterY-0.15-0.5) * tileSize,
+						(picWidth+0.3) * tileSize/2, (picHeight+0.3+1) * tileSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15 - 1) * tileSize,
+						(monsterY-0.15-0.5) * tileSize, (picWidth+0.3) * tileSize/2, (picHeight+0.3+1) * tileSize);
+			} else if (attackDirection == Direction.DOWN) {
+				gc.clearRect((monsterX-0.15) * tileSize, (monsterY+0.3 + 2) * tileSize,
+						(picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize/2);
+				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15) * tileSize,
+						(monsterY-0.15 + 2) * tileSize, (picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize/2);
+			} else if (attackDirection == Direction.UP) {
+				gc.clearRect((monsterX-0.3) * tileSize, (monsterY-0.3 - 1) * tileSize,
+						(picWidth+0.3) * tileSize, (picHeight+0.3-1) * tileSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15) * tileSize,
+						(monsterY-0.15 - 1) * tileSize, (picWidth+0.3) * tileSize, (picHeight+0.3-1) * tileSize);
+			}
+		}
+
+		if (currentAttackAnimation == maxAttackImage) {
+			if (attackDirection == Direction.RIGHT) {
+				gc.clearRect((monsterX + 2) * tileSize, (monsterY-0.15-0.5) * tileSize,
+						(picWidth+0.3) * tileSize/2, (picHeight+0.3+1) * tileSize);
+			} else if (attackDirection == Direction.LEFT) {
+				gc.clearRect((monsterX-0.3 - 1) * tileSize, (monsterY-0.15-0.5) * tileSize,
+						(picWidth+0.3) * tileSize/2, (picHeight+0.3+1) * tileSize);
+			} else if (attackDirection == Direction.DOWN) {
+				gc.clearRect((monsterX-0.15) * tileSize, (monsterY+0.3 + 2) * tileSize,
+						(picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize/2);
+			} else if (attackDirection == Direction.UP) {
+				gc.clearRect((monsterX-0.3) * tileSize, (monsterY-0.3 - 1) * tileSize,
+						(picWidth+0.3) * tileSize, (picHeight+0.3-1) * tileSize);
+			}
+		}
 	}
+	public void attack(Entity entity) {
+		entity.setMoveFinished(false);
+		
+		currentAttackAnimation=0;
+		double monsterX=position.first;
+		double monsterY=position.second;
+		int tileSize=Map.TILE_SIZE;
+		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(150), attack -> {
+			drawAttackAnimation();
+			currentAttackAnimation ++;
+		}));
+		attackTimeline.setCycleCount(6);
+		attackTimeline.play();
+		
+		
+		Timeline timer = new Timeline(new KeyFrame(new Duration(1000), e -> {
+			double atkDmg = calculateDamage(entity);
+			entity.takeDamage(atkDmg);
+			entity.draw();
+
+		}));
+		timer.setCycleCount(1);
+		timer.play();
+		timer.setOnFinished(e -> {
+			Timeline wait = new Timeline(new KeyFrame(Duration.millis(100), f -> {
+			}));
+			wait.setCycleCount(1);
+			wait.play();
+			entity.setMoveFinished(true);
+		});
+	}
+
 
 	public void updateAnimation() {
 		currentAnimation++;

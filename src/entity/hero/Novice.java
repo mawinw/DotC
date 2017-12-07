@@ -37,6 +37,8 @@ public class Novice extends Entity {
 	protected int lv;
 	protected int exp;
 
+	
+	
 	private static final Image[] attackImages = new Image[5];
 	static {
 		for (int i = 1; i <= 5; ++i) {
