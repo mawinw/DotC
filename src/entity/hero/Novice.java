@@ -35,7 +35,7 @@ public class Novice extends Entity {
 	private static final double DEFAULT_EVA = 0.00;
 	private static final double DEFAULT_CRI_RATE = 30;
 	private static final int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500 };
-	private static final Font NAMEFONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("resources/font/arcadeclassic/ARCADECLASSIC.ttf"), 10);
+	private static final Font NAMEFONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/arcadeclassic/ARCADECLASSIC.ttf"), 15);
 	
 	protected Timeline timer;
 	protected int lv;
@@ -122,7 +122,7 @@ public class Novice extends Entity {
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setFont(NAMEFONT);
 		gc.setFill(Color.GRAY);
-		gc.fillText(name+" lv. "+lv, (position.first+0.5) * Map.TILE_SIZE, position.second * Map.TILE_SIZE - 10);
+		gc.fillText(name+"  lv  "+lv, (position.first+0.5) * Map.TILE_SIZE, position.second * Map.TILE_SIZE - 10);
 		
 	}
 	

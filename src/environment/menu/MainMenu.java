@@ -23,8 +23,9 @@ import exception.UnsupportedCharacterException;
 
 public class MainMenu extends Pane {
 
-	private static final Font TITLE_FONT = new Font("Monospace", 60);
-	private static final Font MENU_FONT = new Font("Monospace", 40);
+	private static final Font TITLE_FONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/future-timesplitters/Future TimeSplitters.otf"), 100);
+	private static final Font MENU_FONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/arcadeclassic/ARCADECLASSIC.TTF"), 40);
+
 	private Canvas background;
 	private static Canvas text;
 	private static String name;
@@ -96,7 +97,7 @@ public class MainMenu extends Pane {
 
 		gc.clearRect(Main.SCREEN_SIZE / 5, Main.SCREEN_SIZE / 7.5 * 4, 450, 100);
 
-		gc.setFont(Font.font("Monospace", 30));
+		gc.setFont(Font.font(MENU_FONT.getName(), 30));
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.BASELINE);
 		gc.setFill(Color.BLACK);
@@ -105,7 +106,7 @@ public class MainMenu extends Pane {
 		gc.setFill(Color.gray(0.925));
 		gc.fillRoundRect((Main.SCREEN_SIZE - 450) / 2, Main.SCREEN_SIZE / 7.5 * 4, 450, Main.SCREEN_SIZE / 7.5, 20, 20);
 
-		gc.setFont(Font.font("Monospace", 40));
+		gc.setFont(Font.font(MENU_FONT.getName(), 40));
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.CENTER);
 		gc.setFill(Color.BLACK);
