@@ -7,6 +7,7 @@ import environment.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import utility.Direction;
@@ -20,6 +21,18 @@ public class Fighter extends Novice {
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 30.00;
 	private static final double DEFAULT_CRI_RATE = 40;
+	
+
+	private final static int maxSmashImage=8;
+	private static final Image[] smashImages = new Image[maxSmashImage];
+	static {
+		for (int i = 1; i <= maxSmashImage; ++i) {
+			smashImages[i - 1] = new Image("images/effect/smash (" + i + ").png");
+		}
+	}
+	private static int currentSmashAnimation = 9;
+
+	
 
 	public Fighter(Pair pos) {
 		super(pos);
@@ -45,40 +58,71 @@ public class Fighter extends Novice {
 		}
 
 	}
+	
+	private void drawSmashAnimation() {
+		GraphicsContext gc = this.canvas.getGraphicsContext2D();
+		if (currentSmashAnimation == 0) {
+			attackDirection = faceDirection;
+		}
+		double playerX=position.first;
+		double playerY=position.second;
+		int tileSize=Map.TILE_SIZE;
+
+		if (currentSmashAnimation <= (maxSmashImage)) {
+				gc.clearRect((playerX - 1) * tileSize, (playerY-1) * tileSize,
+						(picWidth+2) * tileSize, (picHeight+2) * tileSize);
+				gc.drawImage(smashImages[currentSmashAnimation], (playerX - 1) * tileSize,
+						(playerY-1) * tileSize, (picWidth+2) * tileSize, (picHeight+2) * tileSize);
+		}
+
+		if (currentSmashAnimation == maxSmashImage+1) {
+			gc.clearRect((playerX - 1) * tileSize, (playerY-1) * tileSize,
+					(picWidth) * tileSize, (picHeight) * tileSize);
+		}
+
+		
+		
+	}
+	
 
 	protected void drawSkillDirection() {
 		System.out.println("x");
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setStroke(Color.RED);
 		gc.setLineWidth(2);
+		
+		int tileSize = Map.TILE_SIZE;
+		double playerX = position.first;
+		double playerY = position.second;
+		
 		if (faceDirection == Direction.RIGHT) {
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((playerX + 1) * tileSize, (playerY - 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX + 1) * tileSize, (playerY) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX + 1) * tileSize, (playerY + 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
 		} else if (faceDirection == Direction.LEFT) {
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((playerX - 1) * tileSize, (playerY - 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX - 1) * tileSize, (playerY) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX - 1) * tileSize, (playerY + 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
 		} else if (faceDirection == Direction.DOWN) {
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((playerX - 1) * tileSize, (playerY + 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX) * tileSize, (playerY + 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX + 1) * tileSize, (playerY + 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
 		} else if (faceDirection == Direction.UP) {
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((playerX - 1) * tileSize, (playerY - 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX) * tileSize, (playerY - 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
+			gc.strokeRect((playerX + 1) * tileSize, (playerY - 1) * tileSize,
+					picWidth * tileSize, picHeight * tileSize);
 		}
 
 	}

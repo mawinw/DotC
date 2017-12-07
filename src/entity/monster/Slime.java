@@ -24,7 +24,7 @@ public class Slime extends Monster {
 	public static final int VISIBLE_RANGE = 5;
 
 	private static final int DEFAULT_MAX_HP = 200;
-	private static final int DEFAULT_ATK = 30;
+	private static final int DEFAULT_ATK = 80;
 	private static final int DEFAULT_DEF = 10;
 	private static final double DEFAULT_ACC = 80.00;
 	private static final double DEFAULT_EVA = 0.00;
@@ -36,7 +36,8 @@ public class Slime extends Monster {
 		return EXP_GAIN;
 	}
 
-	private static int currentAnimation = 0;
+
+	private int currentAnimation = 0;
 	private final static int maxImage = 6;
 	private static final Image[] images = new Image[maxImage];
 	static {
@@ -45,7 +46,7 @@ public class Slime extends Monster {
 		}
 	}
 
-	private static int currentAttackAnimation=0;
+	private int currentAttackAnimation=0;
 	private static final int maxAttackImage = 4;
 	private static final Image[] attackImages = new Image[maxAttackImage];
 	static {
@@ -53,6 +54,20 @@ public class Slime extends Monster {
 			attackImages[i - 1] = new Image("images/effect/hit2 (" + i + ").png");
 		}
 	}
+
+	double monsterX=position.first;
+	double monsterY=position.second;
+	int tileSize=Map.TILE_SIZE;
+	
+	
+	private double oldStartX=0;
+	private double oldStartY=0;
+	private double oldSizeX=Map.WIDTH * tileSize;
+	private double oldSizeY=Map.HEIGHT * tileSize;
+	
+	
+	
+	
 	protected Pair areaPosition; // ref from top left
 
 	public Slime(Pair pos) {
@@ -72,19 +87,21 @@ public class Slime extends Monster {
 	
 	public void draw() {
 		GraphicsContext gc = this.canvas.getGraphicsContext2D();
-		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
-
+		
+		gc.clearRect(0, 0, Map.WIDTH*tileSize, Map.HEIGHT*tileSize);
 		currentAnimation %= 6;
 		if (lastLRFaceDirection == Direction.RIGHT) {
-			gc.drawImage(images[currentAnimation], position.first * Map.TILE_SIZE - Map.TILE_SIZE * 0.25,
-					position.second * Map.TILE_SIZE - Map.TILE_SIZE * 0.25,
-					picWidth * Map.TILE_SIZE + Map.TILE_SIZE * 0.25, picHeight * Map.TILE_SIZE + Map.TILE_SIZE * 0.25);
+			gc.drawImage(images[currentAnimation], 
+					oldStartX=(position.first-0.5) * Map.TILE_SIZE,
+					oldStartY=(position.second-0.5) * Map.TILE_SIZE,
+					oldSizeX=(picWidth+0.5) * Map.TILE_SIZE, 
+					oldSizeY=(picHeight+0.5) * Map.TILE_SIZE);
 		} else if (lastLRFaceDirection == Direction.LEFT) {
 			gc.drawImage(images[currentAnimation],
-					position.first * Map.TILE_SIZE - Map.TILE_SIZE * 0.25 + picWidth * Map.TILE_SIZE
-							+ Map.TILE_SIZE * 0.5,
-					position.second * Map.TILE_SIZE - Map.TILE_SIZE * 0.25,
-					-picWidth * Map.TILE_SIZE - Map.TILE_SIZE * 0.25, picHeight * Map.TILE_SIZE + Map.TILE_SIZE * 0.25);
+					oldStartX=(position.first) * Map.TILE_SIZE + picWidth * Map.TILE_SIZE+ Map.TILE_SIZE * 0.5,
+					oldStartY=(position.second-0.5) * Map.TILE_SIZE,
+					oldSizeX=(-picWidth-0.5) * Map.TILE_SIZE, 
+					oldSizeY=(picHeight+0.5) * Map.TILE_SIZE);
 		}
 
 		drawDirection();
@@ -155,7 +172,6 @@ public class Slime extends Monster {
 						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
 			}
 		}
-
 	}
 	
 	protected void drawDirection() {
@@ -175,7 +191,6 @@ public class Slime extends Monster {
 			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
 					picWidth * Map.TILE_SIZE, Map.TILE_SIZE);
 		}
-
 	}
 	
 
@@ -340,6 +355,14 @@ public class Slime extends Monster {
 		entity.setMoveFinished(false);
 		
 		currentAttackAnimation=0;
+		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(150), attack -> {
+			drawAttackAnimation();
+			currentAttackAnimation ++;
+		}));
+		attackTimeline.setCycleCount(6);
+		attackTimeline.play();
+		
+		
 		Timeline timer = new Timeline(new KeyFrame(new Duration(1000), e -> {
 			double atkDmg = calculateDamage(entity);
 			entity.takeDamage(atkDmg);
@@ -366,7 +389,7 @@ public class Slime extends Monster {
 		}
 	}
 
-	private double calculateDamage(Entity entity) {
+	protected double calculateDamage(Entity entity) {
 		Random rn = new Random();
 		int atkSuccess = rn.nextInt(100);
 		int criSuccess = rn.nextInt(100);

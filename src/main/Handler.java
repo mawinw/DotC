@@ -258,15 +258,9 @@ public class Handler {
 	}
 
 	public static void animateAll() {
-		if (tick % (Main.FPS / 10) == 0) {
+		if (tick % (Main.FPS / 12) == 0) {
 			for (Monster Monster : Map.getMonsterList()) {
 				Monster.updateAnimation();
-			}
-		}
-		if (tick % (Main.FPS / 20) == 0) {
-			Map.getHero().updateAnimation();			
-			for (Monster Monster : Map.getMonsterList()) {
-				Monster.updateAttackAnimation();
 			}
 		}
 	}
