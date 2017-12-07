@@ -11,9 +11,11 @@ import environment.Map;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import main.Handler;
@@ -32,7 +34,8 @@ public class Novice extends Entity {
 	private static final double DEFAULT_EVA = 0.00;
 	private static final double DEFAULT_CRI_RATE = 30;
 	private static final int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500 };
-
+	private static final Font NAMEFONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("resources/font/arcadeclassic/ARCADECLASSIC.ttf"), 10);
+	
 	protected Timeline timer;
 	protected int lv;
 	protected int exp;
@@ -80,6 +83,11 @@ public class Novice extends Entity {
 		gc.setFill(Color.AQUA);
 		gc.fillOval(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth * Map.TILE_SIZE,
 				picHeight * Map.TILE_SIZE);
+		gc.setTextBaseline(VPos.BOTTOM);
+		gc.setTextAlign(TextAlignment.CENTER);
+		gc.setFont(NAMEFONT);
+		gc.setFill(Color.GRAY);
+		gc.fillText(name, (position.first+0.5) * Map.TILE_SIZE, position.second * Map.TILE_SIZE - 10);
 		drawDirection();
 		// System.out.println(position.first+" "+position.second);
 		if (isDead)
@@ -90,6 +98,7 @@ public class Novice extends Entity {
 		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
 	}
 
+	
 	protected void drawDirection() {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setStroke(Color.RED);

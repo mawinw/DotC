@@ -45,9 +45,9 @@ public class HpBar {
 		width = (entity.getHp() / entity.getMaxHp()) * maxWidth;
 		// System.out.println(entity.getPosition().first+"
 		// "+entity.getPosition().second);
-		gc.strokeRoundRect(entity.getPosition().first * Map.TILE_SIZE, entity.getPosition().second * Map.TILE_SIZE - 10,
+		gc.strokeRoundRect(entity.getPosition().first * Map.TILE_SIZE, (entity.getPosition().second+entity.getPicHeight()) * Map.TILE_SIZE + 10,
 				maxWidth, 5, 2, 2);
-		gc.fillRoundRect(entity.getPosition().first * Map.TILE_SIZE, entity.getPosition().second * Map.TILE_SIZE - 10,
+		gc.fillRoundRect(entity.getPosition().first * Map.TILE_SIZE, (entity.getPosition().second+entity.getPicHeight()) * Map.TILE_SIZE + 10,
 				width, 5, 2, 2);
 		// gc.strokeRoundRect(1 * Map.TILE_SIZE, 5 * Map.TILE_SIZE - 10,
 		// maxWidth, 5, 2, 2);

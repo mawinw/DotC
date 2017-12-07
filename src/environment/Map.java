@@ -97,14 +97,14 @@ public class Map extends Canvas {
 		// add monsters above
 
 		// add hero below;
-		hero = new Fighter (name,new Pair(1, 4));
+		hero = new Fighter(name, new Pair(1, 4));
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 
 		// statusBarGroup.getChildren().add(novice.getHpBar().getCanvas());
 		// entityGroup.getChildren().add(novice.getCanvas());
 
 		// add hero above
-		root.getChildren().addAll(tileGroup, entityGroup, statusBarGroup);
+		root.getChildren().addAll(tileGroup, statusBarGroup, entityGroup);
 		return root;
 	}
 
@@ -192,5 +192,5 @@ public class Map extends Canvas {
 	public static ArrayList<Monster> getMonsterList() {
 		return monsterList;
 	}
-	
+
 }
