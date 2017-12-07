@@ -19,6 +19,7 @@ import environment.window.*;
 import exception.DeleteNullException;
 import exception.EmptyNameException;
 import exception.LongNameException;
+import exception.NonEnglishCharacterException;
 import exception.UnsupportedCharacterException;
 
 public class MainMenu extends Pane {
@@ -114,6 +115,7 @@ public class MainMenu extends Pane {
 	}
 
 	public void addCharacter(KeyEvent input) throws Exception {
+		
 		if(input.getCode() == KeyCode.BACK_SPACE) {
 			if(name.length() == 0) {
 				throw new DeleteNullException();
@@ -124,7 +126,12 @@ public class MainMenu extends Pane {
 			if(name.length() >= 10) {
 				throw new LongNameException();
 			} else {
-				name += input.getText();
+				if (input.getText().codePointAt(0) <= 255) {
+					name += input.getText();
+				}
+				else {
+					throw new NonEnglishCharacterException(input.getText());
+				}
 			}
 		} else {
 			if(input.getText().length() >= 1) {
