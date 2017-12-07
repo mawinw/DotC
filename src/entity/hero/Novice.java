@@ -38,16 +38,29 @@ public class Novice extends Entity {
 	protected int exp;
 
 	
-	
-	private static final Image[] attackImages = new Image[5];
+	private static final int maxAttackImage = 5;
+	private static final Image[] attackImages = new Image[maxAttackImage];
 	static {
-		for (int i = 1; i <= 5; ++i) {
+		for (int i = 1; i <= maxAttackImage; ++i) {
 			attackImages[i - 1] = new Image("images/effect/hit5 (" + i + ").png");
 		}
 	}
 	private static int currentAttackAnimation = 7;
 
 	private static int currentAnimation = 0;
+	
+	
+	
+	
+	private final static int maxSmashImage=8;
+	private static final Image[] smashImages = new Image[maxSmashImage];
+	static {
+		for (int i = 1; i <= maxSmashImage; ++i) {
+			smashImages[i - 1] = new Image("images/effect/smash (" + i + ").png");
+		}
+	}
+	private static int currentSmashAnimation = 9;
+
 
 	public Novice(Pair pos) {
 		super("Novice", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
@@ -133,13 +146,18 @@ public class Novice extends Entity {
 		isMoveFinished = false;
 		isAttackFinished = false;
 		entity.setMoveFinished(false);
-		currentAttackAnimation = 0;
 		
-		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(150), attack -> {
-			drawAttackAnimation();
-			currentAttackAnimation ++;
+		//currentAttackAnimation = 0;
+		currentSmashAnimation=0; //
+		
+		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(50), attack -> { //was 150
+			//drawAttackAnimation();
+			//currentAttackAnimation ++;
+			drawSmashAnimation();
+			currentSmashAnimation++;
 		}));
-		attackTimeline.setCycleCount(6);
+		//attackTimeline.setCycleCount(6);
+		attackTimeline.setCycleCount(9);
 		attackTimeline.play();
 
 		timer = new Timeline(new KeyFrame(new Duration(750), e -> {
@@ -176,7 +194,7 @@ public class Novice extends Entity {
 		double playerY=position.second;
 		int tSize=Map.TILE_SIZE;
 
-		if (currentAttackAnimation <= 4) {
+		if (currentAttackAnimation <= maxAttackImage) {
 			if (attackDirection == Direction.RIGHT) {
 				gc.clearRect((playerX + 1) * tSize, (playerY-0.15) * tSize,
 						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
@@ -188,7 +206,7 @@ public class Novice extends Entity {
 				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15 - 1) * tSize,
 						(playerY-0.15) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
 			} else if (attackDirection == Direction.DOWN) {
-				gc.clearRect((playerX-0.15) * tSize, (playerY+0.3 + 1) * tSize,
+				gc.clearRect((playerX-0.15) * tSize, (playerY + 1) * tSize,
 						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
 				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15) * tSize,
 						(playerY-0.15 + 1) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
@@ -200,7 +218,7 @@ public class Novice extends Entity {
 			}
 		}
 
-		if (currentAttackAnimation == 5) {
+		if (currentAttackAnimation == maxAttackImage+1) {
 			if (attackDirection == Direction.RIGHT) {
 				gc.clearRect((playerX + 1) * tSize, (playerY-0.15) * tSize,
 						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
@@ -208,7 +226,7 @@ public class Novice extends Entity {
 				gc.clearRect((playerX-0.3 - 1) * tSize, (playerY-0.15) * tSize,
 						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
 			} else if (attackDirection == Direction.DOWN) {
-				gc.clearRect((playerX-0.15) * tSize, (playerY + 1) * tSize,
+				gc.clearRect((playerX-0.15) * tSize, (playerY+ 1) * tSize,
 						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
 			} else if (attackDirection == Direction.UP) {
 				gc.clearRect((playerX-0.15) * tSize, (playerY-0.3 - 1) * tSize,
@@ -216,6 +234,31 @@ public class Novice extends Entity {
 			}
 		}
 
+	}
+	
+	private void drawSmashAnimation() {
+		GraphicsContext gc = this.canvas.getGraphicsContext2D();
+		if (currentSmashAnimation == 0) {
+			attackDirection = faceDirection;
+		}
+		double playerX=position.first;
+		double playerY=position.second;
+		int tileSize=Map.TILE_SIZE;
+
+		if (currentSmashAnimation <= (maxSmashImage)) {
+				gc.clearRect((playerX - 1) * tileSize, (playerY-1) * tileSize,
+						(picWidth+2) * tileSize, (picHeight+2) * tileSize);
+				gc.drawImage(smashImages[currentSmashAnimation], (playerX - 1) * tileSize,
+						(playerY-1) * tileSize, (picWidth+2) * tileSize, (picHeight+2) * tileSize);
+		}
+
+		if (currentSmashAnimation == maxSmashImage+1) {
+			gc.clearRect((playerX - 1) * tileSize, (playerY-1) * tileSize,
+					(picWidth) * tileSize, (picHeight) * tileSize);
+		}
+
+		
+		
 	}
 
 	public void normalAttack() {
