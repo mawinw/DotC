@@ -7,6 +7,7 @@ import entity.hero.Fighter;
 import entity.hero.Novice;
 import entity.monster.Monster;
 import environment.Map;
+import environment.window.SceneManager;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import utility.ActionResult;
@@ -16,7 +17,7 @@ import utility.Pair;
 import utility.Tile;
 import utility.TileType;
 
-public class Handler {
+public class GameHandler {
 	// set all event
 	private static HashSet<KeyCode> activeKey = new HashSet<KeyCode>();
 
@@ -89,57 +90,58 @@ public class Handler {
 
 	private static void movePlayer() {
 
-		Pair playerPosition = Map.getHero().getPosition();
+		
+		Pair playerPosition = Map.getInstance().getHeroPosition();
 
-		Direction faceDirection = Map.getHero().getFaceDirection();
+		Direction faceDirection = Map.getInstance().getHero().getFaceDirection();
 
 		if (activeKey.contains(KeyCode.UP)) {
-			Map.getHero().setFaceDirection(Direction.UP);
-			if (Map.getHero().isMoveFinished()) {
-				if (playerPosition.second > 0 && !Map.getBoard(playerPosition.add(new Pair(0, -1))).hasEntity()
+			Map.getInstance().getHero().setFaceDirection(Direction.UP);
+			if (Map.getInstance().getHero().isMoveFinished()) {
+				if (playerPosition.second > 0 && !Map.getInstance().getBoard(playerPosition.add(new Pair(0, -1))).hasEntity()
 						&& faceDirection == Direction.UP) {
-					Map.getHero().move(0, -1);
+					Map.getInstance().getHero().move(0, -1);
 				}
 			}
-			Map.getHero().draw();
+			Map.getInstance().getHero().draw();
 			activeKey.remove(KeyCode.UP);
 		}
 
 		if (activeKey.contains(KeyCode.DOWN)) {
-			Map.getHero().setFaceDirection(Direction.DOWN);
-			if (Map.getHero().isMoveFinished()) {
-				if (playerPosition.second <= Map.HEIGHT - 2
-						&& !Map.getBoard(playerPosition.add(new Pair(0, 1))).hasEntity()
+			Map.getInstance().getHero().setFaceDirection(Direction.DOWN);
+			if (Map.getInstance().getHero().isMoveFinished()) {
+				if (playerPosition.second <= Map.getInstance().HEIGHT - 2
+						&& !Map.getInstance().getBoard(playerPosition.add(new Pair(0, 1))).hasEntity()
 						&& faceDirection == Direction.DOWN) {
-					Map.getHero().move(0, 1);
+					Map.getInstance().getHero().move(0, 1);
 				}
 			}
-			Map.getHero().draw();
+			Map.getInstance().getHero().draw();
 			activeKey.remove(KeyCode.DOWN);
 		}
 
 		if (activeKey.contains(KeyCode.LEFT)) {
-			Map.getHero().setFaceDirection(Direction.LEFT);
-			if (Map.getHero().isMoveFinished()) {
-				if (playerPosition.first > 0 && !Map.getBoard(playerPosition.add(new Pair(-1, 0))).hasEntity()
+			Map.getInstance().getHero().setFaceDirection(Direction.LEFT);
+			if (Map.getInstance().getHero().isMoveFinished()) {
+				if (playerPosition.first > 0 && !Map.getInstance().getBoard(playerPosition.add(new Pair(-1, 0))).hasEntity()
 						&& faceDirection == Direction.LEFT) {
-					Map.getHero().move(-1, 0);
+					Map.getInstance().getHero().move(-1, 0);
 				}
 			}
-			Map.getHero().draw();
+			Map.getInstance().getHero().draw();
 			activeKey.remove(KeyCode.LEFT);
 		}
 
 		if (activeKey.contains(KeyCode.RIGHT)) {
-			Map.getHero().setFaceDirection(Direction.RIGHT);
-			if (Map.getHero().isMoveFinished()) {
-				if (playerPosition.first <= Map.WIDTH - 2
-						&& !Map.getBoard(playerPosition.add(new Pair(1, 0))).hasEntity()
+			Map.getInstance().getHero().setFaceDirection(Direction.RIGHT);
+			if (Map.getInstance().getHero().isMoveFinished()) {
+				if (playerPosition.first <= Map.getInstance().WIDTH - 2
+						&& !Map.getInstance().getBoard(playerPosition.add(new Pair(1, 0))).hasEntity()
 						&& faceDirection == Direction.RIGHT) {
-					Map.getHero().move(1, 0);
+					Map.getInstance().getHero().move(1, 0);
 				}
 			}
-			Map.getHero().draw();
+			Map.getInstance().getHero().draw();
 			activeKey.remove(KeyCode.RIGHT);
 		}
 
@@ -147,43 +149,43 @@ public class Handler {
 
 	public static void playerAttack() {
 
-		if (activeKey.contains(KeyCode.Z) && Map.getHero().isMoveFinished() == true
-				&& Map.getHero().isAttackFinished()) {
-			Map.getHero().normalAttack();
+		if (activeKey.contains(KeyCode.Z) && Map.getInstance().getHero().isMoveFinished() == true
+				&& Map.getInstance().getHero().isAttackFinished()) {
+			Map.getInstance().getHero().normalAttack();
 			activeKey.remove(KeyCode.Z);
 
 		}
 
-		else if (activeKey.contains(KeyCode.X) && Map.getHero().isMoveFinished() == true
-				&& Map.getHero().isAttackFinished()) {
-			((Fighter) Map.getHero()).groundSmash();
+		else if (activeKey.contains(KeyCode.X) && Map.getInstance().getHero().isMoveFinished() == true
+				&& Map.getInstance().getHero().isAttackFinished()) {
+			((Fighter) Map.getInstance().getHero()).groundSmash();
 		}
 
 	}
 
 	public static void checkStatus() {
-		for (Monster entity : Map.getMonsterList()) {
+		for (Monster entity : Map.getInstance().getMonsterList()) {
 			if (entity.getIsDead()) {
 				for (int i = 0; i < entity.getPicWidth(); i++) {
 					for (int j = 0; j < entity.getPicHeight(); j++) {
-						Map.setBoard(entity.getPosition().add(new Pair(i, j)), TileType.NONE, null);
+						Map.getInstance().setBoard(entity.getPosition().add(new Pair(i, j)), TileType.NONE, null);
 					}
 				}
 			}
 		}
-		Map.getMonsterList().removeIf(m -> m.getIsDead());
-		if (Map.getHero().getIsDead()) {
-			Map.setBoard(Map.getHeroPosition(), TileType.NONE, null);
+		Map.getInstance().getMonsterList().removeIf(m -> m.getIsDead());
+		if (Map.getInstance().getHero().getIsDead()) {
+			Map.getInstance().setBoard(Map.getInstance().getHeroPosition(), TileType.NONE, null);
 		}
 	}
 
 	public static void moveMonster() {
 		if (tick % (Main.FPS * 2) != 0)
 			return;
-		for (Monster monster : Map.getMonsterList()) {
+		for (Monster monster : Map.getInstance().getMonsterList()) {
 			// System.out.println(monster.isMoveFinished());
-			if (Math.abs(Map.getHeroPosition().first - monster.getPosition().first) <= Monster.VISIBLE_RANGE
-					&& Math.abs(Map.getHeroPosition().second - monster.getPosition().second) <= Monster.VISIBLE_RANGE) {
+			if (Math.abs(Map.getInstance().getHeroPosition().first - monster.getPosition().first) <= Monster.VISIBLE_RANGE
+					&& Math.abs(Map.getInstance().getHeroPosition().second - monster.getPosition().second) <= Monster.VISIBLE_RANGE) {
 				monster.moveToPlayer();
 			} else
 				monster.randomMove();
@@ -193,7 +195,13 @@ public class Handler {
 
 	public static void checkPause() {
 		if (activeKey.contains(KeyCode.SPACE)) {
-			isPaused = !isPaused;
+			if(!isPaused) {
+				SceneManager.openPausedMenu();
+			}
+			else {
+				SceneManager.closePausedMenu();
+			}
+			isPaused=!isPaused;
 			activeKey.remove(KeyCode.SPACE);
 		}
 	}
@@ -205,36 +213,36 @@ public class Handler {
 	public static void monsterAttack() {
 		if (tick % (Main.FPS * 2) != 0)
 			return;
-		for (Monster monster : Map.getMonsterList()) {
+		for (Monster monster : Map.getInstance().getMonsterList()) {
 			if (monster.getFaceDirection() == Direction.UP && (int) monster.getPosition().second - 1 > 0) {
 				for (int i = 0; i < monster.getPicWidth(); i++) {
-					if (Map.getBoard(monster.getPosition().add(new Pair(i, -1))).getTileType() == TileType.HERO) {
-						monster.attack(Map.getBoard(monster.getPosition().add(new Pair(i, -1))).getEntity());
+					if (Map.getInstance().getBoard(monster.getPosition().add(new Pair(i, -1))).getTileType() == TileType.HERO) {
+						monster.attack(Map.getInstance().getBoard(monster.getPosition().add(new Pair(i, -1))).getEntity());
 					}
 				}
 
 			}
-			if (monster.getFaceDirection() == Direction.DOWN && (int) monster.getPosition().second + 1 < Map.HEIGHT) {
+			if (monster.getFaceDirection() == Direction.DOWN && (int) monster.getPosition().second + 1 < Map.getInstance().HEIGHT) {
 				for (int i = 0; i < monster.getPicWidth(); i++) {
-					if (Map.getBoard(monster.getPosition().add(new Pair(i, monster.getPicHeight())))
+					if (Map.getInstance().getBoard(monster.getPosition().add(new Pair(i, monster.getPicHeight())))
 							.getTileType() == TileType.HERO) {
-						monster.attack(Map.getBoard(monster.getPosition().add(new Pair(i, monster.getPicHeight())))
+						monster.attack(Map.getInstance().getBoard(monster.getPosition().add(new Pair(i, monster.getPicHeight())))
 								.getEntity());
 					}
 				}
 			}
 			if (monster.getFaceDirection() == Direction.LEFT && (int) monster.getPosition().first - 1 > 0) {
 				for (int i = 0; i < monster.getPicHeight(); i++) {
-					if (Map.getBoard(monster.getPosition().add(new Pair(-1, i))).getTileType() == TileType.HERO) {
-						monster.attack(Map.getBoard(monster.getPosition().add(new Pair(-1, i))).getEntity());
+					if (Map.getInstance().getBoard(monster.getPosition().add(new Pair(-1, i))).getTileType() == TileType.HERO) {
+						monster.attack(Map.getInstance().getBoard(monster.getPosition().add(new Pair(-1, i))).getEntity());
 					}
 				}
 			}
-			if (monster.getFaceDirection() == Direction.RIGHT && (int) monster.getPosition().first + 1 < Map.WIDTH) {
+			if (monster.getFaceDirection() == Direction.RIGHT && (int) monster.getPosition().first + 1 < Map.getInstance().WIDTH) {
 				for (int i = 0; i < monster.getPicHeight(); i++) {
-					if (Map.getBoard(monster.getPosition().add(new Pair(monster.getPicWidth(), i)))
+					if (Map.getInstance().getBoard(monster.getPosition().add(new Pair(monster.getPicWidth(), i)))
 							.getTileType() == TileType.HERO) {
-						monster.attack(Map.getBoard(monster.getPosition().add(new Pair(monster.getPicWidth(), i)))
+						monster.attack(Map.getInstance().getBoard(monster.getPosition().add(new Pair(monster.getPicWidth(), i)))
 								.getEntity());
 					}
 				}
@@ -259,7 +267,7 @@ public class Handler {
 
 	public static void animateAll() {
 		if (tick % (Main.FPS / 12) == 0) {
-			for (Monster Monster : Map.getMonsterList()) {
+			for (Monster Monster : Map.getInstance().getMonsterList()) {
 				Monster.updateAnimation();
 			}
 		}

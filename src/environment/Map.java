@@ -10,6 +10,7 @@ import entity.hero.Novice;
 import entity.monster.Monster;
 import entity.monster.Slime;
 import entity.monster.SlimeKing;
+import environment.menu.MainMenu;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -21,7 +22,8 @@ import utility.Pair;
 import utility.Tile;
 import utility.TileType;
 
-public class Map extends Canvas {
+public class Map extends Pane {
+	private static Map instance;
 	public static final int TILE_SIZE = 50;
 	public static final int WIDTH = 14;
 	public static final int HEIGHT = 14;
@@ -34,11 +36,11 @@ public class Map extends Canvas {
 	private static Pane namePane = new Pane();
 	private static Fighter hero;
 	private static Pair heroPosition;
+	private static String heroName;
 	private static ArrayList<Monster> monsterList = new ArrayList<>();
 
-	public static Parent createContent(String name) {
-		Pane root = new Pane();
-		root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+	public Map() {
+		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
 				Tile tile = new Tile((x + y) % 2 == 0, x, y, null);
@@ -98,16 +100,17 @@ public class Map extends Canvas {
 		// add monsters above
 
 		// add hero below;
-		hero = new Fighter(name, new Pair(1, 4));
+		hero = new Fighter(MainMenu.name,new Pair(1, 4));
+		heroName=hero.getName();
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 		namePane.getChildren().add(hero.getNameCanvas());
-	//	System.out.println(hero.getNameCanvas().);
+		// System.out.println(hero.getNameCanvas().);
 		// statusBarGroup.getChildren().add(novice.getHpBar().getCanvas());
 		// entityGroup.getChildren().add(novice.getCanvas());
 
 		// add hero above
-		root.getChildren().addAll(tileGroup, statusBarGroup, entityGroup,namePane);
-		return root;
+		this.getChildren().addAll(tileGroup, statusBarGroup, entityGroup, namePane);
+		
 	}
 
 	public static Group getEntityGroup() {
@@ -193,6 +196,13 @@ public class Map extends Canvas {
 
 	public static ArrayList<Monster> getMonsterList() {
 		return monsterList;
+	}
+
+	public static Map getInstance() {
+		if (instance == null) {
+			instance = new Map();
+		}
+		return instance;
 	}
 
 }

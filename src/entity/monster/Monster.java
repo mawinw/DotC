@@ -370,7 +370,7 @@ public abstract class Monster extends Entity {
 		// entity.getDef()));
 		if (this.acc - entity.getEva() > atkSuccess) {
 			if (this.atk > entity.getDef()) {
-				if (this.criRate > criSuccess)
+				if (this.dex > criSuccess)
 					return 2 * (this.atk - entity.getDef());
 				else
 					return this.atk - entity.getDef();

@@ -36,6 +36,7 @@ public class Fighter extends Novice {
 
 	public Fighter(Pair pos) {
 		super(pos);
+		System.out.println("x");
 		setValue("Fighter", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
 	}
 

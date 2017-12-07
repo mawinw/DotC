@@ -18,7 +18,7 @@ public abstract class Entity {
 	protected int def;
 	protected double acc;
 	protected double eva;
-	protected double criRate;
+	protected double dex;
 	protected Pair position;
 	protected Side side;
 	protected boolean isDead;
@@ -69,7 +69,7 @@ public abstract class Entity {
 	}
 
 	protected void setValue(String name, int maxHp, int attack, int defense, double accuracy, double evasion,
-			double criticalRate, Pair position) {
+			double dexterous, Pair position) {
 		this.canvas = new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		this.name = name;
 		this.maxHp = maxHp;
@@ -78,7 +78,7 @@ public abstract class Entity {
 		this.def = defense;
 		this.acc = accuracy;
 		this.eva = evasion;
-		this.criRate = criticalRate;
+		this.dex = dexterous;
 		this.position = position;
 		this.canAttack = true;
 		this.canMove = true;
@@ -140,8 +140,8 @@ public abstract class Entity {
 		return eva;
 	}
 
-	public double getCriRate() {
-		return criRate;
+	public double getDex() {
+		return dex;
 	}
 
 	public Side getSide() {

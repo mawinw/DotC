@@ -24,11 +24,11 @@ import exception.UnsupportedCharacterException;
 public class MainMenu extends Pane {
 
 	private static final Font TITLE_FONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/future-timesplitters/Future TimeSplitters.otf"), 100);
-	private static final Font MENU_FONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/arcadeclassic/ARCADECLASSIC.TTF"), 40);
+	private static final Font MENU_FONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/ferrum.otf"), 40);
 
 	private Canvas background;
 	private static Canvas text;
-	private static String name;
+	public static String name;
 
 	public MainMenu() {
 		name="";
@@ -138,7 +138,7 @@ public class MainMenu extends Pane {
 	}
 	
 	public static void moveToGameScene() {
-		SceneManager.gotoGameScene(name);
+		SceneManager.gotoGameScene();
 		resetName();
 	}
 }
