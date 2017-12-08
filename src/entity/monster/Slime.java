@@ -125,51 +125,29 @@ public class Slime extends Monster {
 	}
 
 	public void drawAttackAnimation() {
-		GraphicsContext gc = this.canvas.getGraphicsContext2D();
+		GraphicsContext gc = this.atkCanvas.getGraphicsContext2D();
 		if (currentAttackAnimation == 0) {
 			attackDirection = faceDirection;
 		}
 		double monsterX=position.first;
 		double monsterY=position.second;
-		int tSize=Map.TILE_SIZE;
+		int tileSize=Map.TILE_SIZE;
+
+		gc.clearRect(0, 0, Map.WIDTH*tileSize, Map.HEIGHT*tileSize);
 
 		if (currentAttackAnimation <= (maxAttackImage-1)) {
 			if (attackDirection == Direction.RIGHT) {
-				gc.clearRect((monsterX + 1) * tSize, (monsterY-0.15) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15 + 1) * tSize,
-						(monsterY-0.15) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15 + 1) * tileSize,
+						(monsterY-0.15) * tileSize, (picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize);
 			} else if (attackDirection == Direction.LEFT) {
-				gc.clearRect((monsterX-0.3 - 1) * tSize, (monsterY-0.15) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15 - 1) * tSize,
-						(monsterY-0.15) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15 - 1) * tileSize,
+						(monsterY-0.15) * tileSize, (picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize);
 			} else if (attackDirection == Direction.DOWN) {
-				gc.clearRect((monsterX-0.15) * tSize, (monsterY+0.3 + 1) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15) * tSize,
-						(monsterY-0.15 + 1) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15) * tileSize,
+						(monsterY-0.15 + 1) * tileSize, (picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize);
 			} else if (attackDirection == Direction.UP) {
-				gc.clearRect((monsterX-0.3) * tSize, (monsterY-0.3 - 1) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15) * tSize,
-						(monsterY-0.15 - 1) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			}
-		}
-
-		if (currentAttackAnimation == maxAttackImage) {
-			if (attackDirection == Direction.RIGHT) {
-				gc.clearRect((monsterX + 1) * tSize, (monsterY-0.15) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.LEFT) {
-				gc.clearRect((monsterX-0.3 - 1) * tSize, (monsterY-0.15) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.DOWN) {
-				gc.clearRect((monsterX-0.15) * tSize, (monsterY + 1) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.UP) {
-				gc.clearRect((monsterX-0.15) * tSize, (monsterY-0.3 - 1) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
+				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15) * tileSize,
+						(monsterY-0.15 - 1) * tileSize, (picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize);
 			}
 		}
 	}

@@ -11,6 +11,7 @@ import utility.Side;
 
 public abstract class Entity {
 	protected Canvas canvas;
+	protected Canvas atkCanvas;
 	protected String name;
 	protected double maxHp;
 	protected double Hp;
@@ -71,6 +72,7 @@ public abstract class Entity {
 	protected void setValue(String name, int maxHp, int attack, int defense, double accuracy, double evasion,
 			double dexterous, Pair position) {
 		this.canvas = new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		this.atkCanvas = new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
 		this.name = name;
 		this.maxHp = maxHp;
 		Hp = maxHp;
@@ -102,6 +104,11 @@ public abstract class Entity {
 
 	public Canvas getCanvas() {
 		return canvas;
+	}
+
+	
+	public Canvas getAtkCanvas() {
+		return atkCanvas;
 	}
 
 	public void setPosition(int x, int y) {

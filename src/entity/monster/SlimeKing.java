@@ -108,54 +108,31 @@ public class SlimeKing extends Slime {
 
 	}	
 	public void drawAttackAnimation() {
-		GraphicsContext gc = this.canvas.getGraphicsContext2D();
+		GraphicsContext gc = this.atkCanvas.getGraphicsContext2D();
 		double monsterX=position.first;
 		double monsterY=position.second;
 		int tileSize=Map.TILE_SIZE;
 		if (currentAttackAnimation == 0) {
 			attackDirection = faceDirection;
 		}
+		gc.clearRect(0, 0, Map.WIDTH*tileSize, Map.HEIGHT*tileSize);
 
 		if (currentAttackAnimation <= (maxAttackImage-1)) {
-			System.out.println(currentAttackAnimation);
 			if (attackDirection == Direction.RIGHT) {
-				gc.clearRect((monsterX + 2) * tileSize, (monsterY-0.15-0.5) * tileSize,
-						(picWidth+0.3) * tileSize/2, (picHeight+0.3+1) * tileSize);
 				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15 + 2) * tileSize,
 						(monsterY-0.15-0.5) * tileSize, (picWidth+0.3) * tileSize/2, (picHeight+0.3+1) * tileSize);
 			} else if (attackDirection == Direction.LEFT) {
-				gc.clearRect((monsterX-0.3 - 1) * tileSize, (monsterY-0.15-0.5) * tileSize,
-						(picWidth+0.3) * tileSize/2, (picHeight+0.3+1) * tileSize);
 				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15 - 1) * tileSize,
 						(monsterY-0.15-0.5) * tileSize, (picWidth+0.3) * tileSize/2, (picHeight+0.3+1) * tileSize);
 			} else if (attackDirection == Direction.DOWN) {
-				gc.clearRect((monsterX-0.15) * tileSize, (monsterY+0.3 + 2) * tileSize,
-						(picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize/2);
 				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15) * tileSize,
 						(monsterY-0.15 + 2) * tileSize, (picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize/2);
 			} else if (attackDirection == Direction.UP) {
-				gc.clearRect((monsterX-0.3) * tileSize, (monsterY-0.3 - 1) * tileSize,
-						(picWidth+0.3) * tileSize, (picHeight+0.3-1) * tileSize);
 				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15) * tileSize,
 						(monsterY-0.15 - 1) * tileSize, (picWidth+0.3) * tileSize, (picHeight+0.3-1) * tileSize);
 			}
 		}
 
-		if (currentAttackAnimation == maxAttackImage) {
-			if (attackDirection == Direction.RIGHT) {
-				gc.clearRect((monsterX + 2) * tileSize, (monsterY-0.15-0.5) * tileSize,
-						(picWidth+0.3) * tileSize/2, (picHeight+0.3+1) * tileSize);
-			} else if (attackDirection == Direction.LEFT) {
-				gc.clearRect((monsterX-0.3 - 1) * tileSize, (monsterY-0.15-0.5) * tileSize,
-						(picWidth+0.3) * tileSize/2, (picHeight+0.3+1) * tileSize);
-			} else if (attackDirection == Direction.DOWN) {
-				gc.clearRect((monsterX-0.15) * tileSize, (monsterY+0.3 + 2) * tileSize,
-						(picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize/2);
-			} else if (attackDirection == Direction.UP) {
-				gc.clearRect((monsterX-0.3) * tileSize, (monsterY-0.3 - 1) * tileSize,
-						(picWidth+0.3) * tileSize, (picHeight+0.3-1) * tileSize);
-			}
-		}
 	}
 	public void attack(Entity entity) {
 		entity.setMoveFinished(false);

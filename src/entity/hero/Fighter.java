@@ -30,7 +30,7 @@ public class Fighter extends Novice {
 			smashImages[i - 1] = new Image("images/effect/smash (" + i + ").png");
 		}
 	}
-	private static int currentSmashAnimation = 9;
+	private static int currentSmashAnimation = 0;
 
 	
 
@@ -57,11 +57,20 @@ public class Fighter extends Novice {
 				}
 			}
 		}
+		currentSmashAnimation=0;
+		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(50), attack -> {
+			drawSmashAnimation();
+			currentSmashAnimation ++;
+		}));
+		attackTimeline.setCycleCount(7);
+		attackTimeline.play();
+		
 
 	}
 	
 	private void drawSmashAnimation() {
-		GraphicsContext gc = this.canvas.getGraphicsContext2D();
+		GraphicsContext gc = this.atkCanvas.getGraphicsContext2D();
+		gc.clearRect(0, 0, Map.WIDTH*Map.TILE_SIZE, Map.HEIGHT*Map.TILE_SIZE);
 		if (currentSmashAnimation == 0) {
 			attackDirection = faceDirection;
 		}
@@ -76,13 +85,6 @@ public class Fighter extends Novice {
 						(playerY-1) * tileSize, (picWidth+2) * tileSize, (picHeight+2) * tileSize);
 		}
 
-		if (currentSmashAnimation == maxSmashImage+1) {
-			gc.clearRect((playerX - 1) * tileSize, (playerY-1) * tileSize,
-					(picWidth) * tileSize, (picHeight) * tileSize);
-		}
-
-		
-		
 	}
 	
 
