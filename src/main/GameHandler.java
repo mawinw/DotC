@@ -27,8 +27,8 @@ public class GameHandler {
 	public static void keyPressed(KeyEvent event) {
 		// if (activeKey.contains(event.getCode()))
 		// return;
-		if (event.getCode() == KeyCode.SPACE) {
-			activeKey.add(KeyCode.SPACE);
+		if (event.getCode() == KeyCode.ENTER) {
+			activeKey.add(KeyCode.ENTER);
 		}
 
 		if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
@@ -58,8 +58,8 @@ public class GameHandler {
 	}
 
 	public static void keyReleased(KeyEvent event) {
-		if (event.getCode() == KeyCode.SPACE) {
-			activeKey.remove(KeyCode.SPACE);
+		if (event.getCode() == KeyCode.ENTER) {
+			activeKey.remove(KeyCode.ENTER);
 		}
 
 		if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
@@ -194,15 +194,19 @@ public class GameHandler {
 	}
 
 	public static void checkPause() {
-		if (activeKey.contains(KeyCode.SPACE)) {
-			if(!isPaused) {
+		if (activeKey.contains(KeyCode.ENTER)) {
+			activeKey.remove(KeyCode.ENTER);
+			
+//			if(!isPaused) {
+//				isPaused=!isPaused;
 				SceneManager.openPausedMenu();
-			}
-			else {
-				SceneManager.closePausedMenu();
-			}
-			isPaused=!isPaused;
-			activeKey.remove(KeyCode.SPACE);
+//			}
+//			else {
+//				isPaused=!isPaused;
+//				SceneManager.closePausedMenu();
+//			}
+			
+			
 		}
 	}
 
