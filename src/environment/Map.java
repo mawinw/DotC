@@ -31,22 +31,30 @@ public class Map extends Pane {
 	public static final int WIDTH = 14;
 	public static final int HEIGHT = 14;
 
-	private static Tile[][] board = new Tile[WIDTH][HEIGHT];
-	//private static Image backgroundImage = new Image("images/background/BG_01.png");
-	private static Canvas bgCanvas;
+	private static Tile[][] board;
+	// private static Image backgroundImage = new
+	// Image("images/background/BG_01.png");
 
-	private static Group tileGroup = new Group();
-	private static Group entityGroup = new Group();
-	public static Group statusBarGroup = new Group();
-	private static Pane namePane = new Pane();
+	private static Group tileGroup;
+	private static Group entityGroup;
+	public static Group statusBarGroup;
+	private static Pane namePane;
 	private static Fighter hero;
 	private static Pair heroPosition;
 	private static String heroName;
-	private static ArrayList<Monster> monsterList = new ArrayList<>();
-	private static Canvas BG = new Canvas(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
-	private static Image bgImage= new Image("background/BG_01.png");
+	private static ArrayList<Monster> monsterList;
+	private static Canvas BG;
+	private static Image bgImage = new Image("background/BG_01.png");
 
 	public Map() {
+		tileGroup = new Group();
+		entityGroup = new Group();
+		statusBarGroup = new Group();
+		namePane = new Pane();
+		monsterList = new ArrayList<>();
+		board = new Tile[WIDTH][HEIGHT];
+		BG = new Canvas(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+
 		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 
 		for (int x = 0; x < WIDTH; x++) {
@@ -58,79 +66,28 @@ public class Map extends Pane {
 				tileGroup.getChildren().add(tile);
 			}
 		}
-		
-		/* */
-		// add monsters below
-		// Monster slime1 = (Monster) createDefaultEntity("Slime", new Pair(2, 4));
-		// Monster slime2 = (Monster) createDefaultEntity("Slime", new Pair(4, 4));
-		// Monster slime3 = (Monster) createDefaultEntity("Slime", new Pair(7, 1));
-		// Monster slime4 = (Monster) createDefaultEntity("Slime", new Pair(7, 7));
-		// board[2][4].setTileType(TileType.MONSTER);
-		// board[2][4].setEntity(slime1);
-		// board[4][4].setTileType(TileType.MONSTER);
-		// board[4][4].setEntity(slime2);
-		// board[7][1].setTileType(TileType.MONSTER);
-		// board[7][1].setEntity(slime3);
-		// board[7][7].setTileType(TileType.MONSTER);
-		// board[7][7].setEntity(slime4);
-		//// statusBarGroup.getChildren().add(slime1.getHpBar().getCanvas());
-		// entityGroup.getChildren().addAll(slime1.getCanvas()
-		// , slime2.getCanvas(), slime3.getCanvas(),
-		// slime4.getCanvas());
-		// monsterList.add(slime1);
-		// monsterList.add(slime2);
-		// monsterList.add(slime3);
-		// monsterList.add(slime4);
-		//
-		// Monster slime5 = (Monster) createDefaultEntity("Slime", new Pair(10,5));
-		// monsterList.add(slime5);
-		// board[10][5].setTileType(TileType.MONSTER);
-		// board[10][5].setEntity(slime5);
-		// entityGroup.getChildren().add(slime5.getCanvas());
+
 		Slime slime6 = new Slime(new Pair(4, 1));
 		createDefaultEntity(slime6, "Slime", slime6.getPosition());
 		SlimeKing king = new SlimeKing(new Pair(5, 5));
 		createDefaultEntity(king, "SlimeKing", king.getPosition());
 
-		// random n th slime
-		// for(int i=0;i<5;i++) {
-		// int x= new Random().nextInt(Map.WIDTH);
-		// int y= new Random().nextInt(Map.HEIGHT);
-		// if(Map.getBoard()[x][y].getTileType()!=null) { i--; continue;}
-		// Monster slime = (Monster) createDefaultEntity("Slime", new Pair(x,y));
-		// monsterList.add(slime);
-		// board[x][y].setTileType(TileType.MONSTER);
-		// board[x][y].setEntity(slime);
-		// entityGroup.getChildren().add(slime.getCanvas());
-		// }
-
-		// System.out.println(slime1.getPosition().first+"
-		// "+slime1.getPosition().second);
-		// add monsters above
-
-		// add hero below;
-		hero = new Fighter(MainMenu.name,new Pair(1, 4));
-		heroName=hero.getName();
+		hero = new Fighter(MainMenu.name, new Pair(1, 4));
+		heroName = hero.getName();
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 		namePane.getChildren().add(hero.getNameCanvas());
-		// System.out.println(hero.getNameCanvas().);
-		// statusBarGroup.getChildren().add(novice.getHpBar().getCanvas());
-		// entityGroup.getChildren().add(novice.getCanvas());
 
-		// add hero above
 		this.getChildren().clear();
-		
+
 		GraphicsContext MapGc = BG.getGraphicsContext2D();
 		MapGc.clearRect(0, 0, 500, 500);
-		MapGc.drawImage(bgImage,0, 0, 700, 700);
+		MapGc.drawImage(bgImage, 0, 0, 700, 700);
 		tileGroup.getChildren().add(BG);
-		
+
 		entityGroup.getChildren().add(slime6.getAtkCanvas());
 		entityGroup.getChildren().add(king.getAtkCanvas());
 		entityGroup.getChildren().add(hero.getAtkCanvas());
 		this.getChildren().addAll(tileGroup, statusBarGroup, entityGroup, namePane);
-
-		
 
 	}
 
@@ -223,7 +180,53 @@ public class Map extends Pane {
 		if (instance == null) {
 			instance = new Map();
 		}
+		System.out.println("z");
+
 		return instance;
 	}
 
+	public void reset() {
+		tileGroup = new Group();
+		entityGroup = new Group();
+		statusBarGroup = new Group();
+		namePane = new Pane();
+		monsterList = new ArrayList<>();
+		board = new Tile[WIDTH][HEIGHT];
+		BG = new Canvas(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+
+		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+
+		for (int x = 0; x < WIDTH; x++) {
+			for (int y = 0; y < HEIGHT; y++) {
+				Tile tile = new Tile((x + y) % 2 == 0, x, y, null);
+
+				tile.setTileType(TileType.NONE);
+				board[x][y] = tile;
+				tileGroup.getChildren().add(tile);
+			}
+		}
+
+		Slime slime6 = new Slime(new Pair(4, 1));
+		createDefaultEntity(slime6, "Slime", slime6.getPosition());
+		SlimeKing king = new SlimeKing(new Pair(5, 5));
+		createDefaultEntity(king, "SlimeKing", king.getPosition());
+
+		hero = new Fighter(MainMenu.name, new Pair(1, 4));
+		heroName = hero.getName();
+		createDefaultEntity(hero, "Novice", hero.getPosition());
+		namePane.getChildren().add(hero.getNameCanvas());
+
+		this.getChildren().clear();
+
+		GraphicsContext MapGc = BG.getGraphicsContext2D();
+		MapGc.clearRect(0, 0, 500, 500);
+		MapGc.drawImage(bgImage, 0, 0, 700, 700);
+		tileGroup.getChildren().add(BG);
+
+		entityGroup.getChildren().add(slime6.getAtkCanvas());
+		entityGroup.getChildren().add(king.getAtkCanvas());
+		entityGroup.getChildren().add(hero.getAtkCanvas());
+		this.getChildren().addAll(tileGroup, statusBarGroup, entityGroup, namePane);
+
+	}
 }

@@ -8,8 +8,12 @@ import entity.hero.Novice;
 import entity.monster.Monster;
 import environment.Map;
 import environment.window.SceneManager;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Duration;
 import utility.ActionResult;
 import utility.ActionType;
 import utility.Direction;
@@ -23,6 +27,8 @@ public class GameHandler {
 
 	private static int tick = 0;
 	private static boolean isPaused;
+
+	private static Timeline gameTimer;
 
 	public static void keyPressed(KeyEvent event) {
 		// if (activeKey.contains(event.getCode()))
@@ -282,6 +288,26 @@ public class GameHandler {
 
 	public static void setPaused(boolean isPause) {
 		isPaused = isPause;
+	}
+
+	public static void startGame() {
+		// TODO Auto-generated method stub
+		GameHandler.setPaused(false);
+		gameTimer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
+			GameHandler.update();
+		}));
+		gameTimer.setCycleCount(Animation.INDEFINITE);
+		gameTimer.play();
+	}
+
+	public static void stopTimer() {
+		// TODO Auto-generated method stub
+		gameTimer.stop();
+	}
+
+	public static void playTimer() {
+		// TODO Auto-generated method stub
+		gameTimer.play();
 	}
 
 }

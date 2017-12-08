@@ -1,9 +1,8 @@
 package environment.menu;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
+import environment.Map;
 import environment.window.SceneManager;
 import exception.EmptyNameException;
 import javafx.animation.Animation;
@@ -108,6 +107,9 @@ public class PauseMenu extends Pane {
 			// openStatusMenu
 		} else if (pointer == 2) {
 			SceneManager.gotoMainMenu();
+			GameHandler.stopTimer();
+			SceneManager.pauseTimer.stop();
+			Map.getInstance().reset();
 		}
 	}
 

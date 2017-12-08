@@ -22,7 +22,6 @@ public final class SceneManager {
 	private static MainMenu mainMenuCanvas  = new environment.menu.MainMenu();
 	private static PauseMenu pausedMenu = new PauseMenu();
 	private static Scene mainMenuScene = new Scene(mainMenuCanvas);
-	public static Timeline gameTimer;
 	public static Timeline pauseTimer;
 
 	public static void initialize(Stage stage) {
@@ -39,7 +38,7 @@ public final class SceneManager {
 	public static void openPausedMenu() {
 		// TODO Fill Code
 		Map.getInstance().getChildren().add(pausedMenu);
-		gameTimer.stop();
+		GameHandler.stopTimer();
 		pauseTimer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			PausedHandler.update();
 		}));
@@ -52,7 +51,7 @@ public final class SceneManager {
 	public static void closePausedMenu() {
 		// TODO Fill Code
 		Map.getInstance().getChildren().remove(pausedMenu);
-		gameTimer.play();
+		GameHandler.playTimer();
 		primaryStage.getScene().setOnKeyPressed(event -> GameHandler.keyPressed(event));
 		primaryStage.getScene().setOnKeyReleased(event -> GameHandler.keyReleased(event));
 		pauseTimer.stop();
@@ -63,19 +62,20 @@ public final class SceneManager {
 	public static void gotoGameScene() {
 
 		// put all pane
-
+		System.out.println("x");
 		Scene scene = new Scene(Map.getInstance());
-		GameHandler.setPaused(false);
-		gameTimer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
-			GameHandler.update();
-		}));
-		gameTimer.setCycleCount(Animation.INDEFINITE);
-		gameTimer.play();
+		System.out.println("y");
+		
 		scene.setOnKeyPressed(event -> GameHandler.keyPressed(event));
 		scene.setOnKeyReleased(event -> GameHandler.keyReleased(event));
 		// set handler
-
+		GameHandler.startGame();
+		
 		primaryStage.setScene(scene);
+		primaryStage.setOnCloseRequest(event -> {
+			GameHandler.stopTimer();
+			
+		});
 	}
 
 	public static void setStage(Stage primaryStage) {
