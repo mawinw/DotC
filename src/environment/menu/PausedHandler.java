@@ -66,7 +66,7 @@ public class PausedHandler {
 
 	private static void action() {
 		// TODO Auto-generated method stub
-		if (activeKey.contains(KeyCode.Z)) {
+		if (activeKey.contains(KeyCode.Z)||activeKey.contains(KeyCode.ENTER)) {
 			PauseMenu.action();
 		}
 		

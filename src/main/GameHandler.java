@@ -196,7 +196,6 @@ public class GameHandler {
 	public static void checkPause() {
 		if (activeKey.contains(KeyCode.ENTER)) {
 			activeKey.remove(KeyCode.ENTER);
-			
 //			if(!isPaused) {
 //				isPaused=!isPaused;
 				SceneManager.openPausedMenu();
