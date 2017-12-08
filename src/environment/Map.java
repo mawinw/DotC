@@ -43,7 +43,7 @@ public class Map extends Pane {
 	private static Pair heroPosition;
 	private static String heroName;
 	private static ArrayList<Monster> monsterList = new ArrayList<>();
-	private static Canvas BG = new Canvas();
+	private static Canvas BG = new Canvas(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 	private static Image bgImage= new Image("background/BG_01.png");
 
 	public Map() {
@@ -122,7 +122,9 @@ public class Map extends Pane {
 		
 		GraphicsContext MapGc = BG.getGraphicsContext2D();
 		MapGc.clearRect(0, 0, 500, 500);
-		MapGc.drawImage(bgImage,0, 0, 500, 500);
+		//MapGc.setFill(Color.BLACK);
+		//MapGc.fillRect(0, 0, 100, 100);
+		MapGc.drawImage(bgImage,0, 0, 700, 700);
 		tileGroup.getChildren().add(BG);
 		
 		entityGroup.getChildren().add(slime6.getAtkCanvas());
