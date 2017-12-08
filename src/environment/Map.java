@@ -15,8 +15,10 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import utility.ActionResult;
 import utility.ActionType;
 import utility.Pair;
@@ -41,9 +43,12 @@ public class Map extends Pane {
 	private static Pair heroPosition;
 	private static String heroName;
 	private static ArrayList<Monster> monsterList = new ArrayList<>();
+	private static Canvas BG = new Canvas();
+	private static Image bgImage= new Image("background/BG_01.png");
 
 	public Map() {
 		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
 				Tile tile = new Tile((x + y) % 2 == 0, x, y, null);
@@ -53,6 +58,7 @@ public class Map extends Pane {
 				tileGroup.getChildren().add(tile);
 			}
 		}
+		
 		/* */
 		// add monsters below
 		// Monster slime1 = (Monster) createDefaultEntity("Slime", new Pair(2, 4));
@@ -113,11 +119,19 @@ public class Map extends Pane {
 
 		// add hero above
 		this.getChildren().clear();
+		
+		GraphicsContext MapGc = BG.getGraphicsContext2D();
+		MapGc.clearRect(0, 0, 500, 500);
+		MapGc.drawImage(bgImage,0, 0, 500, 500);
+		tileGroup.getChildren().add(BG);
+		
 		entityGroup.getChildren().add(slime6.getAtkCanvas());
 		entityGroup.getChildren().add(king.getAtkCanvas());
 		entityGroup.getChildren().add(hero.getAtkCanvas());
 		this.getChildren().addAll(tileGroup, statusBarGroup, entityGroup, namePane);
+
 		
+
 	}
 
 	public static Group getEntityGroup() {
