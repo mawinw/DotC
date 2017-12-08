@@ -113,6 +113,9 @@ public class Map extends Pane {
 
 		// add hero above
 		this.getChildren().clear();
+		entityGroup.getChildren().add(slime6.getAtkCanvas());
+		entityGroup.getChildren().add(king.getAtkCanvas());
+		entityGroup.getChildren().add(hero.getAtkCanvas());
 		this.getChildren().addAll(tileGroup, statusBarGroup, entityGroup, namePane);
 		
 	}
@@ -167,7 +170,6 @@ public class Map extends Pane {
 			board[(int) position.first][(int) position.second].setTileType(TileType.MONSTER);
 			board[(int) position.first][(int) position.second].setEntity(entity);
 			entityGroup.getChildren().add(entity.getCanvas());
-			entityGroup.getChildren().add(entity.getAtkCanvas());
 			entity.draw();
 			return;
 		case "SlimeKing":
@@ -179,7 +181,6 @@ public class Map extends Pane {
 				}
 			}
 			entityGroup.getChildren().add(entity.getCanvas());
-			entityGroup.getChildren().add(entity.getAtkCanvas());
 			entity.draw();
 			return;
 		case "Novice":
@@ -187,7 +188,6 @@ public class Map extends Pane {
 			board[(int) position.first][(int) position.second].setEntity(hero);
 			heroPosition = hero.getPosition();
 			entityGroup.getChildren().add(entity.getCanvas());
-			entityGroup.getChildren().add(entity.getAtkCanvas());
 			entity.draw();
 			return;
 		}

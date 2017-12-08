@@ -78,7 +78,7 @@ public class Fighter extends Novice {
 		double playerY=position.second;
 		int tileSize=Map.TILE_SIZE;
 
-		if (currentSmashAnimation <= (maxSmashImage)) {
+		if (currentSmashAnimation <= (maxSmashImage-1)) {
 				gc.clearRect((playerX - 1) * tileSize, (playerY-1) * tileSize,
 						(picWidth+2) * tileSize, (picHeight+2) * tileSize);
 				gc.drawImage(smashImages[currentSmashAnimation], (playerX - 1) * tileSize,
