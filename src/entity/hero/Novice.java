@@ -53,19 +53,6 @@ public class Novice extends Entity {
 	private static int currentAttackAnimation = 7;
 
 	private static int currentAnimation = 0;
-	
-	
-	
-	
-	private final static int maxSmashImage=8;
-	private static final Image[] smashImages = new Image[maxSmashImage];
-	static {
-		for (int i = 1; i <= maxSmashImage; ++i) {
-			smashImages[i - 1] = new Image("images/effect/smash (" + i + ").png");
-		}
-	}
-	private static int currentSmashAnimation = 9;
-
 
 	public Novice(Pair pos) {
 		super("Novice", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
@@ -167,18 +154,13 @@ public class Novice extends Entity {
 		isMoveFinished = false;
 		isAttackFinished = false;
 		entity.setMoveFinished(false);
+		currentAttackAnimation = 0;
 		
-		//currentAttackAnimation = 0;
-		currentSmashAnimation=0; //
-		
-		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(50), attack -> { //was 150
-			//drawAttackAnimation();
-			//currentAttackAnimation ++;
-			drawSmashAnimation();
-			currentSmashAnimation++;
+		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(150), attack -> {
+			drawAttackAnimation();
+			currentAttackAnimation ++;
 		}));
-		//attackTimeline.setCycleCount(6);
-		attackTimeline.setCycleCount(9);
+		attackTimeline.setCycleCount(6);
 		attackTimeline.play();
 
 		timer = new Timeline(new KeyFrame(new Duration(750), e -> {
@@ -208,80 +190,34 @@ public class Novice extends Entity {
 	}
 
 	public void drawAttackAnimation() {
-		GraphicsContext gc = this.canvas.getGraphicsContext2D();
+		GraphicsContext gc = this.atkCanvas.getGraphicsContext2D();
 		if (currentAttackAnimation == 0) {
-			attackDirection = faceDirection;
-		}
-		double playerX=position.first;
-		double playerY=position.second;
-		int tSize=Map.TILE_SIZE;
-
-		if (currentAttackAnimation <= maxAttackImage) {
-			if (attackDirection == Direction.RIGHT) {
-				gc.clearRect((playerX + 1) * tSize, (playerY-0.15) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15 + 1) * tSize,
-						(playerY-0.15) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.LEFT) {
-				gc.clearRect((playerX-0.3 - 1) * tSize, (playerY-0.15) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15 - 1) * tSize,
-						(playerY-0.15) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.DOWN) {
-				gc.clearRect((playerX-0.15) * tSize, (playerY + 1) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15) * tSize,
-						(playerY-0.15 + 1) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.UP) {
-				gc.clearRect((playerX-0.3) * tSize, (playerY-0.3 - 1) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15) * tSize,
-						(playerY-0.15 - 1) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			}
-		}
-
-		if (currentAttackAnimation == maxAttackImage+1) {
-			if (attackDirection == Direction.RIGHT) {
-				gc.clearRect((playerX + 1) * tSize, (playerY-0.15) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.LEFT) {
-				gc.clearRect((playerX-0.3 - 1) * tSize, (playerY-0.15) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.DOWN) {
-				gc.clearRect((playerX-0.15) * tSize, (playerY+ 1) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.UP) {
-				gc.clearRect((playerX-0.15) * tSize, (playerY-0.3 - 1) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			}
-		}
-
-	}
-	
-	private void drawSmashAnimation() {
-		GraphicsContext gc = this.canvas.getGraphicsContext2D();
-		if (currentSmashAnimation == 0) {
 			attackDirection = faceDirection;
 		}
 		double playerX=position.first;
 		double playerY=position.second;
 		int tileSize=Map.TILE_SIZE;
 
-		if (currentSmashAnimation <= (maxSmashImage)) {
-				gc.clearRect((playerX - 1) * tileSize, (playerY-1) * tileSize,
-						(picWidth+2) * tileSize, (picHeight+2) * tileSize);
-				gc.drawImage(smashImages[currentSmashAnimation], (playerX - 1) * tileSize,
-						(playerY-1) * tileSize, (picWidth+2) * tileSize, (picHeight+2) * tileSize);
+		gc.clearRect(0, 0, Map.WIDTH*tileSize, Map.HEIGHT*tileSize);
+
+		if (currentAttackAnimation <= maxAttackImage-1) {
+			if (attackDirection == Direction.RIGHT) {
+				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15 + 1) * tileSize,
+						(playerY-0.15) * tileSize, (picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize);
+			} else if (attackDirection == Direction.LEFT) {
+				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15 - 1) * tileSize,
+						(playerY-0.15) * tileSize, (picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize);
+			} else if (attackDirection == Direction.DOWN) {
+				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15) * tileSize,
+						(playerY-0.15 + 1) * tileSize, (picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize);
+			} else if (attackDirection == Direction.UP) {
+				gc.drawImage(attackImages[currentAttackAnimation], (playerX-0.15) * tileSize,
+						(playerY-0.15 - 1) * tileSize, (picWidth+0.3) * tileSize, (picHeight+0.3) * tileSize);
+			}
 		}
 
-		if (currentSmashAnimation == maxSmashImage+1) {
-			gc.clearRect((playerX - 1) * tileSize, (playerY-1) * tileSize,
-					(picWidth) * tileSize, (picHeight) * tileSize);
-		}
-
-		
-		
 	}
+	
 
 	public void normalAttack() {
 		if ((int) position.first + 1 < Map.WIDTH) {
