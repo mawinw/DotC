@@ -109,7 +109,8 @@ public class Map extends Pane {
 		// entityGroup.getChildren().add(novice.getCanvas());
 
 		// add hero above
-		this.getChildren().addAll(tileGroup, statusBarGroup, entityGroup, namePane);
+		instance.getChildren().clear();
+		instance.getChildren().addAll(tileGroup, statusBarGroup, entityGroup, namePane);
 		
 	}
 
