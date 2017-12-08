@@ -3,7 +3,9 @@ package entity.monster;
 import java.util.Random;
 
 import entity.Entity;
+import entity.property.Attackable;
 import entity.property.HpBar;
+import entity.property.Moveable;
 import environment.Map;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,7 +22,7 @@ import utility.Pair;
 import utility.Side;
 import utility.TileType;
 
-public abstract class Monster extends Entity {
+public abstract class Monster extends Entity implements Attackable,Moveable {
 
 	public static final int VISIBLE_RANGE = 3;
 
@@ -93,65 +95,10 @@ public abstract class Monster extends Entity {
 
 	}
 
-	public void updateAnimation() {
-		currentAnimation++;
-		draw();
-	}	
-	public void updateAttackAnimation() {
-		currentAttackAnimation++;
-		drawAttackAnimation();
-	}
+	abstract public void updateAnimation() ;
+	abstract public void updateAttackAnimation();
 
-	public void drawAttackAnimation() {
-		GraphicsContext gc = this.canvas.getGraphicsContext2D();
-		if (currentAttackAnimation == 0) {
-			attackDirection = faceDirection;
-		}
-		double monsterX=position.first;
-		double monsterY=position.second;
-		int tSize=Map.TILE_SIZE;
-
-		if (currentAttackAnimation <= (maxAttackImage-1)) {
-			if (attackDirection == Direction.RIGHT) {
-				gc.clearRect((monsterX + 1) * tSize, (monsterY-0.15) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15 + 1) * tSize,
-						(monsterY-0.15) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.LEFT) {
-				gc.clearRect((monsterX-0.3 - 1) * tSize, (monsterY-0.15) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15 - 1) * tSize,
-						(monsterY-0.15) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.DOWN) {
-				gc.clearRect((monsterX-0.15) * tSize, (monsterY+0.3 + 1) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15) * tSize,
-						(monsterY-0.15 + 1) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.UP) {
-				gc.clearRect((monsterX-0.3) * tSize, (monsterY-0.3 - 1) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-				gc.drawImage(attackImages[currentAttackAnimation], (monsterX-0.15) * tSize,
-						(monsterY-0.15 - 1) * tSize, (picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			}
-		}
-
-		if (currentAttackAnimation == maxAttackImage) {
-			if (attackDirection == Direction.RIGHT) {
-				gc.clearRect((monsterX + 1) * tSize, (monsterY-0.15) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.LEFT) {
-				gc.clearRect((monsterX-0.3 - 1) * tSize, (monsterY-0.15) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.DOWN) {
-				gc.clearRect((monsterX-0.15) * tSize, (monsterY + 1) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			} else if (attackDirection == Direction.UP) {
-				gc.clearRect((monsterX-0.15) * tSize, (monsterY-0.3 - 1) * tSize,
-						(picWidth+0.3) * tSize, (picHeight+0.3) * tSize);
-			}
-		}
-
-	}
+	abstract public void drawAttackAnimation() ;
 	
 	
 	protected void drawDirection() {
@@ -362,7 +309,7 @@ public abstract class Monster extends Entity {
 		}
 	}
 
-	private double calculateDamage(Entity entity) {
+	public double calculateDamage(Entity entity) {
 		Random rn = new Random();
 		int atkSuccess = rn.nextInt(100);
 		int criSuccess = rn.nextInt(100);

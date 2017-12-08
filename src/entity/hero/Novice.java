@@ -6,7 +6,9 @@ import java.util.Random;
 import entity.Entity;
 import entity.monster.Monster;
 import entity.monster.SlimeKing;
+import entity.property.Attackable;
 import entity.property.HpBar;
+import entity.property.Moveable;
 import environment.Map;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -17,6 +19,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import main.GameHandler;
@@ -26,7 +29,7 @@ import utility.Pair;
 import utility.Side;
 import utility.TileType;
 
-public class Novice extends Entity {
+public class Novice extends Entity implements Attackable,Moveable {
 
 	private static final int DEFAULT_MAX_HP = 200;
 	private static final int DEFAULT_ATK = 50;
@@ -105,10 +108,17 @@ public class Novice extends Entity {
 	public void drawNameAndLv() {
 		GraphicsContext gc = nameCanvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		gc.setFill(Color.WHITE);
+		String msg= name+"  (lv  "+lv+")";
+		final Text text = new Text(msg);
+        text.setFont(NAMEFONT);
+        final double width = text.getLayoutBounds().getWidth();
+        final double height = text.getLayoutBounds().getHeight();
+		gc.fillRect((position.first+0.5) * Map.TILE_SIZE-(width/2+5), (position.second) * Map.TILE_SIZE - (height+15), width+10, height+10);
 		gc.setTextBaseline(VPos.BOTTOM);
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setFont(NAMEFONT);
-		gc.setFill(Color.GRAY);
+		gc.setFill(Color.BLUE);
 		gc.fillText(name+"  (lv  "+lv+")", (position.first+0.5) * Map.TILE_SIZE, position.second * Map.TILE_SIZE - 10);
 		
 	}
@@ -257,7 +267,7 @@ public class Novice extends Entity {
 		}
 	}
 
-	protected double calculateDamage(Entity entity) {
+	public double calculateDamage(Entity entity) {
 		Random rn = new Random();
 		int atkSuccess = rn.nextInt(100);
 		int criSuccess = rn.nextInt(100);

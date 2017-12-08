@@ -122,8 +122,6 @@ public class Map extends Pane {
 		
 		GraphicsContext MapGc = BG.getGraphicsContext2D();
 		MapGc.clearRect(0, 0, 500, 500);
-		//MapGc.setFill(Color.BLACK);
-		//MapGc.fillRect(0, 0, 100, 100);
 		MapGc.drawImage(bgImage,0, 0, 700, 700);
 		tileGroup.getChildren().add(BG);
 		
