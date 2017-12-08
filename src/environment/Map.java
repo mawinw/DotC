@@ -15,6 +15,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import utility.ActionResult;
 import utility.ActionType;
@@ -29,6 +30,8 @@ public class Map extends Pane {
 	public static final int HEIGHT = 14;
 
 	private static Tile[][] board = new Tile[WIDTH][HEIGHT];
+	//private static Image backgroundImage = new Image("images/background/BG_01.png");
+	private static Canvas bgCanvas;
 
 	private static Group tileGroup = new Group();
 	private static Group entityGroup = new Group();
@@ -163,6 +166,7 @@ public class Map extends Pane {
 			board[(int) position.first][(int) position.second].setTileType(TileType.MONSTER);
 			board[(int) position.first][(int) position.second].setEntity(entity);
 			entityGroup.getChildren().add(entity.getCanvas());
+			entityGroup.getChildren().add(entity.getAtkCanvas());
 			entity.draw();
 			return;
 		case "SlimeKing":
@@ -174,6 +178,7 @@ public class Map extends Pane {
 				}
 			}
 			entityGroup.getChildren().add(entity.getCanvas());
+			entityGroup.getChildren().add(entity.getAtkCanvas());
 			entity.draw();
 			return;
 		case "Novice":
@@ -181,6 +186,7 @@ public class Map extends Pane {
 			board[(int) position.first][(int) position.second].setEntity(hero);
 			heroPosition = hero.getPosition();
 			entityGroup.getChildren().add(entity.getCanvas());
+			entityGroup.getChildren().add(entity.getAtkCanvas());
 			entity.draw();
 			return;
 		}
