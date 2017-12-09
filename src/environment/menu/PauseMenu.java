@@ -2,7 +2,9 @@ package environment.menu;
 
 import java.util.ArrayList;
 
-import environment.Map;
+import entity.hero.Novice;
+import environment.GameHandler;
+import environment.GameScene;
 import environment.window.SceneManager;
 import exception.EmptyNameException;
 import javafx.animation.Animation;
@@ -19,7 +21,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-import main.GameHandler;
 import main.Main;
 
 public class PauseMenu extends Pane {
@@ -100,19 +101,31 @@ public class PauseMenu extends Pane {
 
 	public static void action() {
 		// TODO Auto-generated method stub
-		if (pointer == 0) {
-			
-			SceneManager.closePausedMenu();
-		} else if (pointer == 1) {
-			SceneManager.openStatusMenu();
-		} else if (pointer == 2) {
-			SceneManager.gotoMainMenu();
-			GameHandler.stopTimer();
-			SceneManager.pauseTimer.stop();
-			Map.getInstance().reset();
-			pointer=0;
-			drawSelectedFrame();
-		}
+		if(!isCompleted) return;
+		isCompleted=false;
+		Timeline timer = new Timeline(new KeyFrame(new Duration(100), e -> {
+			if (pointer == 0) {
+				
+				SceneManager.closePausedMenu();
+			} else if (pointer == 1) {
+				SceneManager.openStatusMenu();
+			} else if (pointer == 2) {
+				SceneManager.gotoMainMenu();
+				GameHandler.stopTimer();
+				//SceneManager.pauseTimer.stop();
+				PausedHandler.stopTimer();
+
+				GameScene.getInstance().reset();
+				pointer=0;
+				drawSelectedFrame();
+			}
+		}));
+		timer.setCycleCount(1);
+		timer.play();
+		timer.setOnFinished(e->{
+			isCompleted=true;
+		});
+		
 	}
 
 	public static void moveSelected(boolean b) {

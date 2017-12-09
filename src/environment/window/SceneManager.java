@@ -1,9 +1,11 @@
 package environment.window;
 
-import environment.Map;
+import environment.GameHandler;
+import environment.GameScene;
 import environment.menu.MainMenu;
 import environment.menu.PauseMenu;
 import environment.menu.PausedHandler;
+import environment.menu.StatusHandler;
 import environment.menu.StatusMenu;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -14,7 +16,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import main.GameHandler;
 import main.Main;
 import environment.window.*;
 
@@ -46,11 +47,7 @@ public final class SceneManager {
 		// TODO Fill Code
 		allPane.getChildren().add(pausedMenu);
 		GameHandler.stopTimer();
-		pauseTimer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
-			PausedHandler.update();
-		}));
-		pauseTimer.setCycleCount(Animation.INDEFINITE);
-		pauseTimer.play();
+		PausedHandler.start();
 
 		primaryStage.getScene().setOnKeyPressed(event -> PausedHandler.keyPressed(event));
 		primaryStage.getScene().setOnKeyReleased(event -> PausedHandler.keyReleased(event));
@@ -61,30 +58,26 @@ public final class SceneManager {
 		GameHandler.playTimer();
 		primaryStage.getScene().setOnKeyPressed(event -> GameHandler.keyPressed(event));
 		primaryStage.getScene().setOnKeyReleased(event -> GameHandler.keyReleased(event));
-		pauseTimer.stop();
+		PausedHandler.stopTimer();
 	
 	}
 
 	public static void openStatusMenu() {
 		// TODO Fill Code
 		allPane.getChildren().add(statusMenu);
-//		GameHandler.stopTimer();
-//		pauseTimer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
-//			PausedHandler.update();
-//		}));
-//		pauseTimer.setCycleCount(Animation.INDEFINITE);
-//		pauseTimer.play();
-//
-//		primaryStage.getScene().setOnKeyPressed(event -> PausedHandler.keyPressed(event));
-//		primaryStage.getScene().setOnKeyReleased(event -> PausedHandler.keyReleased(event));
+		PausedHandler.stopTimer();
+		StatusHandler.start();
+		primaryStage.getScene().setOnKeyPressed(event -> StatusHandler.keyPressed(event));
+		primaryStage.getScene().setOnKeyReleased(event -> StatusHandler.keyReleased(event));
 	}
 	public static void closeStatusMenu() {
 		// TODO Fill Code
-		allPane.getChildren().remove(pausedMenu);
-//		GameHandler.playTimer();
-//		primaryStage.getScene().setOnKeyPressed(event -> GameHandler.keyPressed(event));
-//		primaryStage.getScene().setOnKeyReleased(event -> GameHandler.keyReleased(event));
-//		pauseTimer.stop();
+		System.out.println("x");
+		allPane.getChildren().remove(statusMenu);
+		PausedHandler.playTimer();
+		primaryStage.getScene().setOnKeyPressed(event -> PausedHandler.keyPressed(event));
+		primaryStage.getScene().setOnKeyReleased(event -> PausedHandler.keyReleased(event));
+		StatusHandler.stopTimer();
 	
 	}
 
@@ -92,12 +85,12 @@ public final class SceneManager {
 	public static void gotoGameScene() {
 
 		// put all pane
-		Map.getInstance().reset();
+		GameScene.getInstance().reset();
 		allPane = new Pane();
-		allPane.getChildren().add(Map.getInstance().getTileGroup());
-		allPane.getChildren().add(Map.getInstance().getStatusBarGroup());
-		allPane.getChildren().add(Map.getInstance().getEntityGroup());
-		allPane.getChildren().add(Map.getInstance().getNamePane());
+		allPane.getChildren().add(GameScene.getInstance().getTileGroup());
+		allPane.getChildren().add(GameScene.getInstance().getStatusBarGroup());
+		allPane.getChildren().add(GameScene.getInstance().getEntityGroup());
+		allPane.getChildren().add(GameScene.getInstance().getNamePane());
 		
 		Scene scene = new Scene(allPane,Main.SCREEN_SIZE,Main.SCREEN_SIZE);
 		

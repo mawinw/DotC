@@ -9,7 +9,8 @@ import entity.monster.SlimeKing;
 import entity.property.Attackable;
 import entity.property.HpBar;
 import entity.property.Moveable;
-import environment.Map;
+import environment.GameHandler;
+import environment.GameScene;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -23,7 +24,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-import main.GameHandler;
 import main.Main;
 import utility.Direction;
 import utility.Pair;
@@ -66,7 +66,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 		}
 	}
 
-	protected Canvas levelUpCanvas = new Canvas(Map.WIDTH*Map.TILE_SIZE,Map.HEIGHT*Map.TILE_SIZE);
+	protected Canvas levelUpCanvas = new Canvas(GameScene.WIDTH*GameScene.TILE_SIZE,GameScene.HEIGHT*GameScene.TILE_SIZE);
 	private static final int maxLevelUpImage = 21;
 	private static final Image[] levelUpImages = new Image[maxLevelUpImage];
 	static {
@@ -87,7 +87,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 		this.faceDirection = Direction.RIGHT;
 		this.isAttackFinished = true;
 		this.isMoveFinished = true;
-		this.nameCanvas = new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		this.nameCanvas = new Canvas(GameScene.WIDTH * GameScene.TILE_SIZE, GameScene.HEIGHT * GameScene.TILE_SIZE);
 		this.statusPoint = 0;
 		// don't forget to initial picture size and first time position
 	}
@@ -102,57 +102,57 @@ public class Novice extends Entity implements Attackable, Moveable {
 		this.faceDirection = Direction.RIGHT;
 		this.isAttackFinished = true;
 		this.isMoveFinished = true;
-		this.nameCanvas = new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		this.nameCanvas = new Canvas(GameScene.WIDTH * GameScene.TILE_SIZE, GameScene.HEIGHT * GameScene.TILE_SIZE);
 		this.statusPoint = 0;
 		// don't forget to initial picture size and first time position
 	}
 
 	public void draw() {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		gc.clearRect(0, 0, GameScene.WIDTH * GameScene.TILE_SIZE, GameScene.HEIGHT * GameScene.TILE_SIZE);
 
 		if (faceDirection == Direction.RIGHT) {
-			gc.drawImage(characterImages[3], position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.drawImage(characterImages[3], position.first * GameScene.TILE_SIZE, position.second * GameScene.TILE_SIZE,
+					picWidth * GameScene.TILE_SIZE, picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.LEFT) {
-			gc.drawImage(characterImages[2], position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.drawImage(characterImages[2], position.first * GameScene.TILE_SIZE, position.second * GameScene.TILE_SIZE,
+					picWidth * GameScene.TILE_SIZE, picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.DOWN) {
-			gc.drawImage(characterImages[1], position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.drawImage(characterImages[1], position.first * GameScene.TILE_SIZE, position.second * GameScene.TILE_SIZE,
+					picWidth * GameScene.TILE_SIZE, picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.UP) {
-			gc.drawImage(characterImages[4], position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.drawImage(characterImages[4], position.first * GameScene.TILE_SIZE, position.second * GameScene.TILE_SIZE,
+					picWidth * GameScene.TILE_SIZE, picHeight * GameScene.TILE_SIZE);
 		}
 
 		drawDirection();
 		// System.out.println(position.first+" "+position.second);
 		if (isDead)
 			return;
-		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
+		GameScene.statusBarGroup.getChildren().remove(hpBar.getCanvas());
 		hpBar = new HpBar(this);
 		hpBar.draw();
-		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
+		GameScene.statusBarGroup.getChildren().add(hpBar.getCanvas());
 		drawNameAndLv();
 	}
 
 	public void drawNameAndLv() {
 		GraphicsContext gc = nameCanvas.getGraphicsContext2D();
-		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		gc.clearRect(0, 0, GameScene.WIDTH * GameScene.TILE_SIZE, GameScene.HEIGHT * GameScene.TILE_SIZE);
 		gc.setFill(Color.WHITE);
 		String msg = name + "  (lv  " + lv + ")";
 		final Text text = new Text(msg);
 		text.setFont(NAMEFONT);
 		final double width = text.getLayoutBounds().getWidth();
 		final double height = text.getLayoutBounds().getHeight();
-		gc.fillRect((position.first + 0.5) * Map.TILE_SIZE - (width / 2 + 5),
-				(position.second) * Map.TILE_SIZE - (height + 15), width + 10, height + 10);
+		gc.fillRect((position.first + 0.5) * GameScene.TILE_SIZE - (width / 2 + 5),
+				(position.second) * GameScene.TILE_SIZE - (height + 15), width + 10, height + 10);
 		gc.setTextBaseline(VPos.BOTTOM);
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setFont(NAMEFONT);
 		gc.setFill(Color.BLUE);
-		gc.fillText(name + "  (lv  " + lv + ")", (position.first + 0.5) * Map.TILE_SIZE,
-				position.second * Map.TILE_SIZE - 10);
+		gc.fillText(name + "  (lv  " + lv + ")", (position.first + 0.5) * GameScene.TILE_SIZE,
+				position.second * GameScene.TILE_SIZE - 10);
 
 	}
 
@@ -161,25 +161,25 @@ public class Novice extends Entity implements Attackable, Moveable {
 		gc.setStroke(Color.RED);
 		gc.setLineWidth(2);
 		if (faceDirection == Direction.RIGHT) {
-			gc.strokeRect((position.first + 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first + 1) * GameScene.TILE_SIZE, (position.second) * GameScene.TILE_SIZE,
+					picWidth * GameScene.TILE_SIZE, picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.LEFT) {
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first - 1) * GameScene.TILE_SIZE, (position.second) * GameScene.TILE_SIZE,
+					picWidth * GameScene.TILE_SIZE, picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.DOWN) {
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first) * GameScene.TILE_SIZE, (position.second + 1) * GameScene.TILE_SIZE,
+					picWidth * GameScene.TILE_SIZE, picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.UP) {
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first) * GameScene.TILE_SIZE, (position.second - 1) * GameScene.TILE_SIZE,
+					picWidth * GameScene.TILE_SIZE, picHeight * GameScene.TILE_SIZE);
 		}
 
 	}
 
 	public void move(double moveX, double moveY) {
 		isMoveFinished = false;
-		Map.setBoard(position, TileType.NONE, null);
-		Map.setBoard(position.add(new Pair(moveX, moveY)), TileType.HERO, this);
+		GameScene.setBoard(position, TileType.NONE, null);
+		GameScene.setBoard(position.add(new Pair(moveX, moveY)), TileType.HERO, this);
 
 		Timeline timer2 = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			position.first += moveX / Main.FPS * 10;
@@ -239,9 +239,9 @@ public class Novice extends Entity implements Attackable, Moveable {
 		}
 		double playerX = position.first;
 		double playerY = position.second;
-		int tileSize = Map.TILE_SIZE;
+		int tileSize = GameScene.TILE_SIZE;
 
-		gc.clearRect(0, 0, Map.WIDTH * tileSize, Map.HEIGHT * tileSize);
+		gc.clearRect(0, 0, GameScene.WIDTH * tileSize, GameScene.HEIGHT * tileSize);
 
 		if (currentAttackAnimation <= maxAttackImage - 1) {
 			if (attackDirection == Direction.RIGHT) {
@@ -262,31 +262,31 @@ public class Novice extends Entity implements Attackable, Moveable {
 	}
 
 	public void normalAttack() {
-		if ((int) position.first + 1 < Map.WIDTH) {
-			if (Map.getBoard()[(int) position.first + 1][(int) (position.second)].getTileType() == TileType.MONSTER
+		if ((int) position.first + 1 < GameScene.WIDTH) {
+			if (GameScene.getBoard()[(int) position.first + 1][(int) (position.second)].getTileType() == TileType.MONSTER
 					&& faceDirection == Direction.RIGHT) {
-				attack(Map.getBoard()[(int) position.first + 1][(int) position.second].getEntity());
+				attack(GameScene.getBoard()[(int) position.first + 1][(int) position.second].getEntity());
 			}
 		}
 
 		if ((int) position.first - 1 > 0) {
-			if (Map.getBoard()[(int) position.first - 1][(int) (position.second)].getTileType() == TileType.MONSTER
+			if (GameScene.getBoard()[(int) position.first - 1][(int) (position.second)].getTileType() == TileType.MONSTER
 					&& faceDirection == Direction.LEFT) {
-				attack(Map.getBoard()[(int) position.first - 1][(int) (position.second)].getEntity());
+				attack(GameScene.getBoard()[(int) position.first - 1][(int) (position.second)].getEntity());
 			}
 		}
 
 		if ((int) position.second - 1 > 0) {
-			if (Map.getBoard()[(int) position.first][(int) (position.second) - 1].getTileType() == TileType.MONSTER
+			if (GameScene.getBoard()[(int) position.first][(int) (position.second) - 1].getTileType() == TileType.MONSTER
 					&& faceDirection == Direction.UP) {
-				attack(Map.getBoard()[(int) position.first][(int) (position.second) - 1].getEntity());
+				attack(GameScene.getBoard()[(int) position.first][(int) (position.second) - 1].getEntity());
 			}
 		}
 
-		if ((int) position.second + 1 < Map.HEIGHT) {
-			if (Map.getBoard()[(int) Map.getHero().getPosition().first][(int) (position.second) + 1]
+		if ((int) position.second + 1 < GameScene.HEIGHT) {
+			if (GameScene.getBoard()[(int) GameScene.getHero().getPosition().first][(int) (position.second) + 1]
 					.getTileType() == TileType.MONSTER && faceDirection == Direction.DOWN) {
-				attack(Map.getBoard()[(int) Map.getHero().getPosition().first][(int) (position.second) + 1]
+				attack(GameScene.getBoard()[(int) GameScene.getHero().getPosition().first][(int) (position.second) + 1]
 						.getEntity());
 			}
 		}
@@ -313,9 +313,9 @@ public class Novice extends Entity implements Attackable, Moveable {
 		GraphicsContext gc = this.atkCanvas.getGraphicsContext2D();
 		double playerX = position.first;
 		double playerY = position.second;
-		int tileSize = Map.TILE_SIZE;
+		int tileSize = GameScene.TILE_SIZE;
 
-		gc.clearRect(0, 0, Map.WIDTH * tileSize, Map.HEIGHT * tileSize);
+		gc.clearRect(0, 0, GameScene.WIDTH * tileSize, GameScene.HEIGHT * tileSize);
 
 		if (currentLevelUpAnimation <= maxLevelUpImage - 1) {
 			gc.drawImage(levelUpImages[currentLevelUpAnimation], 

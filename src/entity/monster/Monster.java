@@ -6,7 +6,7 @@ import entity.Entity;
 import entity.property.Attackable;
 import entity.property.HpBar;
 import entity.property.Moveable;
-import environment.Map;
+import environment.GameScene;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.VPos;
@@ -69,29 +69,29 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 
 	public void draw() {
 		GraphicsContext gc = this.canvas.getGraphicsContext2D();
-		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		gc.clearRect(0, 0, GameScene.WIDTH * GameScene.TILE_SIZE, GameScene.HEIGHT * GameScene.TILE_SIZE);
 
 		currentAnimation %= 6;
 		if (lastLRFaceDirection == Direction.RIGHT) {
-			gc.drawImage(images[currentAnimation], position.first * Map.TILE_SIZE - Map.TILE_SIZE * 0.25,
-					position.second * Map.TILE_SIZE - Map.TILE_SIZE * 0.25,
-					picWidth * Map.TILE_SIZE + Map.TILE_SIZE * 0.25, picHeight * Map.TILE_SIZE + Map.TILE_SIZE * 0.25);
+			gc.drawImage(images[currentAnimation], position.first * GameScene.TILE_SIZE - GameScene.TILE_SIZE * 0.25,
+					position.second * GameScene.TILE_SIZE - GameScene.TILE_SIZE * 0.25,
+					picWidth * GameScene.TILE_SIZE + GameScene.TILE_SIZE * 0.25, picHeight * GameScene.TILE_SIZE + GameScene.TILE_SIZE * 0.25);
 		} else if (lastLRFaceDirection == Direction.LEFT) {
 			gc.drawImage(images[currentAnimation],
-					position.first * Map.TILE_SIZE - Map.TILE_SIZE * 0.25 + picWidth * Map.TILE_SIZE
-							+ Map.TILE_SIZE * 0.5,
-					position.second * Map.TILE_SIZE - Map.TILE_SIZE * 0.25,
-					-picWidth * Map.TILE_SIZE - Map.TILE_SIZE * 0.25, picHeight * Map.TILE_SIZE + Map.TILE_SIZE * 0.25);
+					position.first * GameScene.TILE_SIZE - GameScene.TILE_SIZE * 0.25 + picWidth * GameScene.TILE_SIZE
+							+ GameScene.TILE_SIZE * 0.5,
+					position.second * GameScene.TILE_SIZE - GameScene.TILE_SIZE * 0.25,
+					-picWidth * GameScene.TILE_SIZE - GameScene.TILE_SIZE * 0.25, picHeight * GameScene.TILE_SIZE + GameScene.TILE_SIZE * 0.25);
 		}
 
 		drawDirection();
 		if (isDead)
 			return;
-		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
+		GameScene.statusBarGroup.getChildren().remove(hpBar.getCanvas());
 
 		hpBar = new HpBar(this);
 		hpBar.draw();
-		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
+		GameScene.statusBarGroup.getChildren().add(hpBar.getCanvas());
 
 	}
 
@@ -106,17 +106,17 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 		gc.setStroke(Color.BLUE);
 		gc.setLineWidth(4);
 		if (faceDirection == Direction.RIGHT) {
-			gc.strokeRect((position.first + picWidth) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, Map.TILE_SIZE,
-					picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first + picWidth) * GameScene.TILE_SIZE, (position.second) * GameScene.TILE_SIZE, GameScene.TILE_SIZE,
+					picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.LEFT) {
-			gc.strokeRect((position.first - 1) * Map.TILE_SIZE, (position.second) * Map.TILE_SIZE, Map.TILE_SIZE,
-					picHeight * Map.TILE_SIZE);
+			gc.strokeRect((position.first - 1) * GameScene.TILE_SIZE, (position.second) * GameScene.TILE_SIZE, GameScene.TILE_SIZE,
+					picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.DOWN) {
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second + picHeight) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, Map.TILE_SIZE);
+			gc.strokeRect((position.first) * GameScene.TILE_SIZE, (position.second + picHeight) * GameScene.TILE_SIZE,
+					picWidth * GameScene.TILE_SIZE, GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.UP) {
-			gc.strokeRect((position.first) * Map.TILE_SIZE, (position.second - 1) * Map.TILE_SIZE,
-					picWidth * Map.TILE_SIZE, Map.TILE_SIZE);
+			gc.strokeRect((position.first) * GameScene.TILE_SIZE, (position.second - 1) * GameScene.TILE_SIZE,
+					picWidth * GameScene.TILE_SIZE, GameScene.TILE_SIZE);
 		}
 
 	}
@@ -130,12 +130,12 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 		double y = moveY;
 		for (int i = 0; i < picWidth; i++) {
 			for (int j = 0; j < picHeight; j++) {
-				Map.setBoard(position.add(new Pair(i, j)), TileType.NONE, null);
+				GameScene.setBoard(position.add(new Pair(i, j)), TileType.NONE, null);
 			}
 		}
 		for (int i = 0; i < picWidth; i++) {
 			for (int j = 0; j < picHeight; j++) {
-				Map.setBoard(position.add(new Pair(x + i, y + j)), TileType.MONSTER, this);
+				GameScene.setBoard(position.add(new Pair(x + i, y + j)), TileType.MONSTER, this);
 				// System.out.println(position.add(new Pair(x+i,y+j)).first+" "+position.add(new
 				// Pair(x+i,y+j)).second);
 			}
@@ -166,7 +166,7 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 		if (moveX == 1) {
 			for (int i = 0; i < picHeight; i++) {
 				// System.out.println((moveX+picWidth-1)+" "+i);
-				if (Map.getBoard(position.add(new Pair(moveX + picWidth - 1, i))).getEntity() != null) {
+				if (GameScene.getBoard(position.add(new Pair(moveX + picWidth - 1, i))).getEntity() != null) {
 					changeDirection(1, 0);
 					return false;
 				}
@@ -175,7 +175,7 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 
 		if (moveX == -1) {
 			for (int i = 0; i < picHeight; i++) {
-				if (Map.getBoard(position.add(new Pair(moveX, i))).getEntity() != null) {
+				if (GameScene.getBoard(position.add(new Pair(moveX, i))).getEntity() != null) {
 					changeDirection(-1, 0);
 					return false;
 				}
@@ -184,7 +184,7 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 
 		if (moveY == 1) {
 			for (int i = 0; i < picWidth; i++) {
-				if (Map.getBoard(position.add(new Pair(i, moveY + picHeight - 1))).getEntity() != null) {
+				if (GameScene.getBoard(position.add(new Pair(i, moveY + picHeight - 1))).getEntity() != null) {
 					changeDirection(0, 1);
 					return false;
 				}
@@ -193,7 +193,7 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 
 		if (moveY == -1) {
 			for (int i = 0; i < picWidth; i++) {
-				if (Map.getBoard(position.add(new Pair(i, moveY))).getEntity() != null) {
+				if (GameScene.getBoard(position.add(new Pair(i, moveY))).getEntity() != null) {
 					changeDirection(0, -1);
 					return false;
 				}
@@ -237,16 +237,16 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 		}
 		// System.out.println(areaPosition.first+" "+areaWidth+" "+areaHeight+"
 		// "+areaPosition.second);
-		if (0 <= position.first + moveX && position.first + moveX < Map.WIDTH && 0 <= position.second + moveY
-				&& position.second + moveY < Map.HEIGHT) {
-			if (Map.getBoard(position.add(new Pair(moveX, moveY))).getEntity() == null)
+		if (0 <= position.first + moveX && position.first + moveX < GameScene.WIDTH && 0 <= position.second + moveY
+				&& position.second + moveY < GameScene.HEIGHT) {
+			if (GameScene.getBoard(position.add(new Pair(moveX, moveY))).getEntity() == null)
 				move(moveX, moveY);
 		}
 	}
 
 	public void moveToPlayer() {
-		double moveX = Map.getHeroPosition().first - position.first;
-		double moveY = Map.getHeroPosition().second - position.second;
+		double moveX = GameScene.getHeroPosition().first - position.first;
+		double moveY = GameScene.getHeroPosition().second - position.second;
 		// System.out.println(" "+moveX+" "+moveY);
 		for (int i = 1; i < picWidth; i++) {
 			if (moveX > 0) {

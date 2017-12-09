@@ -4,7 +4,7 @@ import entity.Entity;
 import entity.hero.Novice;
 import entity.monster.Slime;
 import entity.monster.SlimeKing;
-import environment.Map;
+import environment.GameScene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -45,9 +45,9 @@ public class HpBar {
 		width = (entity.getHp() / entity.getMaxHp()) * maxWidth;
 		// System.out.println(entity.getPosition().first+"
 		// "+entity.getPosition().second);
-		gc.strokeRoundRect(entity.getPosition().first * Map.TILE_SIZE, (entity.getPosition().second+entity.getPicHeight()) * Map.TILE_SIZE + 10,
+		gc.strokeRoundRect(entity.getPosition().first * GameScene.TILE_SIZE, (entity.getPosition().second+entity.getPicHeight()) * GameScene.TILE_SIZE + 10,
 				maxWidth, 5, 2, 2);
-		gc.fillRoundRect(entity.getPosition().first * Map.TILE_SIZE, (entity.getPosition().second+entity.getPicHeight()) * Map.TILE_SIZE + 10,
+		gc.fillRoundRect(entity.getPosition().first * GameScene.TILE_SIZE, (entity.getPosition().second+entity.getPicHeight()) * GameScene.TILE_SIZE + 10,
 				width, 5, 2, 2);
 		// gc.strokeRoundRect(1 * Map.TILE_SIZE, 5 * Map.TILE_SIZE - 10,
 		// maxWidth, 5, 2, 2);
@@ -65,7 +65,7 @@ public class HpBar {
 
 	public void die() {
 		// System.out.println(Map.statusBarGroup.getChildren().contains(canvas));
-		Map.statusBarGroup.getChildren().remove(canvas);
+		GameScene.statusBarGroup.getChildren().remove(canvas);
 		canvas.setOpacity(0);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.BLACK);

@@ -9,7 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import environment.Map;
+import environment.GameScene;
 import environment.window.SceneManager;
 
 import java.util.LinkedList;

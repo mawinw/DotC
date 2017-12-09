@@ -3,21 +3,21 @@ package utility;
 import entity.Entity;
 import entity.hero.Novice;
 import entity.monster.Slime;
-import environment.Map;
+import environment.GameScene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Tile extends Rectangle {
 	private TileType tileType;
 	private Entity entity;
-	private final int offset=Map.TILE_SIZE/2;
+	private final int offset=GameScene.TILE_SIZE/2;
 
 	public Tile(boolean lightColor, int x, int y, Entity entity) {
 
-		setWidth(Map.TILE_SIZE);
-		setHeight(Map.TILE_SIZE);
+		setWidth(GameScene.TILE_SIZE);
+		setHeight(GameScene.TILE_SIZE);
 
-		relocate((x * Map.TILE_SIZE)+offset, (y * Map.TILE_SIZE)+offset);
+		relocate((x * GameScene.TILE_SIZE)+offset, (y * GameScene.TILE_SIZE)+offset);
 
 		setFill(lightColor ? Color.WHITE : Color.BLACK);
 		setOpacity(0);

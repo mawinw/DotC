@@ -1,7 +1,7 @@
 package entity;
 
 import entity.property.HpBar;
-import environment.Map;
+import environment.GameScene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -63,7 +63,7 @@ public abstract class Entity {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, 200, 200);
-		Map.getEntityGroup().getChildren().remove(canvas);
+		GameScene.getEntityGroup().getChildren().remove(canvas);
 		isDead = true;
 		Hp = 0;
 		hpBar.die();
@@ -71,8 +71,8 @@ public abstract class Entity {
 
 	protected void setValue(String name, int maxHp, int attack, int defense, double accuracy, double evasion,
 			double dexterous, Pair position) {
-		this.canvas = new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
-		this.atkCanvas = new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		this.canvas = new Canvas(GameScene.WIDTH * GameScene.TILE_SIZE, GameScene.HEIGHT * GameScene.TILE_SIZE);
+		this.atkCanvas = new Canvas(GameScene.WIDTH * GameScene.TILE_SIZE, GameScene.HEIGHT * GameScene.TILE_SIZE);
 		this.name = name;
 		this.maxHp = maxHp;
 		Hp = maxHp;
@@ -86,7 +86,7 @@ public abstract class Entity {
 		this.canMove = true;
 		this.isDead = false;
 		hpBar = new HpBar(this);
-		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
+		GameScene.statusBarGroup.getChildren().add(hpBar.getCanvas());
 		// draw();
 	}
 
@@ -198,6 +198,26 @@ public abstract class Entity {
 	public int getExpGain() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public void setMaxHp(double maxhp) {
+		maxHp = maxhp;
+	}
+
+	public void setAtk(int atk) {
+		this.atk = atk;
+	}
+
+	public void setDef(int def) {
+		this.def = def;
+	}
+
+	public void setEva(double eva) {
+		this.eva = eva;
+	}
+
+	public void setDex(double dex) {
+		this.dex = dex;
 	}
 
 }
