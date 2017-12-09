@@ -20,8 +20,8 @@ public class StatusMenu {
 	private Map<String, Boolean> canSelect = new HashMap<String, Boolean>();
 	private Canvas back;
 	protected static int pointer = 0;
-	private static int gap = Main.SCREEN_SIZE / 2 / 5;
-	
+	private static int gap = Main.SCREEN_SIZE * 3 / 4 / 10;
+
 	public StatusMenu() {
 		this.background = new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE);
 		this.title = new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE);
@@ -32,21 +32,21 @@ public class StatusMenu {
 		this.statusText.put("ACC", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusText.put("EVA", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusText.put("DEX", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
-		
+
 		this.statusIcon.put("VIT", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusIcon.put("ATK", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusIcon.put("DEF", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusIcon.put("ACC", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusIcon.put("EVA", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusIcon.put("DEX", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
-		
+
 		this.canSelect.put("VIT", false);
 		this.canSelect.put("ATK", false);
 		this.canSelect.put("DEF", false);
 		this.canSelect.put("ACC", false);
 		this.canSelect.put("EVA", false);
 		this.canSelect.put("DEX", false);
-		
+
 		GraphicsContext gc = background.getGraphicsContext2D();
 		gc.setFill(Color.WHEAT);
 		gc.fillRect(Main.SCREEN_SIZE / 8, Main.SCREEN_SIZE / 8, Main.SCREEN_SIZE * 3 / 4, Main.SCREEN_SIZE * 3 / 4);
@@ -56,7 +56,6 @@ public class StatusMenu {
 		gc.setTextBaseline(VPos.CENTER);
 		gc.setFont(new Font(MENU_FONT.getName(), 50));
 		gc.fillText("PAUSED", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE / 4 + gap);
-
 
 	}
 }

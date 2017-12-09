@@ -63,7 +63,7 @@ public final class SceneManager {
 	public static void gotoGameScene() {
 
 		// put all pane
-		System.out.println("x");
+		Map.getInstance().reset();
 		allPane = new Pane();
 		allPane.getChildren().add(Map.getInstance().getTileGroup());
 		allPane.getChildren().add(Map.getInstance().getStatusBarGroup());
@@ -71,7 +71,6 @@ public final class SceneManager {
 		allPane.getChildren().add(Map.getInstance().getNamePane());
 		
 		Scene scene = new Scene(allPane,Main.SCREEN_SIZE,Main.SCREEN_SIZE);
-		System.out.println("y");
 		
 		scene.setOnKeyPressed(event -> GameHandler.keyPressed(event));
 		scene.setOnKeyReleased(event -> GameHandler.keyReleased(event));

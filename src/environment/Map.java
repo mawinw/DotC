@@ -71,7 +71,6 @@ public class Map extends Pane {
 		createDefaultEntity(slime6, "Slime", slime6.getPosition());
 		SlimeKing king = new SlimeKing(new Pair(5, 5));
 		createDefaultEntity(king, "SlimeKing", king.getPosition());
-
 		hero = new Fighter(MainMenu.name, new Pair(1, 4));
 		heroName = hero.getName();
 		createDefaultEntity(hero, "Novice", hero.getPosition());
@@ -196,7 +195,6 @@ public class Map extends Pane {
 		if (instance == null) {
 			instance = new Map();
 		}
-		System.out.println("z");
 
 		return instance;
 	}

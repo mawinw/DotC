@@ -110,6 +110,8 @@ public class PauseMenu extends Pane {
 			GameHandler.stopTimer();
 			SceneManager.pauseTimer.stop();
 			Map.getInstance().reset();
+			pointer=0;
+			drawSelectedFrame();
 		}
 	}
 
