@@ -2,7 +2,7 @@ package entity.monster;
 
 import entity.Entity;
 import entity.property.HpBar;
-import environment.Map;
+import environment.GameScene;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.Canvas;
@@ -52,13 +52,13 @@ public class SlimeKing extends Slime {
 
 	double monsterX=position.first;
 	double monsterY=position.second;
-	int tileSize=Map.TILE_SIZE;
+	int tileSize=GameScene.TILE_SIZE;
 	
 	
 	private double oldStartX=0;
 	private double oldStartY=0;
-	private double oldSizeX=Map.WIDTH * tileSize;
-	private double oldSizeY=Map.HEIGHT * tileSize;
+	private double oldSizeX=GameScene.WIDTH * tileSize;
+	private double oldSizeY=GameScene.HEIGHT * tileSize;
 
 
 	public SlimeKing(Pair pos) {
@@ -76,10 +76,10 @@ public class SlimeKing extends Slime {
 	public void draw() {
 		double monsterX=position.first;
 		double monsterY=position.second;
-		int tileSize=Map.TILE_SIZE;
+		int tileSize=GameScene.TILE_SIZE;
 		
 		GraphicsContext gc = this.canvas.getGraphicsContext2D();
-		gc.clearRect(0, 0, Map.WIDTH*tileSize, Map.HEIGHT*tileSize);
+		gc.clearRect(0, 0, GameScene.WIDTH*tileSize, GameScene.HEIGHT*tileSize);
 
 		currentAnimation %= 6;
 		if (lastLRFaceDirection == Direction.RIGHT) {
@@ -99,11 +99,11 @@ public class SlimeKing extends Slime {
 
 		if (isDead)
 			return;
-		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
+		GameScene.statusBarGroup.getChildren().remove(hpBar.getCanvas());
 
 		hpBar = new HpBar(this);
 		hpBar.draw();
-		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
+		GameScene.statusBarGroup.getChildren().add(hpBar.getCanvas());
 		// System.out.println(Map.statusBarGroup.getChildren().contains(hpBar.getCanvas()));
 
 	}	
@@ -111,11 +111,11 @@ public class SlimeKing extends Slime {
 		GraphicsContext gc = this.atkCanvas.getGraphicsContext2D();
 		double monsterX=position.first;
 		double monsterY=position.second;
-		int tileSize=Map.TILE_SIZE;
+		int tileSize=GameScene.TILE_SIZE;
 		if (currentAttackAnimation == 0) {
 			attackDirection = faceDirection;
 		}
-		gc.clearRect(0, 0, Map.WIDTH*tileSize, Map.HEIGHT*tileSize);
+		gc.clearRect(0, 0, GameScene.WIDTH*tileSize, GameScene.HEIGHT*tileSize);
 
 		if (currentAttackAnimation <= (maxAttackImage-1)) {
 			if (attackDirection == Direction.RIGHT) {
@@ -140,7 +140,7 @@ public class SlimeKing extends Slime {
 		currentAttackAnimation=0;
 		double monsterX=position.first;
 		double monsterY=position.second;
-		int tileSize=Map.TILE_SIZE;
+		int tileSize=GameScene.TILE_SIZE;
 		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(150), attack -> {
 			drawAttackAnimation();
 			currentAttackAnimation ++;

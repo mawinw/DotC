@@ -25,8 +25,8 @@ import utility.Pair;
 import utility.Tile;
 import utility.TileType;
 
-public class Map extends Pane {
-	private static Map instance;
+public class GameScene extends Pane {
+	private static GameScene instance;
 	public static final int TILE_SIZE = 50;
 	public static final int WIDTH = 14;
 	public static final int HEIGHT = 14;
@@ -45,7 +45,7 @@ public class Map extends Pane {
 	private static Canvas BG;
 	private static Image bgImage = new Image("background/BG_01.png");
 
-	public Map() {
+	public GameScene() {
 		tileGroup = new Group();
 		entityGroup = new Group();
 		effectGroup = new Group();
@@ -180,9 +180,9 @@ public class Map extends Pane {
 		return monsterList;
 	}
 
-	public static Map getInstance() {
+	public static GameScene getInstance() {
 		if (instance == null) {
-			instance = new Map();
+			instance = new GameScene();
 		}
 
 		return instance;

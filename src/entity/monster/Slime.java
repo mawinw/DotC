@@ -4,7 +4,7 @@ import java.util.Random;
 
 import entity.Entity;
 import entity.property.HpBar;
-import environment.Map;
+import environment.GameScene;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.VPos;
@@ -57,13 +57,13 @@ public class Slime extends Monster {
 
 	double monsterX=position.first;
 	double monsterY=position.second;
-	int tileSize=Map.TILE_SIZE;
+	int tileSize=GameScene.TILE_SIZE;
 	
 	
 	private double oldStartX=0;
 	private double oldStartY=0;
-	private double oldSizeX=Map.WIDTH * tileSize;
-	private double oldSizeY=Map.HEIGHT * tileSize;
+	private double oldSizeX=GameScene.WIDTH * tileSize;
+	private double oldSizeY=GameScene.HEIGHT * tileSize;
 	
 	
 	
@@ -88,30 +88,30 @@ public class Slime extends Monster {
 	public void draw() {
 		GraphicsContext gc = this.canvas.getGraphicsContext2D();
 		
-		gc.clearRect(0, 0, Map.WIDTH*tileSize, Map.HEIGHT*tileSize);
+		gc.clearRect(0, 0, GameScene.WIDTH*tileSize, GameScene.HEIGHT*tileSize);
 		currentAnimation %= 6;
 		if (lastLRFaceDirection == Direction.RIGHT) {
 			gc.drawImage(images[currentAnimation], 
-					oldStartX=(position.first-0.5) * Map.TILE_SIZE,
-					oldStartY=(position.second-0.5) * Map.TILE_SIZE,
-					oldSizeX=(picWidth+0.5) * Map.TILE_SIZE, 
-					oldSizeY=(picHeight+0.5) * Map.TILE_SIZE);
+					oldStartX=(position.first-0.5) * GameScene.TILE_SIZE,
+					oldStartY=(position.second-0.5) * GameScene.TILE_SIZE,
+					oldSizeX=(picWidth+0.5) * GameScene.TILE_SIZE, 
+					oldSizeY=(picHeight+0.5) * GameScene.TILE_SIZE);
 		} else if (lastLRFaceDirection == Direction.LEFT) {
 			gc.drawImage(images[currentAnimation],
-					oldStartX=(position.first) * Map.TILE_SIZE + picWidth * Map.TILE_SIZE+ Map.TILE_SIZE * 0.5,
-					oldStartY=(position.second-0.5) * Map.TILE_SIZE,
-					oldSizeX=(-picWidth-0.5) * Map.TILE_SIZE, 
-					oldSizeY=(picHeight+0.5) * Map.TILE_SIZE);
+					oldStartX=(position.first) * GameScene.TILE_SIZE + picWidth * GameScene.TILE_SIZE+ GameScene.TILE_SIZE * 0.5,
+					oldStartY=(position.second-0.5) * GameScene.TILE_SIZE,
+					oldSizeX=(-picWidth-0.5) * GameScene.TILE_SIZE, 
+					oldSizeY=(picHeight+0.5) * GameScene.TILE_SIZE);
 		}
 
 		drawDirection();
 		if (isDead)
 			return;
-		Map.statusBarGroup.getChildren().remove(hpBar.getCanvas());
+		GameScene.statusBarGroup.getChildren().remove(hpBar.getCanvas());
 
 		hpBar = new HpBar(this);
 		hpBar.draw();
-		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
+		GameScene.statusBarGroup.getChildren().add(hpBar.getCanvas());
 
 	}
 	
@@ -131,9 +131,9 @@ public class Slime extends Monster {
 		}
 		double monsterX=position.first;
 		double monsterY=position.second;
-		int tileSize=Map.TILE_SIZE;
+		int tileSize=GameScene.TILE_SIZE;
 
-		gc.clearRect(0, 0, Map.WIDTH*tileSize, Map.HEIGHT*tileSize);
+		gc.clearRect(0, 0, GameScene.WIDTH*tileSize, GameScene.HEIGHT*tileSize);
 
 		if (currentAttackAnimation <= (maxAttackImage-1)) {
 			if (attackDirection == Direction.RIGHT) {

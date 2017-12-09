@@ -1,9 +1,7 @@
 package environment.menu;
 
-import java.awt.RenderingHints.Key;
 import java.util.HashSet;
 
-import environment.GameHandler;
 import environment.window.SceneManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -13,10 +11,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import main.Main;
 
-public class PausedHandler {
+public class StatusHandler {
 	private static HashSet<KeyCode> activeKey = new HashSet<KeyCode>();
-	private static Timeline pauseTimer;
-	
+	private static Timeline statusTimer;
+
 	public static void keyPressed(KeyEvent event) {
 		// if (activeKey.contains(event.getCode()))
 		// return;
@@ -66,7 +64,7 @@ public class PausedHandler {
 		}
 
 	}
-	
+
 	public static void update() {
 		moveSelected();
 		action();
@@ -74,42 +72,44 @@ public class PausedHandler {
 
 	private static void action() {
 		// TODO Auto-generated method stub
-		if (activeKey.contains(KeyCode.Z)||activeKey.contains(KeyCode.ENTER)) {
-			PauseMenu.action();
+		if (activeKey.contains(KeyCode.Z) || activeKey.contains(KeyCode.ENTER)) {
+			StatusMenu.action();
 		}
-		
+		else if(activeKey.contains(KeyCode.X)) {
+			SceneManager.closeStatusMenu();
+			
+		}
+
 	}
 
 	private static void moveSelected() {
 		// TODO Auto-generated method stub
-		if(activeKey.contains(KeyCode.UP)) {
-			PauseMenu.moveSelected(true);
-		}
-		else if(activeKey.contains(KeyCode.DOWN)) {
-			PauseMenu.moveSelected(false);
+		
+		if (activeKey.contains(KeyCode.UP)) {
+			StatusMenu.moveSelected(true);
+		} else if (activeKey.contains(KeyCode.DOWN)) {
+			StatusMenu.moveSelected(false);
 		}
 	}
-	
+
 	public static void start() {
 		// TODO Auto-generated method stub
 		activeKey.clear();
-		pauseTimer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
-			PausedHandler.update();
+		statusTimer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
+			StatusHandler.update();
 		}));
-		pauseTimer.setCycleCount(Animation.INDEFINITE);
-		pauseTimer.play();
+		statusTimer.setCycleCount(Animation.INDEFINITE);
+		statusTimer.play();
 	}
-	
+
 	public static void stopTimer() {
 		// TODO Auto-generated method stub
-		pauseTimer.stop();
+		statusTimer.stop();
 	}
 
 	public static void playTimer() {
 		// TODO Auto-generated method stub
-		pauseTimer.play();
+		statusTimer.play();
 	}
-	
-	
-	
+
 }

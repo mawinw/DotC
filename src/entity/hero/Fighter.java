@@ -3,7 +3,7 @@ package entity.hero;
 import entity.Entity;
 import entity.monster.Monster;
 import entity.property.HpBar;
-import environment.Map;
+import environment.GameScene;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
@@ -48,11 +48,11 @@ public class Fighter extends Novice {
 	public void groundSmash() {
 		for (int i = -1; i < 2; i++) {
 			for (int j = -1; j < 2; j++) {
-				if (position.first + i - 1 >= 0 && position.first + i + 1 < Map.WIDTH && position.second + j - 1 >= 0
-						&& position.second + j + 1 < Map.HEIGHT) {
-					if (Map.getBoard()[(int) position.first + i][(int) (position.second) + j]
+				if (position.first + i - 1 >= 0 && position.first + i + 1 < GameScene.WIDTH && position.second + j - 1 >= 0
+						&& position.second + j + 1 < GameScene.HEIGHT) {
+					if (GameScene.getBoard()[(int) position.first + i][(int) (position.second) + j]
 							.getTileType() == TileType.MONSTER) {
-						attack(Map.getBoard()[(int) position.first + i][(int) position.second + j].getEntity());
+						attack(GameScene.getBoard()[(int) position.first + i][(int) position.second + j].getEntity());
 					}
 				}
 			}
@@ -70,13 +70,13 @@ public class Fighter extends Novice {
 	
 	private void drawSmashAnimation() {
 		GraphicsContext gc = this.atkCanvas.getGraphicsContext2D();
-		gc.clearRect(0, 0, Map.WIDTH*Map.TILE_SIZE, Map.HEIGHT*Map.TILE_SIZE);
+		gc.clearRect(0, 0, GameScene.WIDTH*GameScene.TILE_SIZE, GameScene.HEIGHT*GameScene.TILE_SIZE);
 		if (currentSmashAnimation == 0) {
 			attackDirection = faceDirection;
 		}
 		double playerX=position.first;
 		double playerY=position.second;
-		int tileSize=Map.TILE_SIZE;
+		int tileSize=GameScene.TILE_SIZE;
 
 		if (currentSmashAnimation <= (maxSmashImage-1)) {
 				gc.clearRect((playerX - 1) * tileSize, (playerY-1) * tileSize,
@@ -94,7 +94,7 @@ public class Fighter extends Novice {
 		gc.setStroke(Color.RED);
 		gc.setLineWidth(2);
 		
-		int tileSize = Map.TILE_SIZE;
+		int tileSize = GameScene.TILE_SIZE;
 		double playerX = position.first;
 		double playerY = position.second;
 		
