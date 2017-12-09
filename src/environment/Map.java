@@ -91,6 +91,22 @@ public class Map extends Pane {
 
 	}
 
+	public static Group getTileGroup() {
+		return tileGroup;
+	}
+
+	public static Group getStatusBarGroup() {
+		return statusBarGroup;
+	}
+
+	public static Pane getNamePane() {
+		return namePane;
+	}
+
+	public static Canvas getBG() {
+		return BG;
+	}
+
 	public static Group getEntityGroup() {
 		return entityGroup;
 	}

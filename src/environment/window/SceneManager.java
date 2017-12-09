@@ -23,6 +23,7 @@ public final class SceneManager {
 	private static PauseMenu pausedMenu = new PauseMenu();
 	private static Scene mainMenuScene = new Scene(mainMenuCanvas);
 	public static Timeline pauseTimer;
+	public static Pane allPane;
 
 	public static void initialize(Stage stage) {
 		primaryStage = stage;
@@ -37,7 +38,7 @@ public final class SceneManager {
 	}
 	public static void openPausedMenu() {
 		// TODO Fill Code
-		Map.getInstance().getChildren().add(pausedMenu);
+		allPane.getChildren().add(pausedMenu);
 		GameHandler.stopTimer();
 		pauseTimer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			PausedHandler.update();
@@ -50,7 +51,7 @@ public final class SceneManager {
 	}
 	public static void closePausedMenu() {
 		// TODO Fill Code
-		Map.getInstance().getChildren().remove(pausedMenu);
+		allPane.getChildren().remove(pausedMenu);
 		GameHandler.playTimer();
 		primaryStage.getScene().setOnKeyPressed(event -> GameHandler.keyPressed(event));
 		primaryStage.getScene().setOnKeyReleased(event -> GameHandler.keyReleased(event));
@@ -63,7 +64,13 @@ public final class SceneManager {
 
 		// put all pane
 		System.out.println("x");
-		Scene scene = new Scene(Map.getInstance());
+		allPane = new Pane();
+		allPane.getChildren().add(Map.getInstance().getTileGroup());
+		allPane.getChildren().add(Map.getInstance().getStatusBarGroup());
+		allPane.getChildren().add(Map.getInstance().getEntityGroup());
+		allPane.getChildren().add(Map.getInstance().getNamePane());
+		
+		Scene scene = new Scene(allPane,Main.SCREEN_SIZE,Main.SCREEN_SIZE);
 		System.out.println("y");
 		
 		scene.setOnKeyPressed(event -> GameHandler.keyPressed(event));
