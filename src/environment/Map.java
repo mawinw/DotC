@@ -32,8 +32,6 @@ public class Map extends Pane {
 	public static final int HEIGHT = 14;
 
 	private static Tile[][] board;
-	// private static Image backgroundImage = new
-	// Image("images/background/BG_01.png");
 
 	private static Group tileGroup;
 	private static Group entityGroup;
@@ -86,6 +84,7 @@ public class Map extends Pane {
 		entityGroup.getChildren().add(slime6.getAtkCanvas());
 		entityGroup.getChildren().add(king.getAtkCanvas());
 		entityGroup.getChildren().add(hero.getAtkCanvas());
+		entityGroup.getChildren().add(hero.getLevelUpCanvas());
 		this.getChildren().addAll(tileGroup, statusBarGroup, entityGroup, namePane);
 
 	}
