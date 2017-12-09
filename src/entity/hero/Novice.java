@@ -17,6 +17,7 @@ import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -55,7 +56,14 @@ public class Novice extends Entity implements Attackable,Moveable {
 	}
 	private static int currentAttackAnimation = 7;
 
-	private static int currentAnimation = 0;
+	private static int currentAnimation = 0;	
+	private static final Image[] characterImages = new Image[5];
+	static {
+		characterImages[0] = new Image("images/hero/Novice_dlru_t.png");
+		for(int i=1;i<=4;i++) {
+			characterImages[i] = new WritableImage(characterImages[0].getPixelReader(),0,(i-1)*48,46,48);
+		}
+	}
 
 	public Novice(Pair pos) {
 		super("Novice", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
@@ -90,9 +98,22 @@ public class Novice extends Entity implements Attackable,Moveable {
 	public void draw() {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
-		gc.setFill(Color.AQUA);
-		gc.fillOval(position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth * Map.TILE_SIZE,
+
+		
+		if (faceDirection == Direction.RIGHT) {	
+			gc.drawImage(characterImages[3],position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth * Map.TILE_SIZE,
+					picHeight * Map.TILE_SIZE);
+		} else if (faceDirection == Direction.LEFT) {	
+			gc.drawImage(characterImages[2],position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth * Map.TILE_SIZE,
+					picHeight * Map.TILE_SIZE);
+		} else if (faceDirection == Direction.DOWN) {		
+			gc.drawImage(characterImages[1],position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth * Map.TILE_SIZE,
 				picHeight * Map.TILE_SIZE);
+		} else if (faceDirection == Direction.UP) {	
+			gc.drawImage(characterImages[4],position.first * Map.TILE_SIZE, position.second * Map.TILE_SIZE, picWidth * Map.TILE_SIZE,
+					picHeight * Map.TILE_SIZE);
+		}
+		
 		drawDirection();
 		// System.out.println(position.first+" "+position.second);
 		if (isDead)
@@ -102,7 +123,6 @@ public class Novice extends Entity implements Attackable,Moveable {
 		hpBar.draw();
 		Map.statusBarGroup.getChildren().add(hpBar.getCanvas());
 		drawNameAndLv();
-
 	}
 	
 	public void drawNameAndLv() {
