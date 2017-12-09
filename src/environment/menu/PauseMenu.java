@@ -104,7 +104,7 @@ public class PauseMenu extends Pane {
 			
 			SceneManager.closePausedMenu();
 		} else if (pointer == 1) {
-			// openStatusMenu
+			SceneManager.openStatusMenu();
 		} else if (pointer == 2) {
 			SceneManager.gotoMainMenu();
 			GameHandler.stopTimer();
