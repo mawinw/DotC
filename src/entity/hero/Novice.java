@@ -44,7 +44,7 @@ public class Novice extends Entity implements Attackable,Moveable {
 	protected int lv;
 	protected int exp;
 	protected Canvas nameCanvas;
-
+	public int statusPoint;
 	
 	private static final int maxAttackImage = 5;
 	private static final Image[] attackImages = new Image[maxAttackImage];
@@ -69,7 +69,7 @@ public class Novice extends Entity implements Attackable,Moveable {
 		this.isAttackFinished = true;
 		this.isMoveFinished = true;
 		this.nameCanvas = new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
-
+		this.statusPoint=0;
 		// don't forget to initial picture size and first time position
 	}
 
@@ -84,6 +84,7 @@ public class Novice extends Entity implements Attackable,Moveable {
 		this.isAttackFinished = true;
 		this.isMoveFinished = true;
 		this.nameCanvas = new Canvas(Map.WIDTH * Map.TILE_SIZE, Map.HEIGHT * Map.TILE_SIZE);
+		this.statusPoint=0;
 		// don't forget to initial picture size and first time position
 	}
 
@@ -263,6 +264,7 @@ public class Novice extends Entity implements Attackable,Moveable {
 	protected void checkLevelUp() {
 		if (EXP_RATE[lv] < exp) {
 			lv++;
+			statusPoint+=2;
 			drawNameAndLv();
 		}
 	}
