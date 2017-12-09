@@ -184,10 +184,10 @@ public class StatusMenu extends Pane {
 				hero.setDef(hero.getDef()+10);
 			} else if (pointer == 3) {
 				hero.statusPoint--;
-				hero.setEva(hero.getEva()+10);
+				hero.setEva(hero.getEva()+5);
 			} else if (pointer == 4) {
 				hero.statusPoint--;
-				hero.setDex(hero.getDex()+10);
+				hero.setDex(hero.getDex()+5);
 			} else if (pointer == 5) {
 				close();
 			}

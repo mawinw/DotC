@@ -29,7 +29,7 @@ public class GameScene extends Pane {
 	private static GameScene instance;
 	public static final int TILE_SIZE = 50;
 	public static final int WIDTH = 14;
-	public static final int HEIGHT = 14;
+	public static final int HEIGHT = 12;
 
 	private static Tile[][] board;
 
