@@ -299,7 +299,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 			drawNameAndLv();
 			
 			currentLevelUpAnimation = 0;
-			Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(45), attack -> {
+			Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(45*1.5), attack -> {
 				drawLevelUpAnimation();
 				currentLevelUpAnimation++;
 			}));
@@ -320,9 +320,9 @@ public class Novice extends Entity implements Attackable, Moveable {
 		if (currentLevelUpAnimation <= maxLevelUpImage - 1) {
 			gc.drawImage(levelUpImages[currentLevelUpAnimation], 
 					(playerX - 1.5) * tileSize,
-					(playerY - 1.5) * tileSize, 
+					(playerY - 1) * tileSize, 
 					(picWidth + 3) * tileSize, 
-					(picHeight + 3) * tileSize);
+					(picHeight + 2) * tileSize);
 		}
 
 	}
