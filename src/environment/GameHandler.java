@@ -289,6 +289,7 @@ public class GameHandler {
 
 	public static void startGame() {
 		// TODO Auto-generated method stub
+		activeKey.clear();
 		GameHandler.setPaused(false);
 		gameTimer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			GameHandler.update();

@@ -212,7 +212,6 @@ public class Novice extends Entity implements Attackable, Moveable {
 			entity.draw();
 			if (entity.getIsDead()) {
 				exp += ((Monster) entity).getExpGain();
-				System.out.println(exp);
 				checkLevelUp();
 				// System.out.println(lv+" "+exp);
 			}

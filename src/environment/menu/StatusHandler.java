@@ -76,8 +76,7 @@ public class StatusHandler {
 			StatusMenu.action();
 		}
 		else if(activeKey.contains(KeyCode.X)) {
-			SceneManager.closeStatusMenu();
-			
+			StatusMenu.close();
 		}
 
 	}

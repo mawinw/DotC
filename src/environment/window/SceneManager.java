@@ -64,6 +64,7 @@ public final class SceneManager {
 
 	public static void openStatusMenu() {
 		// TODO Fill Code
+		StatusMenu.open();
 		allPane.getChildren().add(statusMenu);
 		PausedHandler.stopTimer();
 		StatusHandler.start();
@@ -72,7 +73,6 @@ public final class SceneManager {
 	}
 	public static void closeStatusMenu() {
 		// TODO Fill Code
-		System.out.println("x");
 		allPane.getChildren().remove(statusMenu);
 		PausedHandler.playTimer();
 		primaryStage.getScene().setOnKeyPressed(event -> PausedHandler.keyPressed(event));
