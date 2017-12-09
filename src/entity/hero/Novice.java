@@ -310,7 +310,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 	}
 
 	public void drawLevelUpAnimation() {
-		GraphicsContext gc = this.atkCanvas.getGraphicsContext2D();
+		GraphicsContext gc = this.levelUpCanvas.getGraphicsContext2D();
 		double playerX = position.first;
 		double playerY = position.second;
 		int tileSize = Map.TILE_SIZE;
@@ -320,7 +320,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 		if (currentLevelUpAnimation <= maxLevelUpImage - 1) {
 			gc.drawImage(levelUpImages[currentLevelUpAnimation], 
 					(playerX - 1.5) * tileSize,
-					(playerY - 1) * tileSize, 
+					(playerY - 1.5) * tileSize, 
 					(picWidth + 3) * tileSize, 
 					(picHeight + 2) * tileSize);
 		}
