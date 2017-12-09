@@ -106,9 +106,11 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 		gc.setStroke(Color.BLUE);
 		gc.setLineWidth(4);
 		if (faceDirection == Direction.RIGHT) {
+			lastLRFaceDirection=Direction.RIGHT;
 			gc.strokeRect((position.first + picWidth) * GameScene.TILE_SIZE, (position.second) * GameScene.TILE_SIZE, GameScene.TILE_SIZE,
 					picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.LEFT) {
+			lastLRFaceDirection=Direction.LEFT;
 			gc.strokeRect((position.first - 1) * GameScene.TILE_SIZE, (position.second) * GameScene.TILE_SIZE, GameScene.TILE_SIZE,
 					picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.DOWN) {
