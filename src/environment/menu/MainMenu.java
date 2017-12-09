@@ -81,7 +81,7 @@ public class MainMenu extends Pane {
 				clearErrorMessage();
 			} catch(Exception f) {
 				setErrorMessage(f.getMessage());
-				f.printStackTrace();
+				//f.printStackTrace();
 			}
 			
 		});
