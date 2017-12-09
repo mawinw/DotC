@@ -41,7 +41,7 @@ public class MainMenu extends Pane {
 		backgroundImages[2] = new WritableImage(backgroundImages[0].getPixelReader(),0,407+5,541,407);
 		backgroundImages[3] = new WritableImage(backgroundImages[0].getPixelReader(),0,814+10,541,407);
 	}
-	private static AudioClip mainMenuMusic = new AudioClip("file:resources/sound/bgm01_intro.wav");
+	private static AudioClip mainMenuMusic = new AudioClip("file:resources/sound/bgm01_intro.mp3");
 
 	public MainMenu() {
 		name="";
