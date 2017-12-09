@@ -10,6 +10,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.GameHandler;
@@ -24,6 +25,9 @@ public final class SceneManager {
 	private static Scene mainMenuScene = new Scene(mainMenuCanvas);
 	public static Timeline pauseTimer;
 	public static Pane allPane;
+	
+	private static AudioClip stageMusic = new AudioClip("file:resources/sound/bgm03_stage.mp3");
+
 
 	public static void initialize(Stage stage) {
 		primaryStage = stage;
@@ -77,11 +81,13 @@ public final class SceneManager {
 		scene.setOnKeyReleased(event -> GameHandler.keyReleased(event));
 		// set handler
 		GameHandler.startGame();
+		stageMusic.play();
 		
 		primaryStage.setScene(scene);
 		primaryStage.setOnCloseRequest(event -> {
 			GameHandler.stopTimer();
-			
+
+			stageMusic.stop();
 		});
 	}
 

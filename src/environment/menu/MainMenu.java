@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -40,6 +41,7 @@ public class MainMenu extends Pane {
 		backgroundImages[2] = new WritableImage(backgroundImages[0].getPixelReader(),0,407+5,541,407);
 		backgroundImages[3] = new WritableImage(backgroundImages[0].getPixelReader(),0,814+10,541,407);
 	}
+	private static AudioClip mainMenuMusic = new AudioClip("file:resources/sound/bgm01_intro.wav");
 
 	public MainMenu() {
 		name="";
@@ -56,6 +58,7 @@ public class MainMenu extends Pane {
 		gc.setFont(TITLE_FONT);
 		gc.fillText("Defends of the Crystal", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE * 2 / 10);
 		drawName();
+		mainMenuMusic.play();
 		this.addKeyEventHandler();
 	}
 
@@ -157,6 +160,7 @@ public class MainMenu extends Pane {
 	}
 	
 	public static void moveToGameScene() {
+		mainMenuMusic.stop();
 		SceneManager.gotoGameScene();
 		resetName();
 	}
