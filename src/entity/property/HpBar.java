@@ -41,7 +41,7 @@ public class HpBar {
 			gc.setStroke(Color.GOLD);
 			gc.setFill(Color.GOLD);
 		}
-		gc.setStroke(Color.GREEN);
+		gc.setStroke(Color.WHITE);
 		width = (entity.getHp() / entity.getMaxHp()) * maxWidth;
 		// System.out.println(entity.getPosition().first+"
 		// "+entity.getPosition().second);
