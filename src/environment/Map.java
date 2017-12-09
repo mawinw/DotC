@@ -36,6 +36,7 @@ public class Map extends Pane {
 	private static Group tileGroup;
 	private static Group entityGroup;
 	public static Group statusBarGroup;
+	public static Group effectGroup;
 	private static Pane namePane;
 	private static Fighter hero;
 	private static Pair heroPosition;
@@ -47,7 +48,9 @@ public class Map extends Pane {
 	public Map() {
 		tileGroup = new Group();
 		entityGroup = new Group();
+		effectGroup = new Group();
 		statusBarGroup = new Group();
+		this.getChildren().clear();
 		namePane = new Pane();
 		monsterList = new ArrayList<>();
 		board = new Tile[WIDTH][HEIGHT];
@@ -55,6 +58,11 @@ public class Map extends Pane {
 
 		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 
+		GraphicsContext MapGc = BG.getGraphicsContext2D();
+		MapGc.clearRect(0, 0, 500, 500);
+		MapGc.drawImage(bgImage, 0, 0, 700, 700);
+		tileGroup.getChildren().add(BG);
+		
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
 				Tile tile = new Tile((x + y) % 2 == 0, x, y, null);
@@ -74,18 +82,8 @@ public class Map extends Pane {
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 		namePane.getChildren().add(hero.getNameCanvas());
 
-		this.getChildren().clear();
 
-		GraphicsContext MapGc = BG.getGraphicsContext2D();
-		MapGc.clearRect(0, 0, 500, 500);
-		MapGc.drawImage(bgImage, 0, 0, 700, 700);
-		tileGroup.getChildren().add(BG);
-
-		entityGroup.getChildren().add(slime6.getAtkCanvas());
-		entityGroup.getChildren().add(king.getAtkCanvas());
-		entityGroup.getChildren().add(hero.getAtkCanvas());
-		entityGroup.getChildren().add(hero.getLevelUpCanvas());
-		this.getChildren().addAll(tileGroup, statusBarGroup, entityGroup, namePane);
+		this.getChildren().addAll(tileGroup, namePane,statusBarGroup,entityGroup,effectGroup);
 
 	}
 
@@ -95,6 +93,9 @@ public class Map extends Pane {
 
 	public static Group getStatusBarGroup() {
 		return statusBarGroup;
+	}
+	public static Group getEffectGroup() {
+		return effectGroup;
 	}
 
 	public static Pane getNamePane() {
@@ -133,21 +134,6 @@ public class Map extends Pane {
 
 	}
 
-	private ActionResult tryAction(ActionType type, int clickX, int clickY) {
-		switch (type) {
-		case ATTACK:
-			break;
-		case SKILL:
-			break;
-		case MOVE:
-			break;
-		default:
-			return new ActionResult(ActionType.ATTACK);
-		}
-		return new ActionResult(ActionType.ATTACK);
-		// confused
-	}
-
 	private static void createDefaultEntity(Entity entity, String entityType, Pair position) {
 		switch (entityType) {
 		case "Slime":
@@ -155,6 +141,7 @@ public class Map extends Pane {
 			board[(int) position.first][(int) position.second].setTileType(TileType.MONSTER);
 			board[(int) position.first][(int) position.second].setEntity(entity);
 			entityGroup.getChildren().add(entity.getCanvas());
+			effectGroup.getChildren().add(entity.getAtkCanvas());
 			entity.draw();
 			return;
 		case "SlimeKing":
@@ -166,13 +153,16 @@ public class Map extends Pane {
 				}
 			}
 			entityGroup.getChildren().add(entity.getCanvas());
+			effectGroup.getChildren().add(entity.getAtkCanvas());
 			entity.draw();
 			return;
 		case "Novice":
 			board[(int) position.first][(int) position.second].setTileType(TileType.HERO);
 			board[(int) position.first][(int) position.second].setEntity(hero);
 			heroPosition = hero.getPosition();
+			entityGroup.getChildren().add(hero.getLevelUpCanvas());
 			entityGroup.getChildren().add(entity.getCanvas());
+			effectGroup.getChildren().add(entity.getAtkCanvas());
 			entity.draw();
 			return;
 		}
@@ -201,14 +191,23 @@ public class Map extends Pane {
 	public void reset() {
 		tileGroup = new Group();
 		entityGroup = new Group();
+		effectGroup = new Group();
+		System.out.println("resetto");
 		statusBarGroup = new Group();
 		namePane = new Pane();
 		monsterList = new ArrayList<>();
 		board = new Tile[WIDTH][HEIGHT];
 		BG = new Canvas(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+		this.getChildren().clear();
 
 		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 
+
+		GraphicsContext MapGc = BG.getGraphicsContext2D();
+		MapGc.clearRect(0, 0, 500, 500);
+		MapGc.drawImage(bgImage, 0, 0, 700, 700);
+		tileGroup.getChildren().add(BG);
+		
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
 				Tile tile = new Tile((x + y) % 2 == 0, x, y, null);
@@ -229,17 +228,7 @@ public class Map extends Pane {
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 		namePane.getChildren().add(hero.getNameCanvas());
 
-		this.getChildren().clear();
-
-		GraphicsContext MapGc = BG.getGraphicsContext2D();
-		MapGc.clearRect(0, 0, 500, 500);
-		MapGc.drawImage(bgImage, 0, 0, 700, 700);
-		tileGroup.getChildren().add(BG);
-
-		entityGroup.getChildren().add(slime6.getAtkCanvas());
-		entityGroup.getChildren().add(king.getAtkCanvas());
-		entityGroup.getChildren().add(hero.getAtkCanvas());
-		this.getChildren().addAll(tileGroup, statusBarGroup, entityGroup, namePane);
+		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
 
 	}
 }

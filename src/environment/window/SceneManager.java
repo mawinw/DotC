@@ -98,6 +98,7 @@ public final class SceneManager {
 		allPane.getChildren().add(Map.getInstance().getStatusBarGroup());
 		allPane.getChildren().add(Map.getInstance().getEntityGroup());
 		allPane.getChildren().add(Map.getInstance().getNamePane());
+		allPane.getChildren().add(Map.getInstance().getEffectGroup());
 		
 		Scene scene = new Scene(allPane,Main.SCREEN_SIZE,Main.SCREEN_SIZE);
 		
