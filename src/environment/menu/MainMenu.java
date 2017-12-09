@@ -1,12 +1,15 @@
 package environment.menu;
 
 import java.awt.Event;
+import java.util.Random;
 
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -30,6 +33,13 @@ public class MainMenu extends Pane {
 	private Canvas background;
 	private static Canvas text;
 	public static String name;
+	private static final Image[] backgroundImages = new Image[5];
+	static {
+		backgroundImages[0] = new Image("background/main_0.jpg");
+		backgroundImages[1] = new WritableImage(backgroundImages[0].getPixelReader(),0,0,541,407);
+		backgroundImages[2] = new WritableImage(backgroundImages[0].getPixelReader(),0,407+5,541,407);
+		backgroundImages[3] = new WritableImage(backgroundImages[0].getPixelReader(),0,814+10,541,407);
+	}
 
 	public MainMenu() {
 		name="";
@@ -37,8 +47,9 @@ public class MainMenu extends Pane {
 		text = new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE);
 		this.getChildren().addAll(background, text);
 		GraphicsContext gc = background.getGraphicsContext2D();
-		gc.setFill(Color.BLACK);
-		gc.fillRect(0, 0, Main.SCREEN_SIZE, Main.SCREEN_SIZE);
+		Random randomBg = new Random();
+		int rn = randomBg.nextInt(3);
+		gc.drawImage(backgroundImages[rn+1],0, 0, Main.SCREEN_SIZE, Main.SCREEN_SIZE);
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.CENTER);
 		gc.setFill(Color.WHITE);
