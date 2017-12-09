@@ -141,8 +141,6 @@ public class StatusMenu extends Pane {
 	}
 	
 	private static void drawSelectedFrame() {
-		if(hero.statusPoint==0) pointer=5;
-		else		pointer=0;
 		isCompleted=false;
 		Timeline timer = new Timeline(new KeyFrame(new Duration(4000 / Main.FPS), e -> {
 			GraphicsContext gc = selectedFrame.getGraphicsContext2D();
@@ -193,7 +191,11 @@ public class StatusMenu extends Pane {
 			} else if (pointer == 5) {
 				close();
 			}
-			drawSelectedFrame();
+			if(hero.statusPoint==0) {
+				pointer=5;
+				drawSelectedFrame();
+			}
+			
 			updateStatus();
 			drawAllStatus();
 			drawAllIcon();
@@ -207,11 +209,12 @@ public class StatusMenu extends Pane {
 	public static void close() {
 		
 		SceneManager.closeStatusMenu();
-		drawSelectedFrame();
 	}
 	
 	public static void open() {
 		hero = GameScene.getInstance().getHero();
+		if(hero.statusPoint==0) pointer=5;
+		else		pointer=0;
 		drawSelectedFrame();
 		drawAllStatus();
 		drawAllIcon();
@@ -220,7 +223,8 @@ public class StatusMenu extends Pane {
 	public static void moveSelected(boolean b) {
 		// TODO Auto-generated method stub
 		if(!isCompleted||hero.statusPoint==0) return;
-		
+		System.out.println(hero.statusPoint);
+
 		if (b) {
 			pointer = (pointer + 5) % 6;
 			drawSelectedFrame();
