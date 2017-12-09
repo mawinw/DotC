@@ -17,10 +17,10 @@ public class Tile extends Rectangle {
 		setWidth(Map.TILE_SIZE);
 		setHeight(Map.TILE_SIZE);
 
-		relocate((x * Map.TILE_SIZE)+offset, (y * Map.TILE_SIZE)+offset);
+		relocate((x * Map.TILE_SIZE), (y * Map.TILE_SIZE));
 
 		setFill(lightColor ? Color.WHITE : Color.BLACK);
-		setOpacity(0);
+		setOpacity(0.05);
 		
 		
 		// if (entity == null) {
