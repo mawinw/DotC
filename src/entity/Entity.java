@@ -2,6 +2,7 @@ package entity;
 
 import entity.property.HpBar;
 import environment.GameScene;
+import exception.AttackDeadEntityException;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -47,7 +48,7 @@ public abstract class Entity {
 
 	public abstract void move(double moveX, double moveY);
 
-	public abstract void attack(Entity entity);
+	public abstract void attack(Entity entity) throws AttackDeadEntityException;
 
 	public boolean isCollied(Entity entity) {
 		// x1y1 x2y2 equal ? true false

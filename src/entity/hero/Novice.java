@@ -12,6 +12,7 @@ import entity.property.Moveable;
 import environment.GameHandler;
 import environment.GameScene;
 import environment.StatusBar;
+import exception.AttackDeadEntityException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -196,6 +197,15 @@ public class Novice extends Entity implements Attackable, Moveable {
 	}
 
 	public void attack(Entity entity) {
+		if(entity.getIsDead()) {
+			try {
+				throw new AttackDeadEntityException();
+			} catch (AttackDeadEntityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				return;
+			}
+		}
 		isMoveFinished = false;
 		isAttackFinished = false;
 		entity.setMoveFinished(false);
@@ -222,7 +232,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 		timer.setCycleCount(1);
 		timer.play();
 		timer.setOnFinished(e -> {
-			Timeline wait = new Timeline(new KeyFrame(Duration.millis(100), f -> {
+			Timeline wait = new Timeline(new KeyFrame(Duration.millis(2000), f -> {
 			}));
 			wait.setCycleCount(1);
 			wait.play();
