@@ -18,6 +18,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import utility.ActionResult;
 import utility.ActionType;
@@ -44,6 +45,7 @@ public class GameScene extends Pane {
 	private static ArrayList<Monster> monsterList;
 	private static Canvas BG;
 	private static Image bgImage = new Image("background/BG_01.png");
+	private static AudioClip stageMusic = new AudioClip("file:resources/sound/bgm03_stage.mp3");
 
 	public GameScene() {
 		tileGroup = new Group();
@@ -229,5 +231,12 @@ public class GameScene extends Pane {
 
 		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
 
+	}	
+	public static void playMusic() {
+		stageMusic.play();
+	}
+
+	public static void stopMusic() {
+		stageMusic.stop();
 	}
 }
