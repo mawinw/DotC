@@ -105,7 +105,6 @@ public final class SceneManager {
 		scene.setOnKeyReleased(event -> GameHandler.keyReleased(event));
 		// set handler
 		GameHandler.startGame();
-		GameScene.getInstance().playMusic();
 		GameScene.playMusic();
 		
 		primaryStage.setScene(scene);
