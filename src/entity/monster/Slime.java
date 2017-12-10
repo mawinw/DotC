@@ -29,7 +29,7 @@ public class Slime extends Monster {
 	private static final double DEFAULT_ACC = 80.00;
 	private static final double DEFAULT_EVA = 0.00;
 	private static final double DEFAULT_CRI_RATE = 0;
-	private static final int EXP_GAIN = 400;
+	private static final int EXP_GAIN = 200;
 
 	@Override
 	public int getExpGain() {

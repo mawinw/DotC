@@ -90,13 +90,12 @@ public final class SceneManager {
 		allPane = new Pane();
 		VBox stage = new VBox();
 		Pane gamePane = new Pane();
-		StatusBar statusBar = new StatusBar();
 		gamePane.getChildren().add(GameScene.getInstance().getTileGroup());
 		gamePane.getChildren().add(GameScene.getInstance().getStatusBarGroup());
 		gamePane.getChildren().add(GameScene.getInstance().getEntityGroup());
 		gamePane.getChildren().add(GameScene.getInstance().getNamePane());
 		gamePane.getChildren().add(GameScene.getInstance().getEffectGroup());
-		stage.getChildren().addAll(gamePane,statusBar);
+		stage.getChildren().addAll(gamePane,StatusBar.getInstance());
 		allPane.getChildren().add(stage);
 		Scene scene = new Scene(allPane,Main.SCREEN_SIZE,Main.SCREEN_SIZE);
 		
