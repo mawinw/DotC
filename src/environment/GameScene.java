@@ -227,7 +227,7 @@ public class GameScene extends Pane {
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 		namePane.getChildren().add(hero.getNameCanvas());
 
-		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup);
+		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
 
 	}
 }

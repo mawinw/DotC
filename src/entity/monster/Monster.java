@@ -223,10 +223,12 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 		case 0:
 			moveX = 1;
 			moveY = 0;
+			lastLRFaceDirection = Direction.RIGHT;
 			break;
 		case 1:
 			moveX = -1;
 			moveY = 0;
+			lastLRFaceDirection = Direction.LEFT;
 			break;
 		case 2:
 			moveX = 0;
