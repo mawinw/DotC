@@ -30,6 +30,31 @@ public class GameHandler {
 
 	private static Timeline gameTimer;
 
+	public static void update() {
+		if (!isPaused) {
+
+			movePlayer();
+			playerAttack();
+			moveMonster();
+			monsterAttack();
+			checkStatus();
+			animateAll();
+			regenHp();
+			tick++;
+		}
+		checkPause();
+
+	}
+
+	private static void regenHp() {
+		// TODO Auto-generated method stub
+		if (tick % (Main.FPS * 5) != 0)
+			return;
+		double hp=GameScene.getInstance().getHero().getHp();
+		GameScene.getInstance().getHero().setHp(hp*1.10);
+		
+	}
+
 	public static void keyPressed(KeyEvent event) {
 		// if (activeKey.contains(event.getCode()))
 		// return;
@@ -254,21 +279,6 @@ public class GameHandler {
 				}
 			}
 		}
-	}
-
-	public static void update() {
-		if (!isPaused) {
-
-			movePlayer();
-			playerAttack();
-			moveMonster();
-			monsterAttack();
-			checkStatus();
-			animateAll();
-			tick++;
-		}
-		checkPause();
-
 	}
 
 	public static void animateAll() {

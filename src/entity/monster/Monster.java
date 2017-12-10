@@ -304,10 +304,10 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 
 	public void takeDamage(double dmg) {
 		// System.out.println(Hp+" "+dmg);
-		if (Hp <= dmg) {
+		if (hp <= dmg) {
 			die();
 		} else {
-			Hp -= dmg;
+			hp -= dmg;
 		}
 	}
 

@@ -175,7 +175,9 @@ public class StatusMenu extends Pane {
 		Timeline timer = new Timeline(new KeyFrame(new Duration(100), e -> {
 			if (pointer == 0) {
 				hero.statusPoint--;
+				double temp= hero.getHp()/hero.getMaxHp();
 				hero.setMaxHp(hero.getMaxHp()+50);
+				hero.setHp(temp*hero.getMaxHp());
 			} else if (pointer == 1) {
 				hero.statusPoint--;
 				hero.setAtk(hero.getAtk()+10);
