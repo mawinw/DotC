@@ -294,7 +294,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 	}
 
 	protected void checkLevelUp() {
-		while (EXP_RATE[lv] < exp) {
+		while (EXP_RATE[lv] <= exp) {
 			lv++;
 			statusPoint += 2;
 			drawNameAndLv();
