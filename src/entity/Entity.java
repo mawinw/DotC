@@ -14,7 +14,7 @@ public abstract class Entity {
 	protected Canvas atkCanvas;
 	protected String name;
 	protected double maxHp;
-	protected double Hp;
+	protected double hp;
 	protected int atk;
 	protected int def;
 	protected double acc;
@@ -65,7 +65,7 @@ public abstract class Entity {
 		gc.fillRect(0, 0, 200, 200);
 		GameScene.getEntityGroup().getChildren().remove(canvas);
 		isDead = true;
-		Hp = 0;
+		hp = 0;
 		hpBar.die();
 	}
 
@@ -75,7 +75,7 @@ public abstract class Entity {
 		this.atkCanvas = new Canvas(GameScene.WIDTH * GameScene.TILE_SIZE, GameScene.HEIGHT * GameScene.TILE_SIZE);
 		this.name = name;
 		this.maxHp = maxHp;
-		Hp = maxHp;
+		hp = maxHp;
 		this.atk = attack;
 		this.def = defense;
 		this.acc = accuracy;
@@ -128,7 +128,7 @@ public abstract class Entity {
 	}
 
 	public double getHp() {
-		return Hp;
+		return hp;
 	}
 
 	public int getAtk() {
@@ -218,6 +218,11 @@ public abstract class Entity {
 
 	public void setDex(double dex) {
 		this.dex = dex;
+	}
+
+	public void setHp(double hp) {
+		if(hp>maxHp) hp=maxHp;
+		this.hp = hp;
 	}
 
 }

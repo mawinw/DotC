@@ -2,6 +2,7 @@ package environment.window;
 
 import environment.GameHandler;
 import environment.GameScene;
+import environment.StatusBar;
 import environment.menu.MainMenu;
 import environment.menu.PauseMenu;
 import environment.menu.PausedHandler;
@@ -13,6 +14,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -64,6 +66,7 @@ public final class SceneManager {
 
 	public static void openStatusMenu() {
 		// TODO Fill Code
+		StatusMenu.open();
 		allPane.getChildren().add(statusMenu);
 		PausedHandler.stopTimer();
 		StatusHandler.start();
@@ -72,7 +75,6 @@ public final class SceneManager {
 	}
 	public static void closeStatusMenu() {
 		// TODO Fill Code
-		System.out.println("x");
 		allPane.getChildren().remove(statusMenu);
 		PausedHandler.playTimer();
 		primaryStage.getScene().setOnKeyPressed(event -> PausedHandler.keyPressed(event));
@@ -87,12 +89,16 @@ public final class SceneManager {
 		// put all pane
 		GameScene.getInstance().reset();
 		allPane = new Pane();
-		allPane.getChildren().add(GameScene.getInstance().getTileGroup());
-		allPane.getChildren().add(GameScene.getInstance().getStatusBarGroup());
-		allPane.getChildren().add(GameScene.getInstance().getEntityGroup());
-		allPane.getChildren().add(GameScene.getInstance().getNamePane());
-		allPane.getChildren().add(GameScene.getInstance().getEffectGroup());
-		
+		VBox stage = new VBox();
+		Pane gamePane = new Pane();
+		StatusBar statusBar = new StatusBar();
+		gamePane.getChildren().add(GameScene.getInstance().getTileGroup());
+		gamePane.getChildren().add(GameScene.getInstance().getStatusBarGroup());
+		gamePane.getChildren().add(GameScene.getInstance().getEntityGroup());
+		gamePane.getChildren().add(GameScene.getInstance().getNamePane());
+		gamePane.getChildren().add(GameScene.getInstance().getEffectGroup());
+		stage.getChildren().addAll(gamePane,statusBar);
+		allPane.getChildren().add(stage);
 		Scene scene = new Scene(allPane,Main.SCREEN_SIZE,Main.SCREEN_SIZE);
 		
 		scene.setOnKeyPressed(event -> GameHandler.keyPressed(event));

@@ -25,12 +25,13 @@ public class StatusMenu extends Pane {
 	private static final Font MENU_FONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/ferrum.otf"), 40);
 	private Canvas background;
 	private Canvas title;
-	private Map<String, Canvas> statusText = new HashMap<String, Canvas>();
-	private Map<String, Canvas> statusIcon = new HashMap<String, Canvas>();
+	private static Map<String, Canvas> statusText = new HashMap<String, Canvas>();
+	private static Map<String, Canvas> statusIcon = new HashMap<String, Canvas>();
 	private Map<String, Boolean> canSelect = new HashMap<String, Boolean>();
-	private Map<String, Double> status = new HashMap<String, Double>();
+	private static Map<String, Double> status = new HashMap<String, Double>();
 	private Canvas back;
 	private static Canvas selectedFrame;
+	private static Novice hero =GameScene.getInstance().getHero();
 	
 	protected static int pointer = 0;
 	private static int gap = Main.SCREEN_SIZE * 3 / 4 / 10;
@@ -60,11 +61,7 @@ public class StatusMenu extends Pane {
 		this.canSelect.put("EVA", false);
 		this.canSelect.put("DEX", false);
 
-		this.status.put("VIT", GameScene.getInstance().getHero().getMaxHp());
-		this.status.put("ATK", (double) GameScene.getInstance().getHero().getAtk());
-		this.status.put("DEF", (double) GameScene.getInstance().getHero().getDef());
-		this.status.put("EVA", GameScene.getInstance().getHero().getEva());
-		this.status.put("DEX", GameScene.getInstance().getHero().getDex());
+		updateStatus();
 
 		GraphicsContext gc = background.getGraphicsContext2D();
 		gc.setFill(Color.WHEAT);
@@ -76,24 +73,16 @@ public class StatusMenu extends Pane {
 		gc.setFont(new Font(MENU_FONT.getName(), 50));
 		gc.fillText("STATUS", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE / 8 + gap);
 
-		drawStatus("VIT", statusText.get("VIT"), 3);
-		drawStatus("ATK", statusText.get("ATK"), 4);
-		drawStatus("DEF", statusText.get("DEF"), 5);
-		drawStatus("EVA", statusText.get("EVA"), 6);
-		drawStatus("DEX", statusText.get("DEX"), 7);
+		drawAllStatus();
 
-		drawIcon("VIT", statusIcon.get("VIT"), 3);
-		drawIcon("ATK", statusIcon.get("ATK"), 4);
-		drawIcon("DEF", statusIcon.get("DEF"), 5);
-		drawIcon("EVA", statusIcon.get("EVA"), 6);
-		drawIcon("DEX", statusIcon.get("DEX"), 7);
+		drawAllIcon();
 
 		gc = back.getGraphicsContext2D();
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.CENTER);
 		gc.setFont(MENU_FONT);
 		gc.fillText("BACK", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE / 8 + gap * 9);
-
+		if(hero.statusPoint==0) pointer =5;
 		drawSelectedFrame();
 		this.getChildren().addAll(background, title);
 		for (Map.Entry m : statusText.entrySet()) {
@@ -107,8 +96,21 @@ public class StatusMenu extends Pane {
 		this.getChildren().addAll(back,selectedFrame);
 
 	}
-
-	private void drawStatus(String s, Canvas statusCanvas, int i) {
+	private static void updateStatus() {
+		status.put("VIT", GameScene.getInstance().getHero().getMaxHp());
+		status.put("ATK", (double) GameScene.getInstance().getHero().getAtk());
+		status.put("DEF", (double) GameScene.getInstance().getHero().getDef());
+		status.put("EVA", GameScene.getInstance().getHero().getEva());
+		status.put("DEX", GameScene.getInstance().getHero().getDex());
+	}
+	private static void drawAllStatus() {
+		drawStatus("VIT", statusText.get("VIT"), 3);
+		drawStatus("ATK", statusText.get("ATK"), 4);
+		drawStatus("DEF", statusText.get("DEF"), 5);
+		drawStatus("EVA", statusText.get("EVA"), 6);
+		drawStatus("DEX", statusText.get("DEX"), 7);
+	}
+	private static void drawStatus(String s, Canvas statusCanvas, int i) {
 		GraphicsContext gc = statusCanvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, Main.SCREEN_SIZE, Main.SCREEN_SIZE);
 		gc.setTextBaseline(VPos.CENTER);
@@ -122,13 +124,20 @@ public class StatusMenu extends Pane {
 		gc.fillText(value, Main.SCREEN_SIZE * 6 / 10, Main.SCREEN_SIZE / 8 + gap * i);
 
 	}
-	private void drawIcon(String s, Canvas iconCanvas, int i) {
+	
+	private static void drawAllIcon() {
+		drawIcon("VIT", statusIcon.get("VIT"), 3);
+		drawIcon("ATK", statusIcon.get("ATK"), 4);
+		drawIcon("DEF", statusIcon.get("DEF"), 5);
+		drawIcon("EVA", statusIcon.get("EVA"), 6);
+		drawIcon("DEX", statusIcon.get("DEX"), 7);
+	}
+	private static void drawIcon(String s, Canvas iconCanvas, int i) {
 		GraphicsContext gc = iconCanvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, Main.SCREEN_SIZE, Main.SCREEN_SIZE);
-		gc.setFill(Color.RED);
+		if(hero.statusPoint==0) gc.setFill(Color.BLACK);
+		else gc.setFill(Color.RED);
 		gc.fillRect(Main.SCREEN_SIZE * 2 / 3 -15, Main.SCREEN_SIZE / 8 + gap * i -15, 30, 30);
-		
-		
 	}
 	
 	private static void drawSelectedFrame() {
@@ -158,21 +167,40 @@ public class StatusMenu extends Pane {
 	public static void action() {
 		// TODO Auto-generated method stub
 		if(!isCompleted) return;
+		if(hero.statusPoint==0) {
+			close();
+			return;
+		}
 		isCompleted=false;
 		Timeline timer = new Timeline(new KeyFrame(new Duration(100), e -> {
-			Novice hero =GameScene.getInstance().getHero();
 			if (pointer == 0) {
 				hero.statusPoint--;
+				double temp= hero.getHp()/hero.getMaxHp();
 				hero.setMaxHp(hero.getMaxHp()+50);
+				hero.setHp(temp*hero.getMaxHp());
 			} else if (pointer == 1) {
-				
+				hero.statusPoint--;
+				hero.setAtk(hero.getAtk()+10);
 			} else if (pointer == 2) {
+				hero.statusPoint--;
+				hero.setDef(hero.getDef()+10);
 			} else if (pointer == 3) {
+				hero.statusPoint--;
+				hero.setEva(hero.getEva()+5);
 			} else if (pointer == 4) {
+				hero.statusPoint--;
+				hero.setDex(hero.getDex()+5);
 			} else if (pointer == 5) {
-				SceneManager.closeStatusMenu();
-				
+				close();
 			}
+			if(hero.statusPoint==0) {
+				pointer=5;
+				drawSelectedFrame();
+			}
+			
+			updateStatus();
+			drawAllStatus();
+			drawAllIcon();
 		}));
 		timer.setCycleCount(1);
 		timer.play();
@@ -180,10 +208,25 @@ public class StatusMenu extends Pane {
 			isCompleted=true;
 		});
 	}
+	public static void close() {
+		
+		SceneManager.closeStatusMenu();
+	}
+	
+	public static void open() {
+		hero = GameScene.getInstance().getHero();
+		if(hero.statusPoint==0) pointer=5;
+		else		pointer=0;
+		drawSelectedFrame();
+		drawAllStatus();
+		drawAllIcon();
+	}
 
 	public static void moveSelected(boolean b) {
 		// TODO Auto-generated method stub
-		if(!isCompleted) return;
+		if(!isCompleted||hero.statusPoint==0) return;
+		System.out.println(hero.statusPoint);
+
 		if (b) {
 			pointer = (pointer + 5) % 6;
 			drawSelectedFrame();

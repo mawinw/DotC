@@ -212,7 +212,6 @@ public class Novice extends Entity implements Attackable, Moveable {
 			entity.draw();
 			if (entity.getIsDead()) {
 				exp += ((Monster) entity).getExpGain();
-				System.out.println(exp);
 				checkLevelUp();
 				// System.out.println(lv+" "+exp);
 			}
@@ -297,7 +296,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 			lv++;
 			statusPoint += 2;
 			drawNameAndLv();
-			
+			hp=maxHp;
 			currentLevelUpAnimation = 0;
 			Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(45*1.5), attack -> {
 				drawLevelUpAnimation();
@@ -346,10 +345,10 @@ public class Novice extends Entity implements Attackable, Moveable {
 	}
 
 	public void takeDamage(double dmg) {
-		if (Hp <= dmg) {
+		if (hp <= dmg) {
 			die();
 		} else {
-			Hp -= dmg;
+			hp -= dmg;
 		}
 	}
 

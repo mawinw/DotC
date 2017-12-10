@@ -1,5 +1,7 @@
 package environment;
 
-public class StatusBar {
+import javafx.scene.layout.Pane;
+
+public class StatusBar extends Pane {
 
 }
