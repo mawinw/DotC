@@ -27,12 +27,14 @@ public class GameHandler {
 
 	private static int tick = 0;
 	private static boolean isPaused;
+	private static boolean groundSmashUsed=false;
+	private static boolean healUsed=false;
 
 	private static Timeline gameTimer;
 
 	public static void update() {
 		if (!isPaused) {
-
+			
 			movePlayer();
 			playerAttack();
 			moveMonster();
@@ -42,15 +44,42 @@ public class GameHandler {
 			regenHp();
 			playerSkill();
 			tick++;
+			skillCountDown();
 		}
 		checkPause();
 
 	}
 
+	private static void skillCountDown() {
+		// TODO Auto-generated method stub
+		if(groundSmashUsed) {
+			if(StatusBar.groundSmash.remainingCoolDown<StatusBar.groundSmash.coolDown)
+				StatusBar.groundSmash.remainingCoolDown+=1 / (double)Main.FPS;
+			else {
+				StatusBar.groundSmash.remainingCoolDown=0;
+				groundSmashUsed=!groundSmashUsed;
+			}
+			StatusBar.groundSmash.draw();
+		}
+		
+		if(healUsed) {
+			if(StatusBar.heal.remainingCoolDown<StatusBar.heal.coolDown)
+				StatusBar.heal.remainingCoolDown+=1 / (double)Main.FPS;
+			else {
+				StatusBar.heal.remainingCoolDown=0;
+				healUsed=!healUsed;
+			}
+			StatusBar.heal.draw();
+		}
+	}
+
 	private static void playerSkill() {
 		// TODO Auto-generated method stub
-		if(activeKey.contains(KeyCode.C)) {
+		if(activeKey.contains(KeyCode.C)&&StatusBar.heal.remainingCoolDown==0) {
+			System.out.println("x");
 			GameScene.getInstance().getHero().heal();
+			StatusBar.heal.remainingCoolDown+=1/(double)Main.FPS;
+			healUsed=true;
 		}
 	}
 
@@ -205,8 +234,10 @@ public class GameHandler {
 
 		else if (activeKey.contains(KeyCode.X) && GameScene.getInstance().getHero().isMoveFinished() == true
 				&& GameScene.getInstance().getHero().isAttackFinished()) {
-			if(GameScene.getInstance().getHero() instanceof Fighter) {
+			if(GameScene.getInstance().getHero() instanceof Fighter&&StatusBar.groundSmash.remainingCoolDown==0) {
 				((Fighter) GameScene.getInstance().getHero()).groundSmash();
+				StatusBar.groundSmash.remainingCoolDown+=1/(double)Main.FPS;
+				groundSmashUsed=true;
 			}
 		}
 

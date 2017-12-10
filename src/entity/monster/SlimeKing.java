@@ -26,11 +26,11 @@ public class SlimeKing extends Slime {
 		return EXP_GAIN;
 	}
 
-	private static final int DEFAULT_DEF = 20;
+	private static final int DEFAULT_DEF = 40;
 	private static final double DEFAULT_ACC = 80.00;
-	private static final double DEFAULT_EVA = 0.00;
-	private static final double DEFAULT_CRI_RATE = 0;
-	private static final int EXP_GAIN = 250;
+	private static final double DEFAULT_EVA = 20.00;
+	private static final double DEFAULT_CRI_RATE = 10;
+	private static final int EXP_GAIN = 400;
 
 	
 	private static final Image[] images = new Image[6];

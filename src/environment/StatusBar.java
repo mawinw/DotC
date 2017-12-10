@@ -4,6 +4,7 @@ import entity.property.SkillIcon;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -27,21 +28,34 @@ public class StatusBar extends Pane {
 	private static Canvas expBarText;
 	private static double expMaxWidth;
 	private static double expWidth;
-
+	public static SkillIcon groundSmash;
+	private static Image groundSmashIcon = new Image("icon/groundSmashIcon.png");
+	public static SkillIcon heal;
+	private static Image healIcon = new Image("icon/healIcon.png");
+	
 	public StatusBar() {
 		this.setPrefSize(Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
 		this.background = new Canvas(Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
 		this.expBar = new Canvas(Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
 		this.expBarText = new Canvas(Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
 		expMaxWidth = 50 * 5;
-
+		this.groundSmash = new SkillIcon(5,groundSmashIcon);
+		this.heal = new SkillIcon(10, healIcon);
 		GraphicsContext gc = background.getGraphicsContext2D();
 		gc.setFill(Color.BEIGE);
 		gc.fillRect(0, 0, Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
-
+		
+		groundSmash.draw();
+		groundSmash.setTranslateX(GameScene.TILE_SIZE * 10);
+		groundSmash.setTranslateY(GameScene.TILE_SIZE * 0.5);
+		
+		heal.draw();
+		heal.setTranslateX(GameScene.TILE_SIZE * 12);
+		heal.setTranslateY(GameScene.TILE_SIZE * 0.5);
+		
 		drawExpBar();
 
-		this.getChildren().addAll(background, expBar, expBarText);
+		this.getChildren().addAll(background, expBar, expBarText,groundSmash,heal);
 	}
 
 	public static void drawExpBar() {

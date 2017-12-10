@@ -23,7 +23,7 @@ import utility.TileType;
 public class Slime extends Monster {
 	public static final int VISIBLE_RANGE = 5;
 
-	private static final int DEFAULT_MAX_HP = 200;
+	private static final int DEFAULT_MAX_HP = 100;
 	private static final int DEFAULT_ATK = 50;
 	private static final int DEFAULT_DEF = 10;
 	private static final double DEFAULT_ACC = 80.00;
