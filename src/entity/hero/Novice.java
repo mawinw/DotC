@@ -11,6 +11,7 @@ import entity.property.HpBar;
 import entity.property.Moveable;
 import environment.GameHandler;
 import environment.GameScene;
+import environment.StatusBar;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -38,7 +39,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 0.00;
 	private static final double DEFAULT_CRI_RATE = 30;
-	private static final int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500 };
+	public static final int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500 };
 	private static final Font NAMEFONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/ferrum.otf"), 15);
 
 	protected Timeline timer;
@@ -213,6 +214,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 			if (entity.getIsDead()) {
 				exp += ((Monster) entity).getExpGain();
 				checkLevelUp();
+				StatusBar.drawExpBar();
 				// System.out.println(lv+" "+exp);
 			}
 		}));
@@ -292,7 +294,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 	}
 
 	protected void checkLevelUp() {
-		if (EXP_RATE[lv] < exp) {
+		while (EXP_RATE[lv] < exp) {
 			lv++;
 			statusPoint += 2;
 			drawNameAndLv();
@@ -366,6 +368,14 @@ public class Novice extends Entity implements Attackable, Moveable {
 
 	public Canvas getLevelUpCanvas() {
 		return levelUpCanvas;
+	}
+
+	public int getExp() {
+		return exp;
+	}
+
+	public int getLv() {
+		return lv;
 	}
 	
 
