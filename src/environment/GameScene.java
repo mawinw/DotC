@@ -259,13 +259,13 @@ public class GameScene extends Pane {
 		stageMusic.volumeProperty().set(0);
 		stageMusic.play();	
 		Timeline fadeIn = new Timeline(
-				new KeyFrame(Duration.millis(5000), new KeyValue(stageMusic.volumeProperty(), 1)));
+				new KeyFrame(Duration.millis(15000), new KeyValue(stageMusic.volumeProperty(), 1)));
     fadeIn.play();
 	}
 	public static void stopMusic() {
 		if(!isMusicPlaying) return;
 		Timeline fadeOut = new Timeline(
-				new KeyFrame(Duration.millis(3000), new KeyValue(stageMusic.volumeProperty(), 0)));
+				new KeyFrame(Duration.millis(1000), new KeyValue(stageMusic.volumeProperty(), 0)));
     fadeOut.play();
     fadeOut.setOnFinished(finish -> {
     	stageMusic.stop();
