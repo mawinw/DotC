@@ -45,6 +45,8 @@ public final class SceneManager {
 		MainMenu.playMusic();
 		System.out.println("playing main menu scene music");
 		mainMenuCanvas .requestFocus();
+		StatusBar.groundSmash.canUse=false;
+		StatusBar.groundSmash.draw();
 	}
 	public static void openPausedMenu() {
 		// TODO Fill Code

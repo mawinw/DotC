@@ -101,6 +101,7 @@ public class StatusHandler {
 
 	public static void stopTimer() {
 		// TODO Auto-generated method stub
+		activeKey.clear();
 		statusTimer.stop();
 	}
 

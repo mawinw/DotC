@@ -34,7 +34,7 @@ public class StatusMenu extends Pane {
 	private Canvas back;
 	private static Canvas selectedFrame;
 	private static Novice hero = GameScene.getInstance().getHero();
-	private static final double[] STATUS_RATE = { 50, 10, 10, 5, 5 };
+	private static final double[] STATUS_RATE = { 50, 10, 5, 3, 3 };
 	private static final Image BG = new Image("background/pauseBG.png");
 
 	protected static int pointer = 0;

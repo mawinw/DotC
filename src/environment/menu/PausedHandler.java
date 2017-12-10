@@ -16,11 +16,13 @@ import main.Main;
 public class PausedHandler {
 	private static HashSet<KeyCode> activeKey = new HashSet<KeyCode>();
 	private static Timeline pauseTimer;
+	private static boolean isActionFinished=true;
+
 	
 	public static void keyPressed(KeyEvent event) {
 		// if (activeKey.contains(event.getCode()))
 		// return;
-		if (event.getCode() == KeyCode.ENTER) {
+		if (event.getCode() == KeyCode.ENTER||event.getCode() == KeyCode.Z) {
 			activeKey.add(KeyCode.ENTER);
 		}
 
@@ -32,10 +34,7 @@ public class PausedHandler {
 			activeKey.add(KeyCode.DOWN);
 		}
 
-		if (event.getCode() == KeyCode.Z) {
-			activeKey.add(KeyCode.Z);
-
-		}
+		
 		if (event.getCode() == KeyCode.X) {
 			activeKey.add(KeyCode.X);
 
@@ -44,8 +43,9 @@ public class PausedHandler {
 	}
 
 	public static void keyReleased(KeyEvent event) {
-		if (event.getCode() == KeyCode.ENTER) {
+		if (event.getCode() == KeyCode.ENTER||event.getCode() == KeyCode.Z) {
 			activeKey.remove(KeyCode.ENTER);
+			isActionFinished=true;
 		}
 
 		if (event.getCode() == KeyCode.UP) {
@@ -56,10 +56,6 @@ public class PausedHandler {
 			activeKey.remove(KeyCode.DOWN);
 		}
 
-		if (event.getCode() == KeyCode.Z) {
-			activeKey.remove(KeyCode.Z);
-
-		}
 		if (event.getCode() == KeyCode.X) {
 			activeKey.remove(KeyCode.X);
 
@@ -74,8 +70,9 @@ public class PausedHandler {
 
 	private static void action() {
 		// TODO Auto-generated method stub
-		if (activeKey.contains(KeyCode.Z)||activeKey.contains(KeyCode.ENTER)) {
+		if (activeKey.contains(KeyCode.ENTER)&&isActionFinished) {
 			PauseMenu.action();
+			isActionFinished=false;
 		}
 		
 	}
@@ -102,6 +99,7 @@ public class PausedHandler {
 	
 	public static void stopTimer() {
 		// TODO Auto-generated method stub
+		activeKey.clear();
 		pauseTimer.stop();
 	}
 

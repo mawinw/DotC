@@ -12,7 +12,7 @@ import javafx.scene.text.TextAlignment;
 import main.Main;
 
 public class StatusBar extends Pane {
-	private static StatusBar instance;
+	private static StatusBar instance = new StatusBar();
 
 	public static StatusBar getInstance() {
 		if (instance == null) {
@@ -29,9 +29,9 @@ public class StatusBar extends Pane {
 	private static double expMaxWidth;
 	private static double expWidth;
 	public static SkillIcon groundSmash;
-	private static Image groundSmashIcon = new Image("icon/groundSmashIcon.png");
+	private static Image groundSmashIcon;
 	public static SkillIcon heal;
-	private static Image healIcon = new Image("icon/healIcon.png");
+	private static Image healIcon;
 	
 	public StatusBar() {
 		this.setPrefSize(Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
@@ -39,8 +39,12 @@ public class StatusBar extends Pane {
 		this.expBar = new Canvas(Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
 		this.expBarText = new Canvas(Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
 		expMaxWidth = 50 * 5;
+		
+		groundSmashIcon = new Image("icon/groundSmashIcon.png");
 		this.groundSmash = new SkillIcon(5,groundSmashIcon,false);
+		healIcon = new Image("icon/healIcon.png");
 		this.heal = new SkillIcon(10, healIcon,true);
+		
 		GraphicsContext gc = background.getGraphicsContext2D();
 		gc.setFill(Color.BEIGE);
 		gc.fillRect(0, 0, Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
