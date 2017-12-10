@@ -86,7 +86,7 @@ public class StatusMenu extends Pane {
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.CENTER);
 		gc.setFont(MENU_FONT);
-		gc.fillText("BACK", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE / 8 + gap * 9);
+		gc.fillText("BACK", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE / 8 + gap * 8.5);
 		if (hero.statusPoint == 0)
 			pointer = 5;
 		drawSelectedFrame();
@@ -173,7 +173,7 @@ public class StatusMenu extends Pane {
 			if (pointer == 5) {
 				gc.setStroke(Color.RED);
 				gc.setLineWidth(5);
-				gc.strokeRect(Main.SCREEN_SIZE * 5 / 14, Main.SCREEN_SIZE / 8 + gap * (9 - 0.5),
+				gc.strokeRect(Main.SCREEN_SIZE * 5 / 14, Main.SCREEN_SIZE / 8 + gap * (8),
 						Main.SCREEN_SIZE * 2 / 7, gap);
 			} else {
 				gc.setStroke(Color.WHITE);
