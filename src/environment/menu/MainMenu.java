@@ -3,6 +3,11 @@ package environment.menu;
 import java.awt.Event;
 import java.util.Random;
 
+import javax.sound.sampled.FloatControl;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;
@@ -15,9 +20,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 import main.Main;
 import environment.window.*;
 import exception.DeleteNullException;
@@ -41,7 +49,9 @@ public class MainMenu extends Pane {
 		backgroundImages[2] = new WritableImage(backgroundImages[0].getPixelReader(),0,407+5,541,407);
 		backgroundImages[3] = new WritableImage(backgroundImages[0].getPixelReader(),0,814+10,541,407);
 	}
-	private static AudioClip mainMenuMusic = new AudioClip("file:resources/sound/bgm01_intro.mp3");
+	private static Media mainMenuMusicFile = new Media(
+			ClassLoader.getSystemResource("sound/bgm01_intro.mp3").toString());
+	static MediaPlayer mainMenuMusic = new MediaPlayer(mainMenuMusicFile);
 
 	public MainMenu() {
 		name="";
@@ -58,7 +68,6 @@ public class MainMenu extends Pane {
 		gc.setFont(TITLE_FONT);
 		gc.fillText("Defends of the Crystal", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE * 2 / 10);
 		drawName();
-		mainMenuMusic.play();
 		this.addKeyEventHandler();
 	}
 
@@ -160,15 +169,21 @@ public class MainMenu extends Pane {
 	}
 	
 	public static void moveToGameScene() {
-		mainMenuMusic.stop();
 		SceneManager.gotoGameScene();
 		resetName();
 	}
 	public static void playMusic() {
-		mainMenuMusic.play();
+		mainMenuMusic.play();		
+		Timeline fadeIn = new Timeline(
+				new KeyFrame(Duration.millis(5000), new KeyValue(mainMenuMusic.volumeProperty(), 1)));
+    fadeIn.play();
 	}
-
 	public static void stopMusic() {
-		mainMenuMusic.stop();
+		Timeline fadeOut = new Timeline(
+				new KeyFrame(Duration.millis(3000), new KeyValue(mainMenuMusic.volumeProperty(), 0)));
+    fadeOut.play();
+    fadeOut.setOnFinished(finish -> {
+    	mainMenuMusic.stop();
+    });
 	}
 }

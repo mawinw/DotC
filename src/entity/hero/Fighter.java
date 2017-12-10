@@ -8,6 +8,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import utility.Direction;
@@ -22,7 +23,14 @@ public class Fighter extends Novice {
 	private static final double DEFAULT_EVA = 30.00;
 	private static final double DEFAULT_CRI_RATE = 40;
 	
-
+	private static final Image[] characterImages = new Image[5];
+	static {
+		characterImages[0] = new Image("images/hero/Fighter_dlru_t.png");
+		for (int i = 1; i <= 4; i++) {
+			characterImages[i] = new WritableImage(characterImages[0].getPixelReader(), 33, (i - 1) * 48, 32, 48);
+		}
+	}
+	
 	private final static int maxSmashImage=8;
 	private static final Image[] smashImages = new Image[maxSmashImage];
 	static {
@@ -50,6 +58,36 @@ public class Fighter extends Novice {
 		super(name, pos);
 		setValue(name, DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
 	}
+	
+	public void draw() {
+		System.out.println("fighter draw");
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc.clearRect(0, 0, GameScene.WIDTH * GameScene.TILE_SIZE, GameScene.HEIGHT * GameScene.TILE_SIZE);
+
+		if (faceDirection == Direction.RIGHT) {
+			gc.drawImage(characterImages[3], (position.first+0.175) * GameScene.TILE_SIZE, (position.second-0.1) * GameScene.TILE_SIZE,
+					picWidth *0.70* GameScene.TILE_SIZE, (picHeight+0.5)*0.70 * GameScene.TILE_SIZE);
+		} else if (faceDirection == Direction.LEFT) {
+			gc.drawImage(characterImages[2], (position.first+0.175) * GameScene.TILE_SIZE, (position.second-0.1) * GameScene.TILE_SIZE,
+					picWidth *0.70* GameScene.TILE_SIZE, (picHeight+0.5)*0.70 * GameScene.TILE_SIZE);
+		} else if (faceDirection == Direction.DOWN) {
+			gc.drawImage(characterImages[1], (position.first+0.175) * GameScene.TILE_SIZE, (position.second-0.1) * GameScene.TILE_SIZE,
+					picWidth *0.70* GameScene.TILE_SIZE, (picHeight+0.5)*0.70 * GameScene.TILE_SIZE);
+		} else if (faceDirection == Direction.UP) {
+			gc.drawImage(characterImages[4], (position.first+0.175) * GameScene.TILE_SIZE, (position.second-0.1) * GameScene.TILE_SIZE,
+					picWidth *0.70* GameScene.TILE_SIZE, (picHeight+0.5)*0.70 * GameScene.TILE_SIZE);
+		}
+
+		drawDirection();
+		// System.out.println(position.first+" "+position.second);
+		if (isDead)
+			return;
+		GameScene.statusBarGroup.getChildren().remove(hpBar.getCanvas());
+		hpBar = new HpBar(this);
+		hpBar.draw();
+		GameScene.statusBarGroup.getChildren().add(hpBar.getCanvas());
+		drawNameAndLv();
+	}
 
 	public void groundSmash() {
 		for (int i = -1; i < 2; i++) {
@@ -71,8 +109,6 @@ public class Fighter extends Novice {
 		attackTimeline.setCycleCount(7);
 		attackTimeline.play();
 		drawSmashDirection();
-		
-
 	}
 	
 	private void drawSmashAnimation() {

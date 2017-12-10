@@ -11,6 +11,9 @@ import entity.monster.Monster;
 import entity.monster.Slime;
 import entity.monster.SlimeKing;
 import environment.menu.MainMenu;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -19,7 +22,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import utility.ActionResult;
 import utility.ActionType;
 import utility.Pair;
@@ -43,7 +49,11 @@ public class GameScene extends Pane {
 	private static ArrayList<Monster> monsterList;
 	private static Canvas BG;
 	private static Image bgImage = new Image("background/BG_01.png");
-	private static AudioClip stageMusic = new AudioClip("file:resources/sound/bgm03_stage.mp3");
+
+	private static Media stageMusicFile = new Media(
+			ClassLoader.getSystemResource("sound/bgm03_stage.mp3").toString());
+	static MediaPlayer stageMusic = new MediaPlayer(stageMusicFile);
+	private static boolean isMusicPlaying=false;
 
 	public GameScene() {
 		tileGroup = new Group();
@@ -80,6 +90,7 @@ public class GameScene extends Pane {
 		hero = new Novice(MainMenu.name, new Pair(1, 4));
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 		namePane.getChildren().add(hero.getNameCanvas());
+
 
 
 		this.getChildren().addAll(tileGroup, namePane,statusBarGroup,entityGroup,effectGroup);
@@ -244,10 +255,21 @@ public class GameScene extends Pane {
 
 	}	
 	public static void playMusic() {
-		stageMusic.play();
+		isMusicPlaying=true;
+		stageMusic.volumeProperty().set(0);
+		stageMusic.play();	
+		Timeline fadeIn = new Timeline(
+				new KeyFrame(Duration.millis(15000), new KeyValue(stageMusic.volumeProperty(), 1)));
+    fadeIn.play();
 	}
-
 	public static void stopMusic() {
-		stageMusic.stop();
+		if(!isMusicPlaying) return;
+		Timeline fadeOut = new Timeline(
+				new KeyFrame(Duration.millis(1000), new KeyValue(stageMusic.volumeProperty(), 0)));
+    fadeOut.play();
+    fadeOut.setOnFinished(finish -> {
+    	stageMusic.stop();
+    	isMusicPlaying=false;
+    });
 	}
 }

@@ -40,8 +40,10 @@ public final class SceneManager {
 	public static void gotoMainMenu() {
 		// TODO Fill Code
 		GameScene.stopMusic();
+		System.out.println("stopping game scene music");
 		primaryStage.setScene(mainMenuScene);
 		MainMenu.playMusic();
+		System.out.println("playing main menu scene music");
 		mainMenuCanvas .requestFocus();
 	}
 	public static void openPausedMenu() {
@@ -103,6 +105,7 @@ public final class SceneManager {
 		scene.setOnKeyReleased(event -> GameHandler.keyReleased(event));
 		// set handler
 		GameHandler.startGame();
+		MainMenu.stopMusic();
 		GameScene.playMusic();
 		
 		primaryStage.setScene(scene);
