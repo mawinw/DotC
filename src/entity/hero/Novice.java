@@ -393,5 +393,13 @@ public class Novice extends Entity implements Attackable, Moveable {
 		hpBar.die();
 	}
 	
+	public void heal() {
+		Timeline healTimeline = new Timeline(new KeyFrame(Duration.millis(800), attack -> {
+			hp+=maxHp*0.05;
+			if(hp>maxHp) hp=maxHp;
+		}));
+		healTimeline.setCycleCount(5);
+		healTimeline.play();
+	}
 
 }

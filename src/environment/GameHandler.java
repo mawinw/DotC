@@ -40,10 +40,18 @@ public class GameHandler {
 			checkStatus();
 			animateAll();
 			regenHp();
+			playerSkill();
 			tick++;
 		}
 		checkPause();
 
+	}
+
+	private static void playerSkill() {
+		// TODO Auto-generated method stub
+		if(activeKey.contains(KeyCode.C)) {
+			GameScene.getInstance().getHero().heal();
+		}
 	}
 
 	private static void regenHp() {
@@ -85,6 +93,10 @@ public class GameHandler {
 			activeKey.add(KeyCode.X);
 
 		}
+		if (event.getCode() == KeyCode.C) {
+			activeKey.add(KeyCode.C);
+
+		}
 
 	}
 
@@ -114,6 +126,10 @@ public class GameHandler {
 		}
 		if (event.getCode() == KeyCode.X) {
 			activeKey.remove(KeyCode.X);
+
+		}
+		if (event.getCode() == KeyCode.C) {
+			activeKey.remove(KeyCode.C);
 
 		}
 
