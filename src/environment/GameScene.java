@@ -59,7 +59,7 @@ public class GameScene extends Pane {
 		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 
 		GraphicsContext MapGc = BG.getGraphicsContext2D();
-		MapGc.clearRect(0, 0, 500, 500);
+		MapGc.clearRect(0, 0, 700, 700);
 		MapGc.drawImage(bgImage, 0, 0, 700, 700);
 		tileGroup.getChildren().add(BG);
 		
@@ -192,7 +192,6 @@ public class GameScene extends Pane {
 		tileGroup = new Group();
 		entityGroup = new Group();
 		effectGroup = new Group();
-		System.out.println("resetto");
 		statusBarGroup = new Group();
 		namePane = new Pane();
 		monsterList = new ArrayList<>();
@@ -220,7 +219,7 @@ public class GameScene extends Pane {
 
 		Slime slime6 = new Slime(new Pair(4, 1));
 		createDefaultEntity(slime6, "Slime", slime6.getPosition());
-		SlimeKing king = new SlimeKing(new Pair(5, 5));
+		SlimeKing king = new SlimeKing(new Pair(6, 6));
 		createDefaultEntity(king, "SlimeKing", king.getPosition());
 
 		hero = new Fighter(MainMenu.name, new Pair(1, 4));
@@ -228,7 +227,7 @@ public class GameScene extends Pane {
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 		namePane.getChildren().add(hero.getNameCanvas());
 
-		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
+		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup);
 
 	}
 }
