@@ -77,6 +77,17 @@ public class Novice extends Entity implements Attackable, Moveable {
 		}
 	}
 	private static int currentLevelUpAnimation = 0;
+	
+	
+	private static final int maxhealingImage = 20;
+	private static final Image[] healingImages = new Image[maxhealingImage];
+	static {
+		for (int i = 1; i <= maxhealingImage; i++) {
+			healingImages[i - 1] = new Image("images/effect/heal/healing (" + i + ").png");
+		}
+	}
+	private static int currentHealingAnimation = 0;
+	
 
 	public Novice(Pair pos) {
 		super("Novice", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
@@ -341,7 +352,11 @@ public class Novice extends Entity implements Attackable, Moveable {
 					(picWidth + 3) * tileSize, 
 					(picHeight + 2) * tileSize);
 		}
-
+	}
+	public void cleanLevelUpCanvas() {
+		int tileSize = GameScene.TILE_SIZE;
+		GraphicsContext gc = this.levelUpCanvas.getGraphicsContext2D();
+		gc.clearRect(0, 0, GameScene.WIDTH * tileSize, GameScene.HEIGHT * tileSize);
 	}
 
 	public double calculateDamage(Entity entity) {
@@ -360,6 +375,24 @@ public class Novice extends Entity implements Attackable, Moveable {
 				return 1;
 		} else
 			return 0;
+	}
+	
+	public void drawHealingAnimation() {
+		GraphicsContext gc = this.levelUpCanvas.getGraphicsContext2D();
+		double playerX = position.first;
+		double playerY = position.second;
+		int tileSize = GameScene.TILE_SIZE;
+
+		gc.clearRect(0, 0, GameScene.WIDTH * tileSize, GameScene.HEIGHT * tileSize);
+
+		if (currentHealingAnimation <= maxhealingImage - 1) {
+			gc.drawImage(healingImages[currentHealingAnimation], 
+					(playerX - 1.5) * tileSize,
+					(playerY - 1.5) * tileSize, 
+					(picWidth + 3) * tileSize, 
+					(picHeight + 2) * tileSize);
+		}
+
 	}
 
 	public void takeDamage(double dmg) {
@@ -410,6 +443,19 @@ public class Novice extends Entity implements Attackable, Moveable {
 		}));
 		healTimeline.setCycleCount(5);
 		healTimeline.play();
+
+		currentHealingAnimation=0;
+		Timeline animationTimeline = new Timeline(new KeyFrame(Duration.millis(80), attack -> {
+			drawHealingAnimation();
+			currentHealingAnimation++;
+			currentHealingAnimation%=20;
+			System.out.println("do");
+		}));
+		animationTimeline.setOnFinished(finish -> {
+			cleanLevelUpCanvas();
+		});
+		animationTimeline.setCycleCount(50);
+		animationTimeline.play();
 	}
 
 }
