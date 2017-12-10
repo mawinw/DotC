@@ -108,6 +108,10 @@ public class Fighter extends Novice {
 		}));
 		attackTimeline.setCycleCount(7);
 		attackTimeline.play();
+		attackTimeline.setOnFinished(e->{
+			GraphicsContext gc = this.atkCanvas.getGraphicsContext2D();
+			gc.clearRect(0, 0, GameScene.WIDTH*GameScene.TILE_SIZE, GameScene.HEIGHT*GameScene.TILE_SIZE);
+		});
 		drawSmashDirection();
 	}
 	

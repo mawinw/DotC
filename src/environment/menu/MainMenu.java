@@ -125,8 +125,8 @@ public class MainMenu extends Pane {
 		gc.setFont(Font.font(MENU_FONT.getName(), 30));
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.BASELINE);
-		gc.setFill(Color.BLACK);
-		gc.fillText("Enter Your Name", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE / 2);
+		gc.setFill(Color.WHITE);
+		gc.fillText("Please Enter Your Name", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE / 2);
 
 		gc.setFill(Color.gray(0.925));
 		gc.fillRoundRect((Main.SCREEN_SIZE - 450) / 2, Main.SCREEN_SIZE / 7.5 * 4, 450, Main.SCREEN_SIZE / 7.5, 20, 20);
