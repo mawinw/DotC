@@ -14,26 +14,24 @@ import main.Main;
 public class StatusHandler {
 	private static HashSet<KeyCode> activeKey = new HashSet<KeyCode>();
 	private static Timeline statusTimer;
+	private static boolean isActionFinished=true;
 
 	public static void keyPressed(KeyEvent event) {
 		// if (activeKey.contains(event.getCode()))
 		// return;
-		if (event.getCode() == KeyCode.ENTER) {
+		if ((event.getCode() == KeyCode.ENTER||event.getCode() == KeyCode.Z)) {
 			activeKey.add(KeyCode.ENTER);
+			
 		}
 
-		if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
+		if (event.getCode() == KeyCode.UP ) {
 			activeKey.add(KeyCode.UP);
 		}
 
-		if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
+		if (event.getCode() == KeyCode.DOWN) {
 			activeKey.add(KeyCode.DOWN);
 		}
-
-		if (event.getCode() == KeyCode.Z) {
-			activeKey.add(KeyCode.Z);
-
-		}
+		
 		if (event.getCode() == KeyCode.X) {
 			activeKey.add(KeyCode.X);
 
@@ -42,22 +40,20 @@ public class StatusHandler {
 	}
 
 	public static void keyReleased(KeyEvent event) {
-		if (event.getCode() == KeyCode.ENTER) {
+		if (event.getCode() == KeyCode.ENTER||event.getCode() == KeyCode.Z) {
 			activeKey.remove(KeyCode.ENTER);
+			isActionFinished=true;
 		}
 
-		if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
+		if (event.getCode() == KeyCode.UP) {
 			activeKey.remove(KeyCode.UP);
 		}
 
-		if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
+		if (event.getCode() == KeyCode.DOWN) {
 			activeKey.remove(KeyCode.DOWN);
 		}
 
-		if (event.getCode() == KeyCode.Z) {
-			activeKey.remove(KeyCode.Z);
-
-		}
+		
 		if (event.getCode() == KeyCode.X) {
 			activeKey.remove(KeyCode.X);
 
@@ -72,8 +68,10 @@ public class StatusHandler {
 
 	private static void action() {
 		// TODO Auto-generated method stub
-		if (activeKey.contains(KeyCode.Z) || activeKey.contains(KeyCode.ENTER)) {
+		if (activeKey.contains(KeyCode.ENTER)&&isActionFinished) {
 			StatusMenu.action();
+			isActionFinished=false;
+			
 		}
 		else if(activeKey.contains(KeyCode.X)) {
 			StatusMenu.close();

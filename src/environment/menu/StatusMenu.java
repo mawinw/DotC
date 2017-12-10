@@ -14,6 +14,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -33,7 +34,8 @@ public class StatusMenu extends Pane {
 	private Canvas back;
 	private static Canvas selectedFrame;
 	private static Novice hero = GameScene.getInstance().getHero();
-	private static final double[] STATUS_RATE = { 50, 10,10, 5, 5 };
+	private static final double[] STATUS_RATE = { 50, 10, 10, 5, 5 };
+	private static final Image BG = new Image("background/pauseBG.png");
 
 	protected static int pointer = 0;
 	private static int gap = Main.SCREEN_SIZE * 3 / 4 / 10;
@@ -67,8 +69,8 @@ public class StatusMenu extends Pane {
 		updateStatus();
 
 		GraphicsContext gc = background.getGraphicsContext2D();
-		gc.setFill(Color.WHEAT);
-		gc.fillRect(Main.SCREEN_SIZE / 8, Main.SCREEN_SIZE / 8, Main.SCREEN_SIZE * 3 / 4, Main.SCREEN_SIZE * 3 / 4);
+		gc.drawImage(BG, Main.SCREEN_SIZE / 8 - 20, Main.SCREEN_SIZE / 60, Main.SCREEN_SIZE * 3 / 4 + 40,
+				Main.SCREEN_SIZE * 19 / 20);
 
 		gc = title.getGraphicsContext2D();
 		gc.setTextAlign(TextAlignment.CENTER);
@@ -140,11 +142,11 @@ public class StatusMenu extends Pane {
 		gc.fillText(":", Main.SCREEN_SIZE / 2 - 30, Main.SCREEN_SIZE / 8 + gap * i);
 		gc.setTextAlign(TextAlignment.LEFT);
 		String value = "" + (status.get(s).intValue());
-		gc.fillText(value, Main.SCREEN_SIZE * 5 / 10 - 10 , Main.SCREEN_SIZE / 8 + gap * i);
+		gc.fillText(value, Main.SCREEN_SIZE * 5 / 10 - 10, Main.SCREEN_SIZE / 8 + gap * i);
 		gc.setTextAlign(TextAlignment.RIGHT);
 		String statusRate = "(+" + (int) STATUS_RATE[i - 3] + ")";
-		gc.fillText(statusRate, Main.SCREEN_SIZE * 6 / 10 + 30 , Main.SCREEN_SIZE / 8 + gap * i);
-		
+		gc.fillText(statusRate, Main.SCREEN_SIZE * 6 / 10 + 30, Main.SCREEN_SIZE / 8 + gap * i);
+
 	}
 
 	private static void drawAllIcon() {
@@ -173,8 +175,8 @@ public class StatusMenu extends Pane {
 			if (pointer == 5) {
 				gc.setStroke(Color.RED);
 				gc.setLineWidth(5);
-				gc.strokeRect(Main.SCREEN_SIZE * 5 / 14, Main.SCREEN_SIZE / 8 + gap * (8),
-						Main.SCREEN_SIZE * 2 / 7, gap);
+				gc.strokeRect(Main.SCREEN_SIZE * 5 / 14, Main.SCREEN_SIZE / 8 + gap * (8), Main.SCREEN_SIZE * 2 / 7,
+						gap);
 			} else {
 				gc.setStroke(Color.WHITE);
 				gc.setLineWidth(5);

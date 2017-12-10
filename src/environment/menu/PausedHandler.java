@@ -24,11 +24,11 @@ public class PausedHandler {
 			activeKey.add(KeyCode.ENTER);
 		}
 
-		if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
+		if (event.getCode() == KeyCode.UP) {
 			activeKey.add(KeyCode.UP);
 		}
 
-		if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
+		if (event.getCode() == KeyCode.DOWN) {
 			activeKey.add(KeyCode.DOWN);
 		}
 
@@ -48,11 +48,11 @@ public class PausedHandler {
 			activeKey.remove(KeyCode.ENTER);
 		}
 
-		if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) {
+		if (event.getCode() == KeyCode.UP) {
 			activeKey.remove(KeyCode.UP);
 		}
 
-		if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) {
+		if (event.getCode() == KeyCode.DOWN) {
 			activeKey.remove(KeyCode.DOWN);
 		}
 

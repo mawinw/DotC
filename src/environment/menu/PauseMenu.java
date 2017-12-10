@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -32,10 +33,11 @@ public class PauseMenu extends Pane {
 	private Canvas mainMenu;
 	private static Canvas selectedFrame;
 	private ArrayList<Canvas> menu = new ArrayList<>();
+	private static final Image BG = new Image("background/pauseBG.png");
 
 	protected static int pointer = 0;
 	private static int gap = Main.SCREEN_SIZE / 2 / 5;
-	private static boolean isCompleted=true;
+	private static boolean isCompleted = true;
 
 	public PauseMenu() {
 		this.background = new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE);
@@ -47,7 +49,8 @@ public class PauseMenu extends Pane {
 
 		GraphicsContext gc = background.getGraphicsContext2D();
 		gc.setFill(Color.WHEAT);
-		gc.fillRect(Main.SCREEN_SIZE / 4, Main.SCREEN_SIZE / 4, Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE / 2);
+		gc.drawImage(BG, Main.SCREEN_SIZE / 4 - 20, Main.SCREEN_SIZE / 4 - 20, Main.SCREEN_SIZE / 2 + 40,
+				Main.SCREEN_SIZE / 2 + 40);
 
 		gc = title.getGraphicsContext2D();
 		gc.setTextAlign(TextAlignment.CENTER);
@@ -77,64 +80,65 @@ public class PauseMenu extends Pane {
 		menu.add(status);
 		menu.add(mainMenu);
 		drawSelectedFrame();
-		this.getChildren().addAll(background, title, resume, status, mainMenu,selectedFrame);
+		this.getChildren().addAll(background, title, resume, status, mainMenu, selectedFrame);
 		this.requestFocus();
 	}
 
-	
-
 	private static void drawSelectedFrame() {
-		isCompleted=false;
+		isCompleted = false;
 		Timeline timer = new Timeline(new KeyFrame(new Duration(4000 / Main.FPS), e -> {
 			GraphicsContext gc = selectedFrame.getGraphicsContext2D();
 			gc.clearRect(0, 0, Main.SCREEN_SIZE, Main.SCREEN_SIZE);
 			gc.setStroke(Color.RED);
 			gc.setLineWidth(5);
-			gc.strokeRect(Main.SCREEN_SIZE * 5 /14, Main.SCREEN_SIZE / 4 + gap * (pointer+2-0.5), Main.SCREEN_SIZE * 2 /7, gap);
+			gc.strokeRect(Main.SCREEN_SIZE * 5 / 14, Main.SCREEN_SIZE / 4 + gap * (pointer + 2 - 0.5),
+					Main.SCREEN_SIZE * 2 / 7, gap);
 		}));
 		timer.setCycleCount(1);
 		timer.play();
-		timer.setOnFinished(e->{
-			isCompleted=true;
+		timer.setOnFinished(e -> {
+			isCompleted = true;
 		});
-		}
+	}
 
 	public static void action() {
 		// TODO Auto-generated method stub
-		if(!isCompleted) return;
-		isCompleted=false;
+		if (!isCompleted)
+			return;
+		isCompleted = false;
 		Timeline timer = new Timeline(new KeyFrame(new Duration(100), e -> {
 			if (pointer == 0) {
-				
+
 				SceneManager.closePausedMenu();
 			} else if (pointer == 1) {
 				SceneManager.openStatusMenu();
 			} else if (pointer == 2) {
 				SceneManager.gotoMainMenu();
 				GameHandler.stopTimer();
-				//SceneManager.pauseTimer.stop();
+				// SceneManager.pauseTimer.stop();
 				PausedHandler.stopTimer();
 
 				GameScene.getInstance().reset();
-				pointer=0;
+				pointer = 0;
 				drawSelectedFrame();
 			}
 		}));
 		timer.setCycleCount(1);
 		timer.play();
-		timer.setOnFinished(e->{
-			isCompleted=true;
+		timer.setOnFinished(e -> {
+			isCompleted = true;
 		});
-		
+
 	}
 
 	public static void moveSelected(boolean b) {
 		// TODO Auto-generated method stub
-		if(!isCompleted) return;
+		if (!isCompleted)
+			return;
 		if (b) {
 			pointer = (pointer + 2) % 3;
 			drawSelectedFrame();
-		} else{
+		} else {
 			pointer = (pointer + 1) % 3;
 			drawSelectedFrame();
 		}
