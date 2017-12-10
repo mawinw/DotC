@@ -249,8 +249,8 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 	}
 
 	public void moveToPlayer() {
-		double moveX = GameScene.getHeroPosition().first - position.first;
-		double moveY = GameScene.getHeroPosition().second - position.second;
+		double moveX = GameScene.getHero().getPosition().first - position.first;
+		double moveY = GameScene.getHero().getPosition().second - position.second;
 		// System.out.println(" "+moveX+" "+moveY);
 		for (int i = 1; i < picWidth; i++) {
 			if (moveX > 0) {

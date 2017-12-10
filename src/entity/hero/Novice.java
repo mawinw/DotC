@@ -37,8 +37,8 @@ public class Novice extends Entity implements Attackable, Moveable {
 	private static final int DEFAULT_ATK = 50;
 	private static final int DEFAULT_DEF = 20;
 	private static final double DEFAULT_ACC = 100.00;
-	private static final double DEFAULT_EVA = 0.00;
-	private static final double DEFAULT_CRI_RATE = 30;
+	private static final double DEFAULT_EVA = 10.00;
+	private static final double DEFAULT_CRI_RATE = 20;
 	public static final int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500 };
 	private static final Font NAMEFONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/ferrum.otf"), 15);
 
@@ -178,6 +178,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 	}
 
 	public void move(double moveX, double moveY) {
+		GameScene.statusBarGroup.getChildren().clear();
 		isMoveFinished = false;
 		GameScene.setBoard(position, TileType.NONE, null);
 		GameScene.setBoard(position.add(new Pair(moveX, moveY)), TileType.HERO, this);
@@ -308,6 +309,11 @@ public class Novice extends Entity implements Attackable, Moveable {
 			attackTimeline.play();
 
 		}
+	if(lv>=5&& !(this instanceof Fighter)) {
+		GameScene.getInstance().classChange();
+	
+		}
+	
 	}
 
 	public void drawLevelUpAnimation() {
@@ -378,5 +384,22 @@ public class Novice extends Entity implements Attackable, Moveable {
 		return lv;
 	}
 	
+	@Override
+	public void die() {
+		GameScene.getEntityGroup().getChildren().remove(canvas);
+		GameScene.getNamePane().getChildren().remove(nameCanvas);
+		isDead = true;
+		hp = 0;
+		hpBar.die();
+	}
+	
+	public void heal() {
+		Timeline healTimeline = new Timeline(new KeyFrame(Duration.millis(800), attack -> {
+			hp+=maxHp*0.05;
+			if(hp>maxHp) hp=maxHp;
+		}));
+		healTimeline.setCycleCount(5);
+		healTimeline.play();
+	}
 
 }

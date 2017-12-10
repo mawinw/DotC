@@ -45,9 +45,7 @@ public class GameScene extends Pane {
 	public static Group statusBarGroup;
 	public static Group effectGroup;
 	private static Pane namePane;
-	private static Fighter hero;
-	private static Pair heroPosition;
-	private static String heroName;
+	private static Novice hero;
 	private static ArrayList<Monster> monsterList;
 	private static Canvas BG;
 	private static Image bgImage = new Image("background/BG_01.png");
@@ -89,8 +87,7 @@ public class GameScene extends Pane {
 		createDefaultEntity(slime6, "Slime", slime6.getPosition());
 		SlimeKing king = new SlimeKing(new Pair(5, 5));
 		createDefaultEntity(king, "SlimeKing", king.getPosition());
-		hero = new Fighter(MainMenu.name, new Pair(1, 4));
-		heroName = hero.getName();
+		hero = new Novice(MainMenu.name, new Pair(1, 4));
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 		namePane.getChildren().add(hero.getNameCanvas());
 
@@ -98,6 +95,25 @@ public class GameScene extends Pane {
 
 		this.getChildren().addAll(tileGroup, namePane,statusBarGroup,entityGroup,effectGroup);
 
+	}
+
+	public static void classChange() {
+		namePane.getChildren().remove(hero.getNameCanvas());
+		entityGroup.getChildren().remove(hero.getLevelUpCanvas());
+		entityGroup.getChildren().remove(hero.getCanvas());
+		effectGroup.getChildren().remove(hero.getAtkCanvas());
+		statusBarGroup.getChildren().clear();
+		hero = new Fighter(hero);
+//		Novice newHero = new Fighter(hero);
+		
+//		GameScene.hero = newHero;
+		namePane.getChildren().add(hero.getNameCanvas());
+		entityGroup.getChildren().add(hero.getLevelUpCanvas());
+		entityGroup.getChildren().add(hero.getCanvas());
+		effectGroup.getChildren().add(hero.getAtkCanvas());
+		board[(int) hero.getPosition().first][(int) hero.getPosition().second].setEntity(hero);
+		hero.draw();
+		statusBarGroup.getChildren().clear();
 	}
 
 	public static Group getTileGroup() {
@@ -123,10 +139,7 @@ public class GameScene extends Pane {
 		return entityGroup;
 	}
 
-	public static Pair getHeroPosition() {
-		return heroPosition;
-	}
-
+	
 	public static Tile[][] getBoard() {
 		return board;
 	}
@@ -172,7 +185,6 @@ public class GameScene extends Pane {
 		case "Novice":
 			board[(int) position.first][(int) position.second].setTileType(TileType.HERO);
 			board[(int) position.first][(int) position.second].setEntity(hero);
-			heroPosition = hero.getPosition();
 			entityGroup.getChildren().add(hero.getLevelUpCanvas());
 			entityGroup.getChildren().add(entity.getCanvas());
 			effectGroup.getChildren().add(entity.getAtkCanvas());
@@ -235,8 +247,7 @@ public class GameScene extends Pane {
 		SlimeKing king = new SlimeKing(new Pair(6, 6));
 		createDefaultEntity(king, "SlimeKing", king.getPosition());
 
-		hero = new Fighter(MainMenu.name, new Pair(1, 4));
-		heroName = hero.getName();
+		hero = new Novice(MainMenu.name, new Pair(1, 4));
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 		namePane.getChildren().add(hero.getNameCanvas());
 

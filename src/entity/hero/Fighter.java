@@ -32,11 +32,17 @@ public class Fighter extends Novice {
 	}
 	private static int currentSmashAnimation = 0;
 
-	
+	public Fighter(Novice novice) {
+		super(novice.getPosition());
+		setValue(novice.getName(), (int) (novice.getMaxHp()+200), novice.getAtk()+20, novice.getDef()+15, DEFAULT_ACC, novice.getEva()+15, novice.getDex()+10, novice.getPosition());
+		this.lv = novice.lv;
+		this.exp = novice.exp;
+		this.statusPoint = novice.statusPoint;
+		this.faceDirection=novice.getFaceDirection();
+	}
 
 	public Fighter(Pair pos) {
 		super(pos);
-		System.out.println("x");
 		setValue("Fighter", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
 	}
 

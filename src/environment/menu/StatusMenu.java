@@ -247,6 +247,7 @@ public class StatusMenu extends Pane {
 			pointer = 5;
 		else
 			pointer = 0;
+		updateStatus();
 		drawStatuspoint();
 		drawSelectedFrame();
 		drawAllStatus();

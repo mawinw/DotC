@@ -40,10 +40,18 @@ public class GameHandler {
 			checkStatus();
 			animateAll();
 			regenHp();
+			playerSkill();
 			tick++;
 		}
 		checkPause();
 
+	}
+
+	private static void playerSkill() {
+		// TODO Auto-generated method stub
+		if(activeKey.contains(KeyCode.C)) {
+			GameScene.getInstance().getHero().heal();
+		}
 	}
 
 	private static void regenHp() {
@@ -85,6 +93,10 @@ public class GameHandler {
 			activeKey.add(KeyCode.X);
 
 		}
+		if (event.getCode() == KeyCode.C) {
+			activeKey.add(KeyCode.C);
+
+		}
 
 	}
 
@@ -116,13 +128,17 @@ public class GameHandler {
 			activeKey.remove(KeyCode.X);
 
 		}
+		if (event.getCode() == KeyCode.C) {
+			activeKey.remove(KeyCode.C);
+
+		}
 
 	}
 
 	private static void movePlayer() {
 
 		
-		Pair playerPosition = GameScene.getInstance().getHeroPosition();
+		Pair playerPosition = GameScene.getInstance().getHero().getPosition();
 
 		Direction faceDirection = GameScene.getInstance().getHero().getFaceDirection();
 
@@ -189,7 +205,9 @@ public class GameHandler {
 
 		else if (activeKey.contains(KeyCode.X) && GameScene.getInstance().getHero().isMoveFinished() == true
 				&& GameScene.getInstance().getHero().isAttackFinished()) {
-			((Fighter) GameScene.getInstance().getHero()).groundSmash();
+			if(GameScene.getInstance().getHero() instanceof Fighter) {
+				((Fighter) GameScene.getInstance().getHero()).groundSmash();
+			}
 		}
 
 	}
@@ -206,7 +224,7 @@ public class GameHandler {
 		}
 		GameScene.getInstance().getMonsterList().removeIf(m -> m.getIsDead());
 		if (GameScene.getInstance().getHero().getIsDead()) {
-			GameScene.getInstance().setBoard(GameScene.getInstance().getHeroPosition(), TileType.NONE, null);
+			GameScene.getInstance().setBoard(GameScene.getInstance().getHero().getPosition(), TileType.NONE, null);
 		}
 	}
 
@@ -215,8 +233,8 @@ public class GameHandler {
 			return;
 		for (Monster monster : GameScene.getInstance().getMonsterList()) {
 			// System.out.println(monster.isMoveFinished());
-			if (Math.abs(GameScene.getInstance().getHeroPosition().first - monster.getPosition().first) <= Monster.VISIBLE_RANGE
-					&& Math.abs(GameScene.getInstance().getHeroPosition().second - monster.getPosition().second) <= Monster.VISIBLE_RANGE) {
+			if (Math.abs(GameScene.getInstance().getHero().getPosition().first - monster.getPosition().first) <= Monster.VISIBLE_RANGE
+					&& Math.abs(GameScene.getInstance().getHero().getPosition().second - monster.getPosition().second) <= Monster.VISIBLE_RANGE) {
 				monster.moveToPlayer();
 			} else
 				monster.randomMove();
