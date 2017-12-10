@@ -243,10 +243,12 @@ public class StatusMenu extends Pane {
 
 	public static void open() {
 		hero = GameScene.getInstance().getHero();
+		System.out.println(hero.getMaxHp());
 		if (hero.statusPoint == 0)
 			pointer = 5;
 		else
 			pointer = 0;
+		updateStatus();
 		drawStatuspoint();
 		drawSelectedFrame();
 		drawAllStatus();

@@ -19,7 +19,7 @@ import utility.TileType;
 public class SlimeKing extends Slime {
 	public static final int VISIBLE_RANGE = 5;
 
-	private static final int DEFAULT_MAX_HP = 1250;
+	private static final int DEFAULT_MAX_HP = 10;
 	private static final int DEFAULT_ATK = 90;
 	@Override
 	public int getExpGain() {
@@ -30,7 +30,7 @@ public class SlimeKing extends Slime {
 	private static final double DEFAULT_ACC = 80.00;
 	private static final double DEFAULT_EVA = 0.00;
 	private static final double DEFAULT_CRI_RATE = 0;
-	private static final int EXP_GAIN = 250;
+	private static final int EXP_GAIN = 500;
 
 	
 	private static final Image[] images = new Image[6];

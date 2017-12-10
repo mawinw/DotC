@@ -1,5 +1,6 @@
 package environment;
 
+import entity.property.SkillIcon;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -60,8 +61,8 @@ public class StatusBar extends Pane {
 		gc.clearRect(0, 0, Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
 		gc.setFill(Color.BLACK);
 		gc.setFont(BAR_FONT);
-		gc.setTextAlign(TextAlignment.LEFT);
 		gc.setTextBaseline(VPos.CENTER);
+		gc.setTextAlign(TextAlignment.LEFT);
 		gc.fillText((int) exp + " / " + (int) expRate, GameScene.TILE_SIZE * 2 + expMaxWidth + 10, GameScene.TILE_SIZE);
 		gc.setTextAlign(TextAlignment.RIGHT);
 		gc.fillText("EXP ", GameScene.TILE_SIZE * 2 - 15, GameScene.TILE_SIZE);
