@@ -39,10 +39,9 @@ public final class SceneManager {
 
 	public static void gotoMainMenu() {
 		// TODO Fill Code
-
-		GameScene.getInstance().stopMusic();
+		GameScene.stopMusic();
 		primaryStage.setScene(mainMenuScene);
-		mainMenuCanvas.playMusic();
+		MainMenu.playMusic();
 		mainMenuCanvas .requestFocus();
 	}
 	public static void openPausedMenu() {
@@ -104,12 +103,12 @@ public final class SceneManager {
 		scene.setOnKeyReleased(event -> GameHandler.keyReleased(event));
 		// set handler
 		GameHandler.startGame();
-		GameScene.getInstance().playMusic();
 		GameScene.playMusic();
 		
 		primaryStage.setScene(scene);
 		primaryStage.setOnCloseRequest(event -> {
 			GameHandler.stopTimer();
+			GameScene.stopMusic();
 		});
 	}
 
