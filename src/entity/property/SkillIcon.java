@@ -14,14 +14,16 @@ public class SkillIcon extends Pane {
 	private Canvas arc;
 	private Image image;
 	private final static double SIZE = 50;
+	public boolean canUse;
 
-	public SkillIcon(double coolDown,Image image) {
+	public SkillIcon(double coolDown,Image image,boolean canUse) {
 		background = new Canvas(SIZE,SIZE);
 		arc = new Canvas(SIZE,SIZE);
 		arc.setOpacity(0.5);
 		this.coolDown = coolDown;
 		remainingCoolDown = 0;
 		this.image = image;
+		this.canUse=canUse;
 		this.getChildren().addAll(background,arc);
 	}
 
@@ -35,7 +37,8 @@ public class SkillIcon extends Pane {
 		gc.clearRect(0, 0, SIZE,SIZE);
 		gc.setFill(Color.BLACK);
 		//gc.se
-		gc.fillArc(0, 0, SIZE,SIZE, 90, (360 * progress), ArcType.ROUND);
+		if(canUse) gc.fillArc(0, 0, SIZE,SIZE, 90, (360 * progress), ArcType.ROUND);
+		else gc.fillArc(0, 0, SIZE,SIZE, 90, 360, ArcType.ROUND);
 	}
 
 }

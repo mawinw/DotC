@@ -114,6 +114,8 @@ public class GameScene extends Pane {
 		board[(int) hero.getPosition().first][(int) hero.getPosition().second].setEntity(hero);
 		hero.draw();
 		statusBarGroup.getChildren().clear();
+		StatusBar.groundSmash.canUse=true;
+		StatusBar.groundSmash.draw();
 	}
 
 	public static Group getTileGroup() {

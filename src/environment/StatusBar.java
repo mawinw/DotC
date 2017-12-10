@@ -39,8 +39,8 @@ public class StatusBar extends Pane {
 		this.expBar = new Canvas(Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
 		this.expBarText = new Canvas(Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
 		expMaxWidth = 50 * 5;
-		this.groundSmash = new SkillIcon(5,groundSmashIcon);
-		this.heal = new SkillIcon(10, healIcon);
+		this.groundSmash = new SkillIcon(5,groundSmashIcon,false);
+		this.heal = new SkillIcon(10, healIcon,true);
 		GraphicsContext gc = background.getGraphicsContext2D();
 		gc.setFill(Color.BEIGE);
 		gc.fillRect(0, 0, Main.SCREEN_SIZE, GameScene.TILE_SIZE * 2);
