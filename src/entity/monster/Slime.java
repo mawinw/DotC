@@ -133,7 +133,8 @@ public class Slime extends Monster {
 		timer.setCycleCount(1);
 		timer.play();
 		
-		
+
+		currentAttackAnimation=0;
 		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(150), attack -> {
 			drawAttackAnimation();
 			currentAttackAnimation ++;
