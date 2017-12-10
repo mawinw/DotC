@@ -30,8 +30,6 @@ public final class SceneManager {
 	private static Scene mainMenuScene = new Scene(mainMenuCanvas);
 	public static Timeline pauseTimer;
 	public static Pane allPane;
-	
-	private static AudioClip stageMusic = new AudioClip("file:resources/sound/bgm03_stage.mp3");
 
 
 	public static void initialize(Stage stage) {
@@ -41,8 +39,10 @@ public final class SceneManager {
 
 	public static void gotoMainMenu() {
 		// TODO Fill Code
-		
+
+		GameScene.getInstance().stopMusic();
 		primaryStage.setScene(mainMenuScene);
+		mainMenuCanvas.playMusic();
 		mainMenuCanvas .requestFocus();
 	}
 	public static void openPausedMenu() {
@@ -104,13 +104,12 @@ public final class SceneManager {
 		scene.setOnKeyReleased(event -> GameHandler.keyReleased(event));
 		// set handler
 		GameHandler.startGame();
-		stageMusic.play();
+		GameScene.getInstance().playMusic();
+		GameScene.playMusic();
 		
 		primaryStage.setScene(scene);
 		primaryStage.setOnCloseRequest(event -> {
 			GameHandler.stopTimer();
-
-			stageMusic.stop();
 		});
 	}
 
@@ -118,4 +117,5 @@ public final class SceneManager {
 		SceneManager.primaryStage = primaryStage;
 		
 	}
+
 }

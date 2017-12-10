@@ -164,4 +164,11 @@ public class MainMenu extends Pane {
 		SceneManager.gotoGameScene();
 		resetName();
 	}
+	public static void playMusic() {
+		mainMenuMusic.play();
+	}
+
+	public static void stopMusic() {
+		mainMenuMusic.stop();
+	}
 }

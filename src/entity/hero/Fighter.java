@@ -64,6 +64,7 @@ public class Fighter extends Novice {
 		}));
 		attackTimeline.setCycleCount(7);
 		attackTimeline.play();
+		drawSmashDirection();
 		
 
 	}
@@ -128,6 +129,19 @@ public class Fighter extends Novice {
 					picWidth * tileSize, picHeight * tileSize);
 		}
 
+	}
+	protected void drawSmashDirection() {
+		GraphicsContext gc = atkCanvas.getGraphicsContext2D();
+		gc.setStroke(Color.RED);
+		gc.setLineWidth(2);
+		
+		int tileSize = GameScene.TILE_SIZE;
+		double playerX = position.first;
+		double playerY = position.second;
+		
+			gc.strokeRect((playerX - 1) * tileSize, (playerY - 1) * tileSize,
+					(picWidth+2) * tileSize, (picHeight+2) * tileSize);
+		
 	}
 
 }

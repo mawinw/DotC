@@ -119,6 +119,40 @@ public class Slime extends Monster {
 		currentAnimation++;
 		draw();
 	}	
+	
+
+	public void attack(Entity entity) {
+		entity.setMoveFinished(false);
+
+		Timeline timer = new Timeline(new KeyFrame(new Duration(1000), e -> {
+			double atkDmg = calculateDamage(entity);
+			entity.takeDamage(atkDmg);
+			entity.draw();
+
+		}));
+		timer.setCycleCount(1);
+		timer.play();
+		
+		
+		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(150), attack -> {
+			drawAttackAnimation();
+			currentAttackAnimation ++;
+		}));
+		attackTimeline.setCycleCount(6);
+		attackTimeline.play();
+		
+		
+		
+		
+		timer.setOnFinished(e -> {
+			Timeline wait = new Timeline(new KeyFrame(Duration.millis(100), f -> {
+			}));
+			wait.setCycleCount(1);
+			wait.play();
+			entity.setMoveFinished(true);
+		});
+	}
+	
 	public void updateAttackAnimation() {
 		currentAttackAnimation++;
 		drawAttackAnimation();

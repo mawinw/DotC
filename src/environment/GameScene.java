@@ -18,6 +18,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import utility.ActionResult;
 import utility.ActionType;
@@ -44,6 +45,7 @@ public class GameScene extends Pane {
 	private static ArrayList<Monster> monsterList;
 	private static Canvas BG;
 	private static Image bgImage = new Image("background/BG_01.png");
+	private static AudioClip stageMusic = new AudioClip("file:resources/sound/bgm03_stage.mp3");
 
 	public GameScene() {
 		tileGroup = new Group();
@@ -59,7 +61,7 @@ public class GameScene extends Pane {
 		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 
 		GraphicsContext MapGc = BG.getGraphicsContext2D();
-		MapGc.clearRect(0, 0, 500, 500);
+		MapGc.clearRect(0, 0, 700, 700);
 		MapGc.drawImage(bgImage, 0, 0, 700, 700);
 		tileGroup.getChildren().add(BG);
 		
@@ -192,7 +194,6 @@ public class GameScene extends Pane {
 		tileGroup = new Group();
 		entityGroup = new Group();
 		effectGroup = new Group();
-		System.out.println("resetto");
 		statusBarGroup = new Group();
 		namePane = new Pane();
 		monsterList = new ArrayList<>();
@@ -220,7 +221,7 @@ public class GameScene extends Pane {
 
 		Slime slime6 = new Slime(new Pair(4, 1));
 		createDefaultEntity(slime6, "Slime", slime6.getPosition());
-		SlimeKing king = new SlimeKing(new Pair(5, 5));
+		SlimeKing king = new SlimeKing(new Pair(6, 6));
 		createDefaultEntity(king, "SlimeKing", king.getPosition());
 
 		hero = new Fighter(MainMenu.name, new Pair(1, 4));
@@ -230,5 +231,12 @@ public class GameScene extends Pane {
 
 		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
 
+	}	
+	public static void playMusic() {
+		stageMusic.play();
+	}
+
+	public static void stopMusic() {
+		stageMusic.stop();
 	}
 }
