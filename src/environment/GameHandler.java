@@ -44,11 +44,21 @@ public class GameHandler {
 			animateAll();
 			regenHp();
 			playerSkill();
-			tick++;
 			skillCountDown();
+			checkStageFinish();
+			tick++;
 		}
 		checkPause();
 
+	}
+	private static void checkStageFinish() {
+		if(GameScene.getIsHeroDead()) {
+			SceneManager.gotoMainMenu();
+		}
+		if(GameScene.getIsStageFinished()) {
+			if(GameScene.getCurrentStage()==1) {SceneManager.gotoStage2();}
+			else if(GameScene.getCurrentStage()==2) {SceneManager.gotoStage3();}
+		}
 	}
 
 	private static void skillCountDown() {
@@ -319,6 +329,10 @@ public class GameHandler {
 			}
 			if (monster.getFaceDirection() == Direction.LEFT && (int) monster.getPosition().first - 1 > 0) {
 				for (int i = 0; i < monster.getPicHeight(); i++) {
+					System.out.println(monster.getPosition().first);
+					System.out.println(monster.getPosition().second);
+					System.out.println(monster.getPosition().add(new Pair(-1, i)).first);
+					System.out.println(monster.getPosition().add(new Pair(-1, i)).second);
 					if (GameScene.getInstance().getBoard(monster.getPosition().add(new Pair(-1, i)))
 							.getTileType() == TileType.HERO) {
 						monster.attack(GameScene.getInstance().getBoard(monster.getPosition().add(new Pair(-1, i)))
