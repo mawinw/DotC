@@ -70,7 +70,7 @@ public class StatusBar extends Pane {
 		gc.setLineWidth(5);
 		gc.strokeRect(GameScene.TILE_SIZE * 2 - 2.5, GameScene.TILE_SIZE - 15 - 2.5, expMaxWidth + 5, 30 + 5);
 		double exp = GameScene.getInstance().getHero().getExp();
-		double expRate = GameScene.getInstance().getHero().EXP_RATE[GameScene.getInstance().getHero().getLv()];
+		double expRate = GameScene.getInstance().getHero().EXP_RATE.get(GameScene.getInstance().getHero().getLv());
 		expWidth = (exp / expRate) * expMaxWidth;
 		gc.fillRect(GameScene.TILE_SIZE * 2, GameScene.TILE_SIZE - 15, expWidth, 30);
 

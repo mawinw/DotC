@@ -1,6 +1,7 @@
 package entity.hero;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.Random;
 
 import entity.Entity;
@@ -40,12 +41,26 @@ public class Novice extends Entity implements Attackable, Moveable {
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 10.00;
 	private static final double DEFAULT_CRI_RATE = 20;
-	public static int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500 };
-	static {
-		for (int i = 11; i <= 100; i++) {
-			EXP_RATE[i] = EXP_RATE[i - 1] + EXP_RATE[i - 7];
+	public static ArrayList<Integer> EXP_RATE = new ArrayList<Integer>() {
+		{
+			add(0);
+			add(100);
+			add(200);
+			add(350);
+			add(550);
+			add(750);
+			add(1000);
+			add(1300);
+			add(1650);
+			add(2100);
+			add(2500);
+			for (int i = 11; i <= 100; i++) {
+				add(get(i - 1) + get(i - 7));
+				//EXP_RATE[i] = EXP_RATE[i - 1] + EXP_RATE[i - 7];
+			}
 		}
-	}	
+	};
+	
 	private static final Font NAMEFONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/ferrum.otf"), 10);
 	private static final Image nameFrame = new Image("background/nameFrame.png");
 
@@ -172,7 +187,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 		text.setFont(NAMEFONT);
 		final double width = text.getLayoutBounds().getWidth();
 		final double height = text.getLayoutBounds().getHeight();
-		gc.drawImage(nameFrame,(position.first + 0.5) * GameScene.TILE_SIZE - (width / 2 + 30),
+		gc.drawImage(nameFrame, (position.first + 0.5) * GameScene.TILE_SIZE - (width / 2 + 30),
 				(position.second) * GameScene.TILE_SIZE - (height + 40), width + 60, height + 40);
 		gc.setTextBaseline(VPos.BOTTOM);
 		gc.setTextAlign(TextAlignment.CENTER);
@@ -330,7 +345,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 	}
 
 	protected void checkLevelUp() {
-		while (EXP_RATE[lv] <= exp) {
+		while (EXP_RATE.get(lv) <= exp) {
 			lv++;
 			statusPoint += 2;
 			drawNameAndLv();
