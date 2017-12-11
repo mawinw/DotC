@@ -60,7 +60,6 @@ public class Fighter extends Novice {
 	}
 	
 	public void draw() {
-		System.out.println("fighter draw");
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, GameScene.WIDTH * GameScene.TILE_SIZE, GameScene.HEIGHT * GameScene.TILE_SIZE);
 
