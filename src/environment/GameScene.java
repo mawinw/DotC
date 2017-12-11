@@ -257,6 +257,7 @@ public class GameScene extends Pane {
 		board = new Tile[WIDTH][HEIGHT];
 		BG = new Canvas(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 		this.getChildren().clear();
+		hero.cleanAtkCanvas();
 
 	}
 	
@@ -319,12 +320,12 @@ public class GameScene extends Pane {
 	
 	
 	public static void playMusic() {
-		isMusicPlaying=true;
-		stageMusic.volumeProperty().set(0);
+		if(!isMusicPlaying) {stageMusic.volumeProperty().set(0);}
 		stageMusic.play();	
 		Timeline fadeIn = new Timeline(
 				new KeyFrame(Duration.millis(15000), new KeyValue(stageMusic.volumeProperty(), 1)));
     fadeIn.play();
+	isMusicPlaying=true;
 	}
 	public static void stopMusic() {
 		if(!isMusicPlaying) return;
