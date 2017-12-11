@@ -36,8 +36,9 @@ public class Slime extends Monster {
 		return EXP_GAIN;
 	}
 
-
-	private int currentAnimation = 0;
+	private Random rn = new Random();
+	private int rng = rn.nextInt(6);
+	private int currentAnimation = rng;
 	private final static int maxImage = 6;
 	private static final Image[] images = new Image[maxImage];
 	static {
