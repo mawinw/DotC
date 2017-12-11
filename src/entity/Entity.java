@@ -62,8 +62,6 @@ public abstract class Entity {
 
 	public void die() {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		gc.setFill(Color.BLACK);
-		gc.fillRect(0, 0, 200, 200);
 		GameScene.getEntityGroup().getChildren().remove(canvas);
 		isDead = true;
 		hp = 0;

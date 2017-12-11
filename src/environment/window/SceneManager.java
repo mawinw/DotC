@@ -86,20 +86,26 @@ public final class SceneManager {
 		StatusHandler.stopTimer();
 	
 	}
-
 	
 	public static void gotoGameScene() {
-
-		// put all pane
 		GameScene.getInstance().reset();
+		gotoStage1();
+	}
+	
+	public static void gotoStage1() {
+		GameScene.getInstance().createStage1();
 		putAllPane();
 	}
 
 	
 	public static void gotoStage2() {
+		GameScene.getInstance().createStage2();
+		putAllPane();
+	}
+	
 
-		// put all pane
-		GameScene.getInstance().reset();
+	public static void gotoStage3() {
+		GameScene.getInstance().createStage3();
 		putAllPane();
 	}
 	public static void putAllPane() {

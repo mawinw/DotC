@@ -58,6 +58,7 @@ public class GameScene extends Pane {
 	private static boolean isStageFinished=false;
 	private static int monsterCount = 0;
 	private static boolean isHeroDead=false;
+	private static int currentStage=0;
 
 	public GameScene() {
 		tileGroup = new Group();
@@ -87,15 +88,7 @@ public class GameScene extends Pane {
 			}
 		}
 
-		Slime slime6 = new Slime(new Pair(4, 1));
-		createDefaultEntity(slime6, "Slime", slime6.getPosition());
-		SlimeKing king = new SlimeKing(new Pair(5, 5));
-		createDefaultEntity(king, "SlimeKing", king.getPosition());
-		hero = new Novice(MainMenu.name, new Pair(1, 4));
-		createDefaultEntity(hero, "Novice", hero.getPosition());
-		namePane.getChildren().add(hero.getNameCanvas());
-
-
+		createLv1HeroAt(8, 2);
 
 		this.getChildren().addAll(tileGroup, namePane,statusBarGroup,entityGroup,effectGroup);
 
@@ -170,11 +163,13 @@ public class GameScene extends Pane {
 		switch (entityType) {
 		case "Slime":
 			monsterList.add((Monster) entity);
+			System.out.println("was created at x="+position.first+" y="+position.second);
 			board[(int) position.first][(int) position.second].setTileType(TileType.MONSTER);
 			board[(int) position.first][(int) position.second].setEntity(entity);
 			entityGroup.getChildren().add(entity.getCanvas());
 			effectGroup.getChildren().add(entity.getAtkCanvas());
 			entity.draw();
+
 			return;
 		case "SlimeKing":
 			monsterList.add((SlimeKing) entity);
@@ -215,43 +210,44 @@ public class GameScene extends Pane {
 		if (instance == null) {
 			instance = new GameScene();
 		}
-
 		return instance;
 	}
 
 	public void reset() {
 		clearScreen();
-		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 		drawBG();
-		createSlimeAt(7,1);
-		createSlimeKingAt(7,7);
 		createLv1HeroAt(1, 4);
 		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
+	}
+	public void createStage1() {
+		clearScreen();
+		drawBG();
+		createSlimeAt(7,1);
+		createLv1HeroAt(1, 4);
+		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
+		currentStage=1;
 	}	
 	public void createStage2() {
 		clearScreen();
-		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 		drawBG();
 		createSlimeAt(7,1);
-		createSlimeAt(4,1);
 		createSlimeAt(7,10);
-		createSlimeKingAt(7,7);
-		createLv1HeroAt(1, 4);
+		createProgressedHeroAt(1, 8);
 		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
+		currentStage=2;
 	}
 	public void createStage3() {
 		clearScreen();
-		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 		drawBG();
-		createSlimeAt(7,1);
+		createSlimeAt(1,1);
 		createSlimeAt(4,1);
-		createSlimeAt(7,10);
-		createSlimeKingAt(7,7);
-		createLv1HeroAt(1, 4);
+		createSlimeAt(7,11);
+		createSlimeKingAt(2,7);
+		createProgressedHeroAt(10, 4);
 		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
 	}
 	
-	public void clearScreen() {
+	private void clearScreen() {
 
 		tileGroup = new Group();
 		entityGroup = new Group();
@@ -266,7 +262,8 @@ public class GameScene extends Pane {
 	}
 	
 	
-	public void drawBG() {
+	private void drawBG() {
+		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 		GraphicsContext MapGc = BG.getGraphicsContext2D();
 		MapGc.clearRect(0, 0, 700, 700);
 		MapGc.drawImage(bgImage, 0, 0, 700, 700);
@@ -283,26 +280,26 @@ public class GameScene extends Pane {
 		}
 	}
 	
-	public void createSlimeAt(int x, int y) {
+	private void createSlimeAt(int x, int y) {
 		Slime slime = new Slime(new Pair(x, y));
 		createDefaultEntity(slime, "Slime", slime.getPosition());
 		monsterCount++;
 	}
 	
-	public void createSlimeKingAt(int x, int y) {
+	private void createSlimeKingAt(int x, int y) {
 		SlimeKing slimeKing = new SlimeKing(new Pair(x, y));
 		createDefaultEntity(slimeKing, "SlimeKing", slimeKing.getPosition());
 		monsterCount++;
 	}
 	
-	public void createLv1HeroAt(int x, int y) {
+	private void createLv1HeroAt(int x, int y) {
 		hero = new Novice(MainMenu.name, new Pair(x, y));
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 		namePane.getChildren().add(hero.getNameCanvas());
 		isHeroDead=false;
 	}
 	
-	public void createProgressedHeroAt(int x, int y) {
+	private void createProgressedHeroAt(int x, int y) {
 		hero.setPosition(x, y);
 		board[(int) x][(int) y].setTileType(TileType.HERO);
 		board[(int) x][(int) y].setEntity(hero);
@@ -346,5 +343,8 @@ public class GameScene extends Pane {
 	
 	public static boolean getIsStageFinished() {
 		return monsterCount<=0;
+	}
+	public static int getCurrentStage() {
+		return currentStage;
 	}
 }
