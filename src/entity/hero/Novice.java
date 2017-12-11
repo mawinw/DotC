@@ -43,7 +43,8 @@ public class Novice extends Entity implements Attackable, Moveable {
 	public static final int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500,
 			3000, 3500, 4000, 4500, 5000, 5500, 6000, 7000, 8000, 9000, 10000 };
 	private static final Font NAMEFONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/ferrum.otf"), 15);
-
+	private static final Image nameFrame = new Image("background/nameFrame.png");
+	
 	protected Timeline timer;
 	protected int lv;
 	protected int exp;
@@ -164,14 +165,14 @@ public class Novice extends Entity implements Attackable, Moveable {
 		text.setFont(NAMEFONT);
 		final double width = text.getLayoutBounds().getWidth();
 		final double height = text.getLayoutBounds().getHeight();
-		gc.fillRect((position.first + 0.5) * GameScene.TILE_SIZE - (width / 2 + 5),
-				(position.second) * GameScene.TILE_SIZE - (height + 15), width + 10, height + 10);
+		gc.drawImage(nameFrame,(position.first + 0.5) * GameScene.TILE_SIZE - (width / 2 + 30),
+				(position.second) * GameScene.TILE_SIZE - (height + 60), width + 60, height + 60);
 		gc.setTextBaseline(VPos.BOTTOM);
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setFont(NAMEFONT);
 		gc.setFill(Color.BLUE);
 		gc.fillText(name + "  (lv  " + lv + ")", (position.first + 0.5) * GameScene.TILE_SIZE,
-				position.second * GameScene.TILE_SIZE - 10);
+				position.second * GameScene.TILE_SIZE - 30);
 
 	}
 
