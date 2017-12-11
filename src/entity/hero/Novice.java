@@ -365,6 +365,11 @@ public class Novice extends Entity implements Attackable, Moveable {
 		GraphicsContext gc = this.levelUpCanvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, GameScene.WIDTH * tileSize, GameScene.HEIGHT * tileSize);
 	}
+	public void cleanAtkCanvas() {
+		int tileSize = GameScene.TILE_SIZE;
+		GraphicsContext gc = atkCanvas.getGraphicsContext2D();
+		gc.clearRect(0, 0, GameScene.WIDTH * tileSize, GameScene.HEIGHT * tileSize);
+	}
 
 	public double calculateDamage(Entity entity) {
 		Random rn = new Random();
