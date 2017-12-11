@@ -89,6 +89,7 @@ public class GameHandler {
 			return;
 		double hp=GameScene.getInstance().getHero().getHp();
 		GameScene.getInstance().getHero().setHp(hp*1.10);
+		GameScene.getInstance().getHero().draw();
 		
 	}
 
