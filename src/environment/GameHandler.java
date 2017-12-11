@@ -191,7 +191,7 @@ public class GameHandler {
 		if (activeKey.contains(KeyCode.UP)) {
 			GameScene.getInstance().getHero().setFaceDirection(Direction.UP);
 			if (GameScene.getInstance().getHero().isMoveFinished()) {
-				if (playerPosition.second > 0
+				if (playerPosition.second > 1
 						&& !GameScene.getInstance().getBoard(playerPosition.add(new Pair(0, -1))).hasEntity()
 						&& faceDirection == Direction.UP) {
 					GameScene.getInstance().getHero().move(0, -1);
@@ -204,7 +204,7 @@ public class GameHandler {
 		if (activeKey.contains(KeyCode.DOWN)) {
 			GameScene.getInstance().getHero().setFaceDirection(Direction.DOWN);
 			if (GameScene.getInstance().getHero().isMoveFinished()) {
-				if (playerPosition.second <= GameScene.getInstance().HEIGHT - 2
+				if (playerPosition.second <= GameScene.getInstance().HEIGHT - 3
 						&& !GameScene.getInstance().getBoard(playerPosition.add(new Pair(0, 1))).hasEntity()
 						&& faceDirection == Direction.DOWN) {
 					GameScene.getInstance().getHero().move(0, 1);
@@ -217,7 +217,7 @@ public class GameHandler {
 		if (activeKey.contains(KeyCode.LEFT)) {
 			GameScene.getInstance().getHero().setFaceDirection(Direction.LEFT);
 			if (GameScene.getInstance().getHero().isMoveFinished()) {
-				if (playerPosition.first > 0
+				if (playerPosition.first > 1
 						&& !GameScene.getInstance().getBoard(playerPosition.add(new Pair(-1, 0))).hasEntity()
 						&& faceDirection == Direction.LEFT) {
 					GameScene.getInstance().getHero().move(-1, 0);
@@ -230,7 +230,7 @@ public class GameHandler {
 		if (activeKey.contains(KeyCode.RIGHT)) {
 			GameScene.getInstance().getHero().setFaceDirection(Direction.RIGHT);
 			if (GameScene.getInstance().getHero().isMoveFinished()) {
-				if (playerPosition.first <= GameScene.getInstance().WIDTH - 2
+				if (playerPosition.first <= GameScene.getInstance().WIDTH - 3
 						&& !GameScene.getInstance().getBoard(playerPosition.add(new Pair(1, 0))).hasEntity()
 						&& faceDirection == Direction.RIGHT) {
 					GameScene.getInstance().getHero().move(1, 0);
