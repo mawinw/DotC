@@ -31,7 +31,7 @@ public final class SceneManager {
 	private static DeadScene deadScene = new DeadScene();
 	private static Scene mainMenuScene = new Scene(mainMenuCanvas);
 	public static Timeline pauseTimer;
-	public static Pane allPane;
+	public static Pane allPane = new Pane();
 
 
 	public static void initialize(Stage stage) {
@@ -111,6 +111,7 @@ public final class SceneManager {
 		putAllPane();
 	}
 	public static void putAllPane() {
+		allPane.getChildren().clear();
 		allPane = new Pane();
 		VBox stage = new VBox();
 		Pane gamePane = new Pane();
