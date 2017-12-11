@@ -48,6 +48,11 @@ public class Novice extends Entity implements Attackable, Moveable {
 	protected int exp;
 	protected Canvas nameCanvas;
 	public int statusPoint;
+	public Timeline healTimeline;
+	public Timeline moveTimeline;
+	public Timeline attackTimeline;
+	public Timeline levelUpTimeline;
+	public Timeline animationTimeline;
 
 	private static final int maxAttackImage = 5;
 	private static final Image[] attackImages = new Image[maxAttackImage];
@@ -195,14 +200,14 @@ public class Novice extends Entity implements Attackable, Moveable {
 		GameScene.setBoard(position, TileType.NONE, null);
 		GameScene.setBoard(position.add(new Pair(moveX, moveY)), TileType.HERO, this);
 
-		Timeline timer2 = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
+		moveTimeline = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			position.first += moveX / Main.FPS * 10;
 			position.second += moveY / Main.FPS * 10;
 			draw();
 		}));
-		timer2.setCycleCount(Main.FPS / 10);
-		timer2.play();
-		timer2.setOnFinished(e -> {
+		moveTimeline.setCycleCount(Main.FPS / 10);
+		moveTimeline.play();
+		moveTimeline.setOnFinished(e -> {
 			isMoveFinished = true;
 		});
 	}
@@ -222,7 +227,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 		entity.setMoveFinished(false);
 		
 		currentAttackAnimation = 0;
-		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(150), attack -> {
+		attackTimeline = new Timeline(new KeyFrame(Duration.millis(150), attack -> {
 			drawAttackAnimation();
 			currentAttackAnimation++;
 		}));
@@ -322,12 +327,12 @@ public class Novice extends Entity implements Attackable, Moveable {
 			drawNameAndLv();
 			hp=maxHp;
 			currentLevelUpAnimation = 0;
-			Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(45*1.5), attack -> {
+			levelUpTimeline = new Timeline(new KeyFrame(Duration.millis(45*1.5), attack -> {
 				drawLevelUpAnimation();
 				currentLevelUpAnimation++;
 			}));
-			attackTimeline.setCycleCount(22);
-			attackTimeline.play();
+			levelUpTimeline.setCycleCount(22);
+			levelUpTimeline.play();
 
 		}
 	if(lv>=5&& !(this instanceof Fighter)) {
@@ -437,7 +442,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 	}
 	
 	public void heal() {
-		Timeline healTimeline = new Timeline(new KeyFrame(Duration.millis(800), attack -> {
+		healTimeline = new Timeline(new KeyFrame(Duration.millis(800), attack -> {
 			hp+=maxHp*0.05;
 			if(hp>maxHp) hp=maxHp;
 			draw();
@@ -446,11 +451,10 @@ public class Novice extends Entity implements Attackable, Moveable {
 		healTimeline.play();
 
 		currentHealingAnimation=0;
-		Timeline animationTimeline = new Timeline(new KeyFrame(Duration.millis(80), attack -> {
+		animationTimeline = new Timeline(new KeyFrame(Duration.millis(80), attack -> {
 			drawHealingAnimation();
 			currentHealingAnimation++;
 			currentHealingAnimation%=20;
-			System.out.println("do");
 		}));
 		animationTimeline.setOnFinished(finish -> {
 			cleanLevelUpCanvas();

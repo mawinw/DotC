@@ -102,7 +102,7 @@ public class Fighter extends Novice {
 			}
 		}
 		currentSmashAnimation=0;
-		Timeline attackTimeline = new Timeline(new KeyFrame(Duration.millis(50), attack -> {
+		attackTimeline = new Timeline(new KeyFrame(Duration.millis(50), attack -> {
 			drawSmashAnimation();
 			currentSmashAnimation ++;
 		}));

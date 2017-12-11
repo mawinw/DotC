@@ -52,6 +52,7 @@ public final class SceneManager {
 		// TODO Fill Code
 		allPane.getChildren().add(pausedMenu);
 		GameHandler.stopTimer();
+		
 		PausedHandler.start();
 
 		primaryStage.getScene().setOnKeyPressed(event -> PausedHandler.keyPressed(event));
