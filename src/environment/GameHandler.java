@@ -47,17 +47,22 @@ public class GameHandler {
 			skillCountDown();
 			checkStageFinish();
 			tick++;
+			playerDie();
 		}
 		checkPause();
 
 	}
 	private static void checkStageFinish() {
-		if(GameScene.getIsHeroDead()) {
-			SceneManager.gotoMainMenu();
-		}
 		if(GameScene.getIsStageFinished()) {
 			if(GameScene.getCurrentStage()==1) {SceneManager.gotoStage2();}
 			else if(GameScene.getCurrentStage()==2) {SceneManager.gotoStage3();}
+		}
+	}
+
+	private static void playerDie() {
+		// TODO Auto-generated method stub
+		if(GameScene.getHero().getIsDead()) {
+			SceneManager.playerDead();
 		}
 	}
 
