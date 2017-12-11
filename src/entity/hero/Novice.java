@@ -40,7 +40,8 @@ public class Novice extends Entity implements Attackable, Moveable {
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 10.00;
 	private static final double DEFAULT_CRI_RATE = 20;
-	public static final int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500 };
+	public static final int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500,
+			3000, 3500, 4000, 4500, 5000, 5500, 6000, 7000, 8000, 9000, 10000 };
 	private static final Font NAMEFONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/ferrum.otf"), 15);
 
 	protected Timeline timer;
@@ -403,6 +404,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 	public void takeDamage(double dmg) {
 		if (hp <= dmg) {
 			die();
+			GameScene.setIsHeroDead(true);
 		} else {
 			hp -= dmg;
 		}
