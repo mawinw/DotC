@@ -54,6 +54,10 @@ public class GameScene extends Pane {
 			ClassLoader.getSystemResource("sound/bgm03_stage.mp3").toString());
 	static MediaPlayer stageMusic = new MediaPlayer(stageMusicFile);
 	private static boolean isMusicPlaying=false;
+	
+	private static boolean isStageFinished=false;
+	private static int monsterCount = 0;
+	private static boolean isHeroDead=false;
 
 	public GameScene() {
 		tileGroup = new Group();
@@ -216,6 +220,39 @@ public class GameScene extends Pane {
 	}
 
 	public void reset() {
+		clearScreen();
+		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+		drawBG();
+		createSlimeAt(7,1);
+		createSlimeKingAt(7,7);
+		createLv1HeroAt(1, 4);
+		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
+	}	
+	public void createStage2() {
+		clearScreen();
+		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+		drawBG();
+		createSlimeAt(7,1);
+		createSlimeAt(4,1);
+		createSlimeAt(7,10);
+		createSlimeKingAt(7,7);
+		createLv1HeroAt(1, 4);
+		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
+	}
+	public void createStage3() {
+		clearScreen();
+		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+		drawBG();
+		createSlimeAt(7,1);
+		createSlimeAt(4,1);
+		createSlimeAt(7,10);
+		createSlimeKingAt(7,7);
+		createLv1HeroAt(1, 4);
+		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
+	}
+	
+	public void clearScreen() {
+
 		tileGroup = new Group();
 		entityGroup = new Group();
 		effectGroup = new Group();
@@ -226,11 +263,12 @@ public class GameScene extends Pane {
 		BG = new Canvas(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 		this.getChildren().clear();
 
-		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
-
-
+	}
+	
+	
+	public void drawBG() {
 		GraphicsContext MapGc = BG.getGraphicsContext2D();
-		MapGc.clearRect(0, 0, 500, 500);
+		MapGc.clearRect(0, 0, 700, 700);
 		MapGc.drawImage(bgImage, 0, 0, 700, 700);
 		tileGroup.getChildren().add(BG);
 		
@@ -243,19 +281,47 @@ public class GameScene extends Pane {
 				tileGroup.getChildren().add(tile);
 			}
 		}
-
-		Slime slime6 = new Slime(new Pair(4, 1));
-		createDefaultEntity(slime6, "Slime", slime6.getPosition());
-		SlimeKing king = new SlimeKing(new Pair(6, 6));
-		createDefaultEntity(king, "SlimeKing", king.getPosition());
-
-		hero = new Novice(MainMenu.name, new Pair(1, 4));
+	}
+	
+	public void createSlimeAt(int x, int y) {
+		Slime slime = new Slime(new Pair(x, y));
+		createDefaultEntity(slime, "Slime", slime.getPosition());
+		monsterCount++;
+	}
+	
+	public void createSlimeKingAt(int x, int y) {
+		SlimeKing slimeKing = new SlimeKing(new Pair(x, y));
+		createDefaultEntity(slimeKing, "SlimeKing", slimeKing.getPosition());
+		monsterCount++;
+	}
+	
+	public void createLv1HeroAt(int x, int y) {
+		hero = new Novice(MainMenu.name, new Pair(x, y));
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 		namePane.getChildren().add(hero.getNameCanvas());
-
-		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
-
-	}	
+		isHeroDead=false;
+	}
+	
+	public void createProgressedHeroAt(int x, int y) {
+		hero.setPosition(x, y);
+		board[(int) x][(int) y].setTileType(TileType.HERO);
+		board[(int) x][(int) y].setEntity(hero);
+		entityGroup.getChildren().add(hero.getLevelUpCanvas());
+		entityGroup.getChildren().add(hero.getCanvas());
+		effectGroup.getChildren().add(hero.getAtkCanvas());
+		hero.draw();
+		namePane.getChildren().add(hero.getNameCanvas());
+		isHeroDead=false;
+		return;
+	}
+	public static boolean getIsHeroDead() {
+		return isHeroDead;
+	}
+	public static void setIsHeroDead(boolean isDead) {
+		isHeroDead=isDead;
+	}
+	
+	
 	public static void playMusic() {
 		isMusicPlaying=true;
 		stageMusic.volumeProperty().set(0);
@@ -273,5 +339,12 @@ public class GameScene extends Pane {
     	stageMusic.stop();
     	isMusicPlaying=false;
     });
+	}
+	public static void decreaseMonsterCount() {
+		monsterCount--;
+	}
+	
+	public static boolean getIsStageFinished() {
+		return monsterCount<=0;
 	}
 }

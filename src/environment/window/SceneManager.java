@@ -40,10 +40,8 @@ public final class SceneManager {
 	public static void gotoMainMenu() {
 		// TODO Fill Code
 		GameScene.stopMusic();
-		System.out.println("stopping game scene music");
 		primaryStage.setScene(mainMenuScene);
 		MainMenu.playMusic();
-		System.out.println("playing main menu scene music");
 		mainMenuCanvas .requestFocus();
 		StatusBar.groundSmash.canUse=false;
 		StatusBar.groundSmash.draw();
@@ -92,6 +90,17 @@ public final class SceneManager {
 
 		// put all pane
 		GameScene.getInstance().reset();
+		putAllPane();
+	}
+
+	
+	public static void gotoStage2() {
+
+		// put all pane
+		GameScene.getInstance().reset();
+		putAllPane();
+	}
+	public static void putAllPane() {
 		allPane = new Pane();
 		VBox stage = new VBox();
 		Pane gamePane = new Pane();
@@ -116,8 +125,10 @@ public final class SceneManager {
 			GameHandler.stopTimer();
 			GameScene.stopMusic();
 		});
+		
 	}
-
+	
+	
 	public static void setStage(Stage primaryStage) {
 		SceneManager.primaryStage = primaryStage;
 		
