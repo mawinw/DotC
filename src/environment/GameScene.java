@@ -218,6 +218,9 @@ public class GameScene extends Pane {
 		drawBG();
 		createLv1HeroAt(1, 4);
 		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
+		currentStage=1;
+		cleared=0;
+		monsterCount=0;
 	}
 	public void createStage1() {
 		clearScreen();
