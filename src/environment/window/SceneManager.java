@@ -110,6 +110,14 @@ public final class SceneManager {
 		GameScene.getInstance().createStage3();
 		putAllPane();
 	}
+	
+	public static void gotoEndlessStage() {
+		GameHandler.stopTimer();
+		GameScene.getInstance().createEndlessStage();
+		putAllPane();
+	}
+	
+	
 	public static void putAllPane() {
 		allPane = new Pane();
 		VBox stage = new VBox();

@@ -59,6 +59,7 @@ public class GameScene extends Pane {
 	private static int monsterCount = 0;
 	private static boolean isHeroDead=false;
 	private static int currentStage=0;
+	private static int cleared=0;
 
 	public GameScene() {
 		tileGroup = new Group();
@@ -240,9 +241,24 @@ public class GameScene extends Pane {
 		drawBG();
 		createSlimeAt(1,1);
 		createSlimeAt(4,1);
-		createSlimeAt(7,11);
+		createSlimeAt(7,10);
 		createSlimeKingAt(2,7);
 		createProgressedHeroAt(10, 4);
+		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
+		currentStage=3;
+	}
+	
+	public void createEndlessStage() {
+		clearScreen();
+		drawBG();
+		for(int i=0;i<cleared;i++) {
+			createSlimeAt(9,i+1);
+			createSlimeAt(12,10-i);
+		}
+		Random rn = new Random();
+		int rng = rn.nextInt(3)*(cleared%2==0? -1 : 1);
+		createSlimeKingAt(6,6+rng);
+		createProgressedHeroAt(1, 6);
 		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
 	}
 	
@@ -340,11 +356,14 @@ public class GameScene extends Pane {
 	public static void decreaseMonsterCount() {
 		monsterCount--;
 	}
-	
 	public static boolean getIsStageFinished() {
 		return monsterCount<=0;
 	}
 	public static int getCurrentStage() {
 		return currentStage;
+	}
+	public static void gameCleared() {
+		cleared++;
+		if(cleared>=9) {cleared=9;}
 	}
 }

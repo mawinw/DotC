@@ -56,6 +56,7 @@ public class GameHandler {
 		if(GameScene.getIsStageFinished()) {
 			if(GameScene.getCurrentStage()==1) {SceneManager.gotoStage2();}
 			else if(GameScene.getCurrentStage()==2) {SceneManager.gotoStage3();}
+			else if(GameScene.getCurrentStage()==3) {GameScene.gameCleared();SceneManager.gotoEndlessStage();}
 		}
 	}
 
