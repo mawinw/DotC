@@ -374,6 +374,7 @@ public class GameHandler {
 		// TODO Auto-generated method stub
 		activeKey.clear();
 		GameHandler.setPaused(false);
+		System.out.println(Main.FPS);
 		gameTimer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			GameHandler.update();
 		}));

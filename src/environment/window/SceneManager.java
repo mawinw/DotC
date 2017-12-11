@@ -99,12 +99,14 @@ public final class SceneManager {
 
 	
 	public static void gotoStage2() {
+		GameHandler.stopTimer();
 		GameScene.getInstance().createStage2();
 		putAllPane();
 	}
 	
 
 	public static void gotoStage3() {
+		GameHandler.stopTimer();
 		GameScene.getInstance().createStage3();
 		putAllPane();
 	}
