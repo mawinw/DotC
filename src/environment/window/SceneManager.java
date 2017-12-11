@@ -1,5 +1,6 @@
 package environment.window;
 
+import environment.DeadScene;
 import environment.GameHandler;
 import environment.GameScene;
 import environment.StatusBar;
@@ -27,6 +28,7 @@ public final class SceneManager {
 	private static MainMenu mainMenuCanvas  = new environment.menu.MainMenu();
 	private static PauseMenu pausedMenu = new PauseMenu();
 	private static StatusMenu statusMenu = new StatusMenu();
+	private static DeadScene deadScene = new DeadScene();
 	private static Scene mainMenuScene = new Scene(mainMenuCanvas);
 	public static Timeline pauseTimer;
 	public static Pane allPane;
@@ -132,6 +134,13 @@ public final class SceneManager {
 	public static void setStage(Stage primaryStage) {
 		SceneManager.primaryStage = primaryStage;
 		
+	}
+
+	public static void playerDead() {
+		// TODO Auto-generated method stub
+		allPane.getChildren().add(deadScene);
+		deadScene.requestFocus();
+		GameHandler.stopTimer();
 	}
 
 }

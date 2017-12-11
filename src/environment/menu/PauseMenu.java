@@ -48,7 +48,6 @@ public class PauseMenu extends Pane {
 		this.selectedFrame = new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE);
 
 		GraphicsContext gc = background.getGraphicsContext2D();
-		gc.setFill(Color.WHEAT);
 		gc.drawImage(BG, Main.SCREEN_SIZE / 4 - 20, Main.SCREEN_SIZE / 4 - 20, Main.SCREEN_SIZE / 2 + 40,
 				Main.SCREEN_SIZE / 2 + 40);
 

@@ -46,9 +46,17 @@ public class GameHandler {
 			playerSkill();
 			tick++;
 			skillCountDown();
+			playerDie();
 		}
 		checkPause();
 
+	}
+
+	private static void playerDie() {
+		// TODO Auto-generated method stub
+		if(GameScene.getHero().getIsDead()) {
+			SceneManager.playerDead();
+		}
 	}
 
 	private static void skillCountDown() {
