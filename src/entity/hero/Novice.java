@@ -41,7 +41,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 10.00;
 	private static final double DEFAULT_CRI_RATE = 20;
-	public static ArrayList<Integer> EXP_RATE = new ArrayList<Integer>() {
+	public static final ArrayList<Integer> EXP_RATE = new ArrayList<Integer>() {
 		{
 			add(0);
 			add(100);
