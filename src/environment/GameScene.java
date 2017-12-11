@@ -163,7 +163,6 @@ public class GameScene extends Pane {
 		switch (entityType) {
 		case "Slime":
 			monsterList.add((Monster) entity);
-			System.out.println("was created at x="+position.first+" y="+position.second);
 			board[(int) position.first][(int) position.second].setTileType(TileType.MONSTER);
 			board[(int) position.first][(int) position.second].setEntity(entity);
 			entityGroup.getChildren().add(entity.getCanvas());
