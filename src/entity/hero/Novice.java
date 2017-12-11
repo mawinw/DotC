@@ -40,11 +40,15 @@ public class Novice extends Entity implements Attackable, Moveable {
 	private static final double DEFAULT_ACC = 100.00;
 	private static final double DEFAULT_EVA = 10.00;
 	private static final double DEFAULT_CRI_RATE = 20;
-	public static final int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500,
-			3000, 3500, 4000, 4500, 5000, 5500, 6000, 7000, 8000, 9000, 10000 };
+	public static int[] EXP_RATE = { 0, 100, 200, 350, 550, 750, 1000, 1300, 1650, 2100, 2500 };
+	static {
+		for (int i = 11; i <= 100; i++) {
+			EXP_RATE[i] = EXP_RATE[i - 1] + EXP_RATE[i - 7];
+		}
+	}
 	private static final Font NAMEFONT = Font.loadFont(ClassLoader.getSystemResourceAsStream("font/ferrum.otf"), 15);
 	private static final Image nameFrame = new Image("background/nameFrame.png");
-	
+
 	protected Timeline timer;
 	protected int lv;
 	protected int exp;
@@ -75,7 +79,8 @@ public class Novice extends Entity implements Attackable, Moveable {
 		}
 	}
 
-	protected Canvas levelUpCanvas = new Canvas(GameScene.WIDTH*GameScene.TILE_SIZE,GameScene.HEIGHT*GameScene.TILE_SIZE);
+	protected Canvas levelUpCanvas = new Canvas(GameScene.WIDTH * GameScene.TILE_SIZE,
+			GameScene.HEIGHT * GameScene.TILE_SIZE);
 	private static final int maxLevelUpImage = 21;
 	private static final Image[] levelUpImages = new Image[maxLevelUpImage];
 	static {
@@ -84,8 +89,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 		}
 	}
 	private static int currentLevelUpAnimation = 0;
-	
-	
+
 	private static final int maxhealingImage = 20;
 	private static final Image[] healingImages = new Image[maxhealingImage];
 	static {
@@ -94,7 +98,6 @@ public class Novice extends Entity implements Attackable, Moveable {
 		}
 	}
 	private static int currentHealingAnimation = 0;
-	
 
 	public Novice(Pair pos) {
 		super("Novice", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
@@ -132,17 +135,21 @@ public class Novice extends Entity implements Attackable, Moveable {
 		gc.clearRect(0, 0, GameScene.WIDTH * GameScene.TILE_SIZE, GameScene.HEIGHT * GameScene.TILE_SIZE);
 
 		if (faceDirection == Direction.RIGHT) {
-			gc.drawImage(characterImages[3], position.first * GameScene.TILE_SIZE, position.second * GameScene.TILE_SIZE,
-					picWidth * GameScene.TILE_SIZE, picHeight * GameScene.TILE_SIZE);
+			gc.drawImage(characterImages[3], position.first * GameScene.TILE_SIZE,
+					position.second * GameScene.TILE_SIZE, picWidth * GameScene.TILE_SIZE,
+					picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.LEFT) {
-			gc.drawImage(characterImages[2], position.first * GameScene.TILE_SIZE, position.second * GameScene.TILE_SIZE,
-					picWidth * GameScene.TILE_SIZE, picHeight * GameScene.TILE_SIZE);
+			gc.drawImage(characterImages[2], position.first * GameScene.TILE_SIZE,
+					position.second * GameScene.TILE_SIZE, picWidth * GameScene.TILE_SIZE,
+					picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.DOWN) {
-			gc.drawImage(characterImages[1], position.first * GameScene.TILE_SIZE, position.second * GameScene.TILE_SIZE,
-					picWidth * GameScene.TILE_SIZE, picHeight * GameScene.TILE_SIZE);
+			gc.drawImage(characterImages[1], position.first * GameScene.TILE_SIZE,
+					position.second * GameScene.TILE_SIZE, picWidth * GameScene.TILE_SIZE,
+					picHeight * GameScene.TILE_SIZE);
 		} else if (faceDirection == Direction.UP) {
-			gc.drawImage(characterImages[4], position.first * GameScene.TILE_SIZE, position.second * GameScene.TILE_SIZE,
-					picWidth * GameScene.TILE_SIZE, picHeight * GameScene.TILE_SIZE);
+			gc.drawImage(characterImages[4], position.first * GameScene.TILE_SIZE,
+					position.second * GameScene.TILE_SIZE, picWidth * GameScene.TILE_SIZE,
+					picHeight * GameScene.TILE_SIZE);
 		}
 
 		drawDirection();
@@ -165,7 +172,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 		text.setFont(NAMEFONT);
 		final double width = text.getLayoutBounds().getWidth();
 		final double height = text.getLayoutBounds().getHeight();
-		gc.drawImage(nameFrame,(position.first + 0.5) * GameScene.TILE_SIZE - (width / 2 + 30),
+		gc.drawImage(nameFrame, (position.first + 0.5) * GameScene.TILE_SIZE - (width / 2 + 30),
 				(position.second) * GameScene.TILE_SIZE - (height + 60), width + 60, height + 60);
 		gc.setTextBaseline(VPos.BOTTOM);
 		gc.setTextAlign(TextAlignment.CENTER);
@@ -215,7 +222,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 	}
 
 	public void attack(Entity entity) {
-		if(entity.getIsDead()) {
+		if (entity.getIsDead()) {
 			try {
 				throw new AttackDeadEntityException();
 			} catch (AttackDeadEntityException e1) {
@@ -227,7 +234,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 		isMoveFinished = false;
 		isAttackFinished = false;
 		entity.setMoveFinished(false);
-		
+
 		currentAttackAnimation = 0;
 		attackTimeline = new Timeline(new KeyFrame(Duration.millis(150), attack -> {
 			drawAttackAnimation();
@@ -293,22 +300,22 @@ public class Novice extends Entity implements Attackable, Moveable {
 
 	public void normalAttack() {
 		if ((int) position.first + 1 < GameScene.WIDTH) {
-			if (GameScene.getBoard()[(int) position.first + 1][(int) (position.second)].getTileType() == TileType.MONSTER
-					&& faceDirection == Direction.RIGHT) {
+			if (GameScene.getBoard()[(int) position.first + 1][(int) (position.second)]
+					.getTileType() == TileType.MONSTER && faceDirection == Direction.RIGHT) {
 				attack(GameScene.getBoard()[(int) position.first + 1][(int) position.second].getEntity());
 			}
 		}
 
 		if ((int) position.first - 1 > 0) {
-			if (GameScene.getBoard()[(int) position.first - 1][(int) (position.second)].getTileType() == TileType.MONSTER
-					&& faceDirection == Direction.LEFT) {
+			if (GameScene.getBoard()[(int) position.first - 1][(int) (position.second)]
+					.getTileType() == TileType.MONSTER && faceDirection == Direction.LEFT) {
 				attack(GameScene.getBoard()[(int) position.first - 1][(int) (position.second)].getEntity());
 			}
 		}
 
 		if ((int) position.second - 1 > 0) {
-			if (GameScene.getBoard()[(int) position.first][(int) (position.second) - 1].getTileType() == TileType.MONSTER
-					&& faceDirection == Direction.UP) {
+			if (GameScene.getBoard()[(int) position.first][(int) (position.second) - 1]
+					.getTileType() == TileType.MONSTER && faceDirection == Direction.UP) {
 				attack(GameScene.getBoard()[(int) position.first][(int) (position.second) - 1].getEntity());
 			}
 		}
@@ -327,9 +334,9 @@ public class Novice extends Entity implements Attackable, Moveable {
 			lv++;
 			statusPoint += 2;
 			drawNameAndLv();
-			hp=maxHp;
+			hp = maxHp;
 			currentLevelUpAnimation = 0;
-			levelUpTimeline = new Timeline(new KeyFrame(Duration.millis(45*1.5), attack -> {
+			levelUpTimeline = new Timeline(new KeyFrame(Duration.millis(45 * 1.5), attack -> {
 				drawLevelUpAnimation();
 				currentLevelUpAnimation++;
 			}));
@@ -337,11 +344,11 @@ public class Novice extends Entity implements Attackable, Moveable {
 			levelUpTimeline.play();
 
 		}
-	if(lv>=5&& !(this instanceof Fighter)) {
-		GameScene.getInstance().classChange();
-	
+		if (lv >= 5 && !(this instanceof Fighter)) {
+			GameScene.getInstance().classChange();
+
 		}
-	
+
 	}
 
 	public void drawLevelUpAnimation() {
@@ -353,18 +360,17 @@ public class Novice extends Entity implements Attackable, Moveable {
 		gc.clearRect(0, 0, GameScene.WIDTH * tileSize, GameScene.HEIGHT * tileSize);
 
 		if (currentLevelUpAnimation <= maxLevelUpImage - 1) {
-			gc.drawImage(levelUpImages[currentLevelUpAnimation], 
-					(playerX - 1.5) * tileSize,
-					(playerY - 1.5) * tileSize, 
-					(picWidth + 3) * tileSize, 
-					(picHeight + 2) * tileSize);
+			gc.drawImage(levelUpImages[currentLevelUpAnimation], (playerX - 1.5) * tileSize, (playerY - 1.5) * tileSize,
+					(picWidth + 3) * tileSize, (picHeight + 2) * tileSize);
 		}
 	}
+
 	public void cleanLevelUpCanvas() {
 		int tileSize = GameScene.TILE_SIZE;
 		GraphicsContext gc = this.levelUpCanvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, GameScene.WIDTH * tileSize, GameScene.HEIGHT * tileSize);
 	}
+
 	public void cleanAtkCanvas() {
 		int tileSize = GameScene.TILE_SIZE;
 		GraphicsContext gc = atkCanvas.getGraphicsContext2D();
@@ -388,7 +394,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 		} else
 			return 0;
 	}
-	
+
 	public void drawHealingAnimation() {
 		GraphicsContext gc = this.levelUpCanvas.getGraphicsContext2D();
 		double playerX = position.first;
@@ -398,11 +404,8 @@ public class Novice extends Entity implements Attackable, Moveable {
 		gc.clearRect(0, 0, GameScene.WIDTH * tileSize, GameScene.HEIGHT * tileSize);
 
 		if (currentHealingAnimation <= maxhealingImage - 1) {
-			gc.drawImage(healingImages[currentHealingAnimation], 
-					(playerX - 1.5) * tileSize,
-					(playerY - 1.5) * tileSize, 
-					(picWidth + 3) * tileSize, 
-					(picHeight + 2) * tileSize);
+			gc.drawImage(healingImages[currentHealingAnimation], (playerX - 1.5) * tileSize, (playerY - 1.5) * tileSize,
+					(picWidth + 3) * tileSize, (picHeight + 2) * tileSize);
 		}
 
 	}
@@ -439,7 +442,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 	public int getLv() {
 		return lv;
 	}
-	
+
 	@Override
 	public void die() {
 		GameScene.getEntityGroup().getChildren().remove(canvas);
@@ -448,21 +451,22 @@ public class Novice extends Entity implements Attackable, Moveable {
 		hp = 0;
 		hpBar.die();
 	}
-	
+
 	public void heal() {
 		healTimeline = new Timeline(new KeyFrame(Duration.millis(800), attack -> {
-			hp+=maxHp*0.05;
-			if(hp>maxHp) hp=maxHp;
+			hp += maxHp * 0.05;
+			if (hp > maxHp)
+				hp = maxHp;
 			draw();
 		}));
 		healTimeline.setCycleCount(5);
 		healTimeline.play();
 
-		currentHealingAnimation=0;
+		currentHealingAnimation = 0;
 		animationTimeline = new Timeline(new KeyFrame(Duration.millis(80), attack -> {
 			drawHealingAnimation();
 			currentHealingAnimation++;
-			currentHealingAnimation%=20;
+			currentHealingAnimation %= 20;
 		}));
 		animationTimeline.setOnFinished(finish -> {
 			cleanLevelUpCanvas();
