@@ -1,8 +1,8 @@
 package exception;
 
-public class UnsupportedCharacterException extends Exception {
+public class SpecialCharacterException extends Exception {
 	public String text;
-	public UnsupportedCharacterException(String text) {
+	public SpecialCharacterException(String text) {
 		this.text = text;
 	}
 	
