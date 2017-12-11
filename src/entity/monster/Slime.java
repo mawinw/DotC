@@ -187,7 +187,14 @@ public class Slime extends Monster {
 		}
 	}
 	
-	
+	public void die() {
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		GameScene.getEntityGroup().getChildren().remove(canvas);
+		isDead = true;
+		hp = 0;
+		hpBar.die();
+		GameScene.decreaseMonsterCount();
+	}
 
 
 	
