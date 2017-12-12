@@ -48,23 +48,23 @@ public class StatusMenu extends Pane {
 		this.back = new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE);
 		this.selectedFrame = new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE);
 
-		this.statusText.put("VIT", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
+		this.statusText.put("HP", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusText.put("ATK", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusText.put("DEF", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusText.put("EVA", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
-		this.statusText.put("DEX", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
+		this.statusText.put("CRI", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 
-		this.statusIcon.put("VIT", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
+		this.statusIcon.put("HP", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusIcon.put("ATK", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusIcon.put("DEF", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 		this.statusIcon.put("EVA", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
-		this.statusIcon.put("DEX", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
+		this.statusIcon.put("CRI", new Canvas(Main.SCREEN_SIZE, Main.SCREEN_SIZE));
 
-		this.canSelect.put("VIT", false);
+		this.canSelect.put("HP", false);
 		this.canSelect.put("ATK", false);
 		this.canSelect.put("DEF", false);
 		this.canSelect.put("EVA", false);
-		this.canSelect.put("DEX", false);
+		this.canSelect.put("CRI", false);
 
 		updateStatus();
 
@@ -106,19 +106,19 @@ public class StatusMenu extends Pane {
 	}
 
 	private static void updateStatus() {
-		status.put("VIT", GameScene.getInstance().getHero().getMaxHp());
+		status.put("HP", GameScene.getInstance().getHero().getMaxHp());
 		status.put("ATK", (double) GameScene.getInstance().getHero().getAtk());
 		status.put("DEF", (double) GameScene.getInstance().getHero().getDef());
 		status.put("EVA", GameScene.getInstance().getHero().getEva());
-		status.put("DEX", GameScene.getInstance().getHero().getDex());
+		status.put("CRI", GameScene.getInstance().getHero().getDex());
 	}
 
 	private static void drawAllStatus() {
-		drawStatus("VIT", statusText.get("VIT"), 3);
+		drawStatus("HP", statusText.get("HP"), 3);
 		drawStatus("ATK", statusText.get("ATK"), 4);
 		drawStatus("DEF", statusText.get("DEF"), 5);
 		drawStatus("EVA", statusText.get("EVA"), 6);
-		drawStatus("DEX", statusText.get("DEX"), 7);
+		drawStatus("CRI", statusText.get("CRI"), 7);
 	}
 
 	private static void drawStatuspoint() {
@@ -142,6 +142,7 @@ public class StatusMenu extends Pane {
 		gc.fillText(":", Main.SCREEN_SIZE / 2 - 30, Main.SCREEN_SIZE / 8 + gap * i);
 		gc.setTextAlign(TextAlignment.LEFT);
 		String value = "" + (status.get(s).intValue());
+		if(i==6 || i==7) {value = "" + (status.get(s).intValue()) + "%";}
 		gc.fillText(value, Main.SCREEN_SIZE * 5 / 10 - 10, Main.SCREEN_SIZE / 8 + gap * i);
 		gc.setTextAlign(TextAlignment.RIGHT);
 		String statusRate = "(+" + (int) STATUS_RATE[i - 3] + ")";
@@ -150,11 +151,11 @@ public class StatusMenu extends Pane {
 	}
 
 	private static void drawAllIcon() {
-		drawIcon("VIT", statusIcon.get("VIT"), 3);
+		drawIcon("HP", statusIcon.get("HP"), 3);
 		drawIcon("ATK", statusIcon.get("ATK"), 4);
 		drawIcon("DEF", statusIcon.get("DEF"), 5);
 		drawIcon("EVA", statusIcon.get("EVA"), 6);
-		drawIcon("DEX", statusIcon.get("DEX"), 7);
+		drawIcon("CRI", statusIcon.get("CRI"), 7);
 	}
 
 	private static void drawIcon(String s, Canvas iconCanvas, int i) {
