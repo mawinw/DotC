@@ -36,6 +36,7 @@ public class StatusMenu extends Pane {
 	private static Novice hero = GameScene.getInstance().getHero();
 	private static final double[] STATUS_RATE = { 50, 10, 5, 3, 3 };
 	private static final Image BG = new Image("background/pauseBG.png");
+	private static final Image ICON = new Image("icon/upSkillIcon2.png");
 
 	protected static int pointer = 0;
 	private static int gap = Main.SCREEN_SIZE * 3 / 4 / 10;
@@ -161,11 +162,12 @@ public class StatusMenu extends Pane {
 	private static void drawIcon(String s, Canvas iconCanvas, int i) {
 		GraphicsContext gc = iconCanvas.getGraphicsContext2D();
 		gc.clearRect(0, 0, Main.SCREEN_SIZE, Main.SCREEN_SIZE);
-		if (hero.statusPoint == 0)
+		if (hero.statusPoint == 0) {
 			gc.setFill(Color.BLACK);
+			gc.fillRect(Main.SCREEN_SIZE * 2 / 3 - 15, Main.SCREEN_SIZE / 8 + gap * i - 15, 30, 30);
+		}
 		else
-			gc.setFill(Color.RED);
-		gc.fillRect(Main.SCREEN_SIZE * 2 / 3 - 15, Main.SCREEN_SIZE / 8 + gap * i - 15, 30, 30);
+			gc.drawImage(ICON,Main.SCREEN_SIZE * 2 / 3 - 15, Main.SCREEN_SIZE / 8 + gap * i - 15, 30, 30);
 	}
 
 	private static void drawSelectedFrame() {
@@ -179,7 +181,7 @@ public class StatusMenu extends Pane {
 				gc.strokeRect(Main.SCREEN_SIZE * 5 / 14, Main.SCREEN_SIZE / 8 + gap * (8), Main.SCREEN_SIZE * 2 / 7,
 						gap);
 			} else {
-				gc.setStroke(Color.WHITE);
+				gc.setStroke(Color.BLACK);
 				gc.setLineWidth(5);
 				gc.strokeRect(Main.SCREEN_SIZE * 2 / 3 - 15, Main.SCREEN_SIZE / 8 + gap * (pointer + 3) - 15, 30, 30);
 
