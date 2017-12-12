@@ -272,7 +272,7 @@ public class Novice extends Entity implements Attackable, Moveable {
 		timer.setCycleCount(1);
 		timer.play();
 		timer.setOnFinished(e -> {
-			Timeline wait = new Timeline(new KeyFrame(Duration.millis(2000), f -> {
+			Timeline wait = new Timeline(new KeyFrame(Duration.millis(1000), f -> {
 			}));
 			wait.setCycleCount(1);
 			wait.play();

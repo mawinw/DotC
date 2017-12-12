@@ -50,16 +50,15 @@ public class GameScene extends Pane {
 	private static Canvas BG;
 	private static Image bgImage = new Image("background/BG_01.png");
 
-	private static Media stageMusicFile = new Media(
-			ClassLoader.getSystemResource("sound/bgm03_stage.mp3").toString());
-	static MediaPlayer stageMusic = new MediaPlayer(stageMusicFile);
-	private static boolean isMusicPlaying=false;
-	
-	private static boolean isStageFinished=false;
+	private static Media stageMusicFile = new Media(ClassLoader.getSystemResource("sound/bgm03_stage.mp3").toString());
+	private static MediaPlayer stageMusic = new MediaPlayer(stageMusicFile);
+	private static boolean isMusicPlaying = false;
+
+	private static boolean isStageFinished = false;
 	private static int monsterCount = 0;
-	private static boolean isHeroDead=false;
-	private static int currentStage=0;
-	private static int cleared=0;
+	private static boolean isHeroDead = false;
+	private static int currentStage = 0;
+	private static int clearedCount = 0;
 
 	public GameScene() {
 		tileGroup = new Group();
@@ -78,7 +77,7 @@ public class GameScene extends Pane {
 		MapGc.clearRect(0, 0, 700, 700);
 		MapGc.drawImage(bgImage, 0, 0, 700, 700);
 		tileGroup.getChildren().add(BG);
-		
+
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
 				Tile tile = new Tile((x + y) % 2 == 0, x, y, null);
@@ -91,7 +90,7 @@ public class GameScene extends Pane {
 
 		createLv1HeroAt(8, 2);
 
-		this.getChildren().addAll(tileGroup, namePane,statusBarGroup,entityGroup,effectGroup);
+		this.getChildren().addAll(tileGroup, namePane, statusBarGroup, entityGroup, effectGroup);
 
 	}
 
@@ -102,9 +101,9 @@ public class GameScene extends Pane {
 		effectGroup.getChildren().remove(hero.getAtkCanvas());
 		statusBarGroup.getChildren().clear();
 		hero = new Fighter(hero);
-//		Novice newHero = new Fighter(hero);
-		
-//		GameScene.hero = newHero;
+		// Novice newHero = new Fighter(hero);
+
+		// GameScene.hero = newHero;
 		namePane.getChildren().add(hero.getNameCanvas());
 		entityGroup.getChildren().add(hero.getLevelUpCanvas());
 		entityGroup.getChildren().add(hero.getCanvas());
@@ -112,7 +111,7 @@ public class GameScene extends Pane {
 		board[(int) hero.getPosition().first][(int) hero.getPosition().second].setEntity(hero);
 		hero.draw();
 		statusBarGroup.getChildren().clear();
-		StatusBar.groundSmash.canUse=true;
+		StatusBar.groundSmash.canUse = true;
 		StatusBar.groundSmash.draw();
 	}
 
@@ -123,6 +122,7 @@ public class GameScene extends Pane {
 	public static Group getStatusBarGroup() {
 		return statusBarGroup;
 	}
+
 	public static Group getEffectGroup() {
 		return effectGroup;
 	}
@@ -139,7 +139,6 @@ public class GameScene extends Pane {
 		return entityGroup;
 	}
 
-	
 	public static Tile[][] getBoard() {
 		return board;
 	}
@@ -217,54 +216,57 @@ public class GameScene extends Pane {
 		clearScreen();
 		drawBG();
 		createLv1HeroAt(1, 4);
-		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
-		currentStage=1;
-		cleared=0;
-		monsterCount=0;
+		this.getChildren().addAll(tileGroup, statusBarGroup, namePane, entityGroup, effectGroup);
+		currentStage = 1;
+		clearedCount = 0;
+		monsterCount = 0;
 	}
+
 	public void createStage1() {
 		clearScreen();
 		drawBG();
-		createSlimeAt(7,1);
+		createSlimeAt(7, 1);
 		createLv1HeroAt(1, 4);
-		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
-		currentStage=1;
-	}	
+		this.getChildren().addAll(tileGroup, statusBarGroup, namePane, entityGroup, effectGroup);
+		currentStage = 1;
+	}
+
 	public void createStage2() {
 		clearScreen();
 		drawBG();
-		createSlimeAt(7,1);
-		createSlimeAt(7,10);
+		createSlimeAt(7, 1);
+		createSlimeAt(7, 10);
 		createProgressedHeroAt(1, 8);
-		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
-		currentStage=2;
+		this.getChildren().addAll(tileGroup, statusBarGroup, namePane, entityGroup, effectGroup);
+		currentStage = 2;
 	}
+
 	public void createStage3() {
 		clearScreen();
 		drawBG();
-		createSlimeAt(1,1);
-		createSlimeAt(4,1);
-		createSlimeAt(7,10);
-		createSlimeKingAt(2,7);
+		createSlimeAt(1, 1);
+		createSlimeAt(4, 1);
+		createSlimeAt(7, 10);
+		createSlimeKingAt(2, 7);
 		createProgressedHeroAt(10, 4);
-		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
-		currentStage=3;
+		this.getChildren().addAll(tileGroup, statusBarGroup, namePane, entityGroup, effectGroup);
+		currentStage = 3;
 	}
-	
+
 	public void createEndlessStage() {
 		clearScreen();
 		drawBG();
-		for(int i=0;i<cleared;i++) {
-			createSlimeAt(9,i+1);
-			createSlimeAt(12,10-i);
+		for (int i = 0; i < clearedCount; i++) {
+			createSlimeAt(9, i + 1);
+			createSlimeAt(12, 10 - i);
 		}
 		Random rn = new Random();
-		int rng = rn.nextInt(3)*(cleared%2==0? -1 : 1);
-		createSlimeKingAt(6,6+rng);
+		int rng = rn.nextInt(3) * (clearedCount % 2 == 0 ? -1 : 1);
+		createSlimeKingAt(6, 6 + rng);
 		createProgressedHeroAt(1, 6);
-		this.getChildren().addAll(tileGroup, statusBarGroup,namePane,entityGroup,effectGroup);
+		this.getChildren().addAll(tileGroup, statusBarGroup, namePane, entityGroup, effectGroup);
 	}
-	
+
 	private void clearScreen() {
 
 		tileGroup = new Group();
@@ -279,15 +281,14 @@ public class GameScene extends Pane {
 		hero.cleanAtkCanvas();
 
 	}
-	
-	
+
 	private void drawBG() {
 		this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 		GraphicsContext MapGc = BG.getGraphicsContext2D();
 		MapGc.clearRect(0, 0, 700, 700);
 		MapGc.drawImage(bgImage, 0, 0, 700, 700);
 		tileGroup.getChildren().add(BG);
-		
+
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
 				Tile tile = new Tile((x + y) % 2 == 0, x, y, null);
@@ -298,26 +299,26 @@ public class GameScene extends Pane {
 			}
 		}
 	}
-	
+
 	private void createSlimeAt(int x, int y) {
 		Slime slime = new Slime(new Pair(x, y));
 		createDefaultEntity(slime, "Slime", slime.getPosition());
 		monsterCount++;
 	}
-	
+
 	private void createSlimeKingAt(int x, int y) {
 		SlimeKing slimeKing = new SlimeKing(new Pair(x, y));
 		createDefaultEntity(slimeKing, "SlimeKing", slimeKing.getPosition());
 		monsterCount++;
 	}
-	
+
 	private void createLv1HeroAt(int x, int y) {
 		hero = new Novice(MainMenu.name, new Pair(x, y));
 		createDefaultEntity(hero, "Novice", hero.getPosition());
 		namePane.getChildren().add(hero.getNameCanvas());
-		isHeroDead=false;
+		isHeroDead = false;
 	}
-	
+
 	private void createProgressedHeroAt(int x, int y) {
 		hero.setPosition(x, y);
 		board[(int) x][(int) y].setTileType(TileType.HERO);
@@ -327,46 +328,57 @@ public class GameScene extends Pane {
 		effectGroup.getChildren().add(hero.getAtkCanvas());
 		hero.draw();
 		namePane.getChildren().add(hero.getNameCanvas());
-		isHeroDead=false;
+		isHeroDead = false;
 		return;
 	}
+
 	public static boolean getIsHeroDead() {
 		return isHeroDead;
 	}
+
 	public static void setIsHeroDead(boolean isDead) {
-		isHeroDead=isDead;
+		isHeroDead = isDead;
 	}
-	
-	
+
 	public static void playMusic() {
-		if(!isMusicPlaying) {stageMusic.volumeProperty().set(0);}
-		stageMusic.play();	
+		if (!isMusicPlaying) {
+			stageMusic.volumeProperty().set(0);
+		}
+		stageMusic.play();
 		Timeline fadeIn = new Timeline(
 				new KeyFrame(Duration.millis(15000), new KeyValue(stageMusic.volumeProperty(), 1)));
-    fadeIn.play();
-	isMusicPlaying=true;
+		fadeIn.play();
+		isMusicPlaying = true;
 	}
+
 	public static void stopMusic() {
-		if(!isMusicPlaying) return;
+		if (!isMusicPlaying)
+			return;
 		Timeline fadeOut = new Timeline(
 				new KeyFrame(Duration.millis(1000), new KeyValue(stageMusic.volumeProperty(), 0)));
-    fadeOut.play();
-    fadeOut.setOnFinished(finish -> {
-    	stageMusic.stop();
-    	isMusicPlaying=false;
-    });
+		fadeOut.play();
+		fadeOut.setOnFinished(finish -> {
+			stageMusic.stop();
+			isMusicPlaying = false;
+		});
 	}
+
 	public static void decreaseMonsterCount() {
 		monsterCount--;
 	}
+
 	public static boolean getIsStageFinished() {
-		return monsterCount<=0;
+		return monsterCount <= 0;
 	}
+
 	public static int getCurrentStage() {
 		return currentStage;
 	}
+
 	public static void gameCleared() {
-		cleared++;
-		if(cleared>=9) {cleared=9;}
+		clearedCount++;
+		if (clearedCount >= 9) {
+			clearedCount = 9;
+		}
 	}
 }
