@@ -2,7 +2,9 @@ package entity.hero;
 
 import entity.Entity;
 import entity.monster.Monster;
+import entity.property.Attackable;
 import entity.property.HpBar;
+import entity.property.Moveable;
 import environment.GameScene;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,7 +17,7 @@ import utility.Direction;
 import utility.Pair;
 import utility.TileType;
 
-public class Fighter extends Novice {
+public class Fighter extends Novice  {
 	private static final int DEFAULT_MAX_HP = 500;
 	private static final int DEFAULT_ATK = 50;
 	private static final int DEFAULT_DEF = 30;

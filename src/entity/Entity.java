@@ -46,17 +46,9 @@ public abstract class Entity {
 
 	protected abstract void drawDirection();
 
-	public abstract void move(double moveX, double moveY);
-
-	public abstract void attack(Entity entity) throws AttackDeadEntityException;
-
-	public boolean isCollied(Entity entity) {
-		// x1y1 x2y2 equal ? true false
-		if (this.position == entity.position) {
-			return true;
-		} else
-			return false;
-	}
+	// public abstract void move(double moveX, double moveY);
+	//
+	// public abstract void attack(Entity entity) throws AttackDeadEntityException;
 
 	public abstract void takeDamage(double dmg);
 
@@ -105,7 +97,6 @@ public abstract class Entity {
 		return canvas;
 	}
 
-	
 	public Canvas getAtkCanvas() {
 		return atkCanvas;
 	}
@@ -194,11 +185,6 @@ public abstract class Entity {
 		this.isMoveFinished = isMoveFinished;
 	}
 
-	public int getExpGain() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	public void setMaxHp(double maxhp) {
 		maxHp = maxhp;
 	}
@@ -220,7 +206,8 @@ public abstract class Entity {
 	}
 
 	public void setHp(double hp) {
-		if(hp>maxHp) hp=maxHp;
+		if (hp > maxHp)
+			hp = maxHp;
 		this.hp = hp;
 	}
 
