@@ -54,7 +54,7 @@ public class MainMenu extends Pane {
 	}
 	private static Media mainMenuMusicFile = new Media(
 			ClassLoader.getSystemResource("sound/bgm01_intro.mp3").toString());
-	static MediaPlayer mainMenuMusic = new MediaPlayer(mainMenuMusicFile);
+	private static MediaPlayer mainMenuMusic = new MediaPlayer(mainMenuMusicFile);
 
 	private static final Image nameFrame = new Image("background/nameFrame.png");
 
@@ -110,17 +110,17 @@ public class MainMenu extends Pane {
 
 		GraphicsContext gc = text.getGraphicsContext2D();
 		gc.setFont(Font.font(MENU_FONT.getName(), 30));
-		gc.setStroke(Color.FORESTGREEN);
+		gc.setFill(Color.WHITE);
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.CENTER);
 		gc.setLineWidth(1);
-		gc.strokeText(error, Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE * 7 / 10 + 50);
+		gc.fillText(error, Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE * 7 / 10 + 50);
 		gc = backgroundText.getGraphicsContext2D();
 		final Text text = new Text(error);
 		text.setFont(Font.font(MENU_FONT.getName(), 30));
 		final double width = text.getLayoutBounds().getWidth();
 		final double height = text.getLayoutBounds().getHeight();
-		gc.setFill(Color.WHITE);
+		gc.setFill(Color.BLACK);
 		gc.fillRect((Main.SCREEN_SIZE - width) / 2 - 20, (Main.SCREEN_SIZE * 7 - height * 5) / 10 + 40, width + 40,
 				height + 20);
 	}
@@ -141,7 +141,7 @@ public class MainMenu extends Pane {
 		GraphicsContext gc = backgroundText.getGraphicsContext2D();
 		gc.clearRect(Main.SCREEN_SIZE / 5, Main.SCREEN_SIZE / 7.5 * 4, 450, 100);
 		backgroundText.setOpacity(0.7);
-		gc.setFill(Color.WHITE);
+		gc.setFill(Color.BLACK);
 		gc.fillRect(Main.SCREEN_SIZE / 2 - 160, Main.SCREEN_SIZE / 2 - 50, 320, 50);
 		gc = text.getGraphicsContext2D();
 
@@ -150,11 +150,11 @@ public class MainMenu extends Pane {
 		gc.setFont(Font.font(MENU_FONT.getName(), 35));
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.CENTER);
-		gc.setFill(Color.SADDLEBROWN);
+		gc.setFill(Color.SANDYBROWN);
 		gc.fillText("Please Enter Your Name", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE / 2 - 25);
-		gc.setStroke(Color.ANTIQUEWHITE);
-		gc.setLineWidth(0.5);
-		gc.strokeText("Please Enter Your Name", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE / 2 - 25);
+//		gc.setStroke(Color.ANTIQUEWHITE);
+//		gc.setLineWidth(0.5);
+//		gc.strokeText("Please Enter Your Name", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE / 2 - 25);
 
 		gc.setFill(Color.gray(0.925));
 		gc.drawImage(nameFrame, (Main.SCREEN_SIZE - 450) / 2, Main.SCREEN_SIZE / 7.5 * 4 - 30, 450,

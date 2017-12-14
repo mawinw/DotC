@@ -27,42 +27,44 @@ public class GameHandler {
 	private static HashSet<KeyCode> activeKey = new HashSet<KeyCode>();
 
 	private static int tick = 0;
-	private static boolean isPaused;
 	private static boolean groundSmashUsed = false;
 	private static boolean healUsed = false;
 
 	private static Timeline gameTimer;
 
 	public static void update() {
-		if (!isPaused) {
-
-			movePlayer();
-			playerAttack();
-			moveMonster();
-			monsterAttack();
-			checkStatus();
-			animateAll();
-			regenHp();
-			playerSkill();
-			skillCountDown();
-			checkStageFinish();
-			tick++;
-			playerDie();
-		}
+		movePlayer();
+		playerAttack();
+		moveMonster();
+		monsterAttack();
+		checkStatus();
+		animateAll();
+		regenHp();
+		playerSkill();
+		skillCountDown();
+		checkStageFinish();
+		tick++;
+		playerDie();
 		checkPause();
 
 	}
+
 	private static void checkStageFinish() {
-		if(GameScene.getIsStageFinished()) {
-			if(GameScene.getCurrentStage()==1) {SceneManager.gotoStage2();}
-			else if(GameScene.getCurrentStage()==2) {SceneManager.gotoStage3();}
-			else if(GameScene.getCurrentStage()==3) {GameScene.gameCleared();SceneManager.gotoEndlessStage();}
+		if (GameScene.getIsStageFinished()) {
+			if (GameScene.getCurrentStage() == 1) {
+				SceneManager.gotoStage2();
+			} else if (GameScene.getCurrentStage() == 2) {
+				SceneManager.gotoStage3();
+			} else if (GameScene.getCurrentStage() == 3) {
+				GameScene.gameCleared();
+				SceneManager.gotoEndlessStage();
+			}
 		}
 	}
 
 	private static void playerDie() {
 		// TODO Auto-generated method stub
-		if(GameScene.getHero().getIsDead()) {
+		if (GameScene.getHero().getIsDead()) {
 			SceneManager.playerDead();
 		}
 	}
@@ -363,18 +365,9 @@ public class GameHandler {
 		}
 	}
 
-	public static boolean isPaused() {
-		return isPaused;
-	}
-
-	public static void setPaused(boolean isPause) {
-		isPaused = isPause;
-	}
-
 	public static void startGame() {
 		// TODO Auto-generated method stub
 		activeKey.clear();
-		GameHandler.setPaused(false);
 		System.out.println(Main.FPS);
 		gameTimer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			GameHandler.update();

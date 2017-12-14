@@ -32,7 +32,6 @@ public class PauseMenu extends Pane {
 	private Canvas resume;
 	private Canvas mainMenu;
 	private static Canvas selectedFrame;
-	private ArrayList<Canvas> menu = new ArrayList<>();
 	private static final Image BG = new Image("background/pauseBG.png");
 
 	protected static int pointer = 0;
@@ -75,9 +74,6 @@ public class PauseMenu extends Pane {
 		gc.setFont(MENU_FONT);
 		gc.fillText("Main Menu", Main.SCREEN_SIZE / 2, Main.SCREEN_SIZE / 4 + gap * 4);
 
-		menu.add(resume);
-		menu.add(status);
-		menu.add(mainMenu);
 		drawSelectedFrame();
 		this.getChildren().addAll(background, title, resume, status, mainMenu, selectedFrame);
 		this.requestFocus();

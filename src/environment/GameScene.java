@@ -54,7 +54,6 @@ public class GameScene extends Pane {
 	private static MediaPlayer stageMusic = new MediaPlayer(stageMusicFile);
 	private static boolean isMusicPlaying = false;
 
-	private static boolean isStageFinished = false;
 	private static int monsterCount = 0;
 	private static boolean isHeroDead = false;
 	private static int currentStage = 0;
@@ -193,9 +192,6 @@ public class GameScene extends Pane {
 		}
 	}
 
-	private int toBoard(double pixel) {
-		return (int) (pixel + TILE_SIZE / 2) / TILE_SIZE;
-	}
 
 	public static Novice getHero() {
 		return hero;
