@@ -305,7 +305,6 @@ public class GameHandler {
 	public static void monsterAttack() {
 		if (tick % (Main.FPS * 2) != 0)
 			return;
-		System.out.println(GameScene.getMonsterCount());
 		for (Monster monster : GameScene.getInstance().getMonsterList()) {
 			if (monster.getFaceDirection() == Direction.UP && (int) monster.getPosition().second - 1 > 0) {
 				for (int i = 0; i < monster.getPicWidth(); i++) {
