@@ -37,7 +37,6 @@ public abstract class Entity {
 
 	public Entity(String name, int maxHp, int attack, int defense, double accuracy, double evasion, double criticalRate,
 			Pair position) {
-		// System.out.println(position.first+" "+position.second);
 
 		setValue(name, maxHp, attack, defense, accuracy, evasion, criticalRate, position);
 	}

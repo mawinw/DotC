@@ -116,7 +116,6 @@ public class Novice extends Entity implements Attackable, Moveable {
 
 	public Novice(Pair pos) {
 		super("Novice", DEFAULT_MAX_HP, DEFAULT_ATK, DEFAULT_DEF, DEFAULT_ACC, DEFAULT_EVA, DEFAULT_CRI_RATE, pos);
-		// System.out.println(this.position.first+" "+this.position.second);
 		this.lv = 1;
 		this.exp = 0;
 		this.side = Side.HERO;
@@ -168,7 +167,6 @@ public class Novice extends Entity implements Attackable, Moveable {
 		}
 
 		drawDirection();
-		// System.out.println(position.first+" "+position.second);
 		if (isDead)
 			return;
 		GameScene.statusBarGroup.getChildren().remove(hpBar.getCanvas());
@@ -266,7 +264,6 @@ public class Novice extends Entity implements Attackable, Moveable {
 				exp += ((Monster) entity).getExpGain();
 				checkLevelUp();
 				StatusBar.drawExpBar();
-				// System.out.println(lv+" "+exp);
 			}
 		}));
 		timer.setCycleCount(1);
@@ -396,8 +393,6 @@ public class Novice extends Entity implements Attackable, Moveable {
 		Random rn = new Random();
 		int atkSuccess = rn.nextInt(100);
 		int criSuccess = rn.nextInt(100);
-		// System.out.println(atkSuccess+" "+criSuccess+" "+(this.atk -
-		// entity.getDef()));
 		if (this.acc - entity.getEva() > atkSuccess) {
 			if (this.atk > entity.getDef()) {
 				if (this.dex > criSuccess)

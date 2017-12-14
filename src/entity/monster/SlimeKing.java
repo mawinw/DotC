@@ -104,7 +104,6 @@ public class SlimeKing extends Slime {
 		hpBar = new HpBar(this);
 		hpBar.draw();
 		GameScene.statusBarGroup.getChildren().add(hpBar.getCanvas());
-		// System.out.println(Map.statusBarGroup.getChildren().contains(hpBar.getCanvas()));
 
 	}	
 	public void drawAttackAnimation() {

@@ -82,7 +82,7 @@ public class Fighter extends Novice  {
 		}
 
 		drawDirection();
-		// System.out.println(position.first+" "+position.second);
+
 		if (isDead)
 			return;
 		GameScene.statusBarGroup.getChildren().remove(hpBar.getCanvas());
@@ -176,7 +176,6 @@ public class Fighter extends Novice  {
 	
 
 	protected void drawSkillDirection() {
-		System.out.println("x");
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setStroke(Color.RED);
 		gc.setLineWidth(2);
