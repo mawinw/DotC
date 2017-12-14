@@ -49,6 +49,7 @@ public class SlimeKing extends Slime {
 		}
 	}
 	
+	private boolean isAlreadyDead;
 
 	double monsterX=position.first;
 	double monsterY=position.second;
@@ -70,6 +71,7 @@ public class SlimeKing extends Slime {
 		picHeight = 2;
 		picWidth = 2;
 		lastLRFaceDirection = Direction.LEFT;
+		isAlreadyDead=false;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -170,5 +172,17 @@ public class SlimeKing extends Slime {
 		currentAnimation++;
 		draw();
 	}
+	public void die() {
+		if(!isAlreadyDead) {
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		GameScene.getEntityGroup().getChildren().remove(canvas);
+		isDead = true;
+		hp = 0;
+		hpBar.die();
+		GameScene.decreaseMonsterCount();
+		isAlreadyDead=true;
+		}
+	}
+
 
 }

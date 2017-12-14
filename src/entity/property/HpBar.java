@@ -28,7 +28,6 @@ public class HpBar {
 		canvas.setHeight(entity.getCanvas().getHeight());
 		canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-		// System.out.println(maxWidth);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setLineWidth(2);
 		if (entity.getSide() == Side.MONSTER) {
@@ -64,14 +63,12 @@ public class HpBar {
 	}
 
 	public void die() {
-		// System.out.println(Map.statusBarGroup.getChildren().contains(canvas));
 		GameScene.statusBarGroup.getChildren().remove(canvas);
 		canvas.setOpacity(0);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.BLACK);
 		gc.fillRect(0, 0, 200, 200);
 
-		// System.out.println(Map.statusBarGroup.getChildren().contains(canvas));
 
 	}
 }

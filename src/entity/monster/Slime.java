@@ -55,6 +55,7 @@ public class Slime extends Monster {
 			attackImages[i - 1] = new Image("images/effect/hit2 (" + i + ").png");
 		}
 	}
+	private boolean isAlreadyDead;
 
 	double monsterX=position.first;
 	double monsterY=position.second;
@@ -81,6 +82,7 @@ public class Slime extends Monster {
 		picWidth = 1;
 		faceDirection = Direction.LEFT;
 		lastLRFaceDirection = Direction.LEFT;
+		isAlreadyDead=false;
 		// draw();
 		// don't forget to initial picture size and first time position
 	}
@@ -189,12 +191,15 @@ public class Slime extends Monster {
 	}
 	
 	public void die() {
+		if(!isAlreadyDead) {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		GameScene.getEntityGroup().getChildren().remove(canvas);
 		isDead = true;
 		hp = 0;
 		hpBar.die();
 		GameScene.decreaseMonsterCount();
+		isAlreadyDead=true;
+		}
 	}
 
 
