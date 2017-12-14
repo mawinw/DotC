@@ -95,7 +95,6 @@ public class GameHandler {
 	private static void playerSkill() {
 		// TODO Auto-generated method stub
 		if (activeKey.contains(KeyCode.C) && StatusBar.heal.remainingCoolDown == 0) {
-			System.out.println("x");
 			GameScene.getInstance().getHero().heal();
 			StatusBar.heal.remainingCoolDown += 1 / (double) Main.FPS;
 			healUsed = true;
@@ -284,7 +283,6 @@ public class GameHandler {
 		if (tick % (Main.FPS * 2) != 0)
 			return;
 		for (Monster monster : GameScene.getInstance().getMonsterList()) {
-			// System.out.println(monster.isMoveFinished());
 			if (Math.abs(GameScene.getInstance().getHero().getPosition().first
 					- monster.getPosition().first) <= Monster.VISIBLE_RANGE
 					&& Math.abs(GameScene.getInstance().getHero().getPosition().second
@@ -299,14 +297,7 @@ public class GameHandler {
 	public static void checkPause() {
 		if (activeKey.contains(KeyCode.ENTER)) {
 			activeKey.remove(KeyCode.ENTER);
-			// if(!isPaused) {
-			// isPaused=!isPaused;
 			SceneManager.openPausedMenu();
-			// }
-			// else {
-			// isPaused=!isPaused;
-			// SceneManager.closePausedMenu();
-			// }
 
 		}
 	}
@@ -314,6 +305,7 @@ public class GameHandler {
 	public static void monsterAttack() {
 		if (tick % (Main.FPS * 2) != 0)
 			return;
+		System.out.println(GameScene.getMonsterCount());
 		for (Monster monster : GameScene.getInstance().getMonsterList()) {
 			if (monster.getFaceDirection() == Direction.UP && (int) monster.getPosition().second - 1 > 0) {
 				for (int i = 0; i < monster.getPicWidth(); i++) {
@@ -368,7 +360,6 @@ public class GameHandler {
 	public static void startGame() {
 		// TODO Auto-generated method stub
 		activeKey.clear();
-		System.out.println(Main.FPS);
 		gameTimer = new Timeline(new KeyFrame(new Duration(1000 / Main.FPS), e -> {
 			GameHandler.update();
 		}));

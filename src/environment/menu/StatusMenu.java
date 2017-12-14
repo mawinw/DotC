@@ -263,7 +263,6 @@ public class StatusMenu extends Pane {
 		// TODO Auto-generated method stub
 		if (!isCompleted || hero.statusPoint == 0)
 			return;
-		System.out.println(hero.statusPoint);
 
 		if (b) {
 			pointer = (pointer + 5) % 6;

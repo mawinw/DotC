@@ -40,7 +40,6 @@ public final class SceneManager {
 	}
 
 	public static void gotoMainMenu() {
-		// TODO Fill Code
 		GameScene.stopMusic();
 		primaryStage.setScene(mainMenuScene);
 		MainMenu.playMusic();
@@ -49,7 +48,6 @@ public final class SceneManager {
 		StatusBar.groundSmash.draw();
 	}
 	public static void openPausedMenu() {
-		// TODO Fill Code
 		allPane.getChildren().add(pausedMenu);
 		GameHandler.stopTimer();
 		
@@ -154,7 +152,6 @@ public final class SceneManager {
 	}
 
 	public static void playerDead() {
-		// TODO Auto-generated method stub
 		allPane.getChildren().add(deadScene);
 		deadScene.requestFocus();
 		GameHandler.stopTimer();
