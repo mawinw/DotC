@@ -46,15 +46,21 @@ public class MainMenu extends Pane {
 	private static Canvas backgroundText;
 	public static String name;
 	private static final Image[] backgroundImages = new Image[5];
+	private static Media mainMenuMusicFile;
+	static MediaPlayer mainMenuMusic;
+	
 	static {
 		backgroundImages[0] = new Image("background/main_0.jpg");
 		backgroundImages[1] = new WritableImage(backgroundImages[0].getPixelReader(), 0, 0, 541, 407);
 		backgroundImages[2] = new WritableImage(backgroundImages[0].getPixelReader(), 0, 407 + 5, 541, 407);
 		backgroundImages[3] = new WritableImage(backgroundImages[0].getPixelReader(), 0, 814 + 10, 541, 407);
+		
+		new Thread(() -> {
+			mainMenuMusicFile = new Media(
+					ClassLoader.getSystemResource("sound/bgm01_intro.mp3").toString());
+			mainMenuMusic = new MediaPlayer(mainMenuMusicFile);
+		}).start();
 	}
-	private static Media mainMenuMusicFile = new Media(
-			ClassLoader.getSystemResource("sound/bgm01_intro.mp3").toString());
-	private static MediaPlayer mainMenuMusic = new MediaPlayer(mainMenuMusicFile);
 
 	private static final Image nameFrame = new Image("background/nameFrame.png");
 
@@ -202,6 +208,7 @@ public class MainMenu extends Pane {
 	}
 
 	public static void playMusic() {
+		mainMenuMusic.setCycleCount(Integer.MAX_VALUE);
 		mainMenuMusic.play();
 		Timeline fadeIn = new Timeline(
 				new KeyFrame(Duration.millis(5000), new KeyValue(mainMenuMusic.volumeProperty(), 1)));

@@ -340,6 +340,8 @@ public class GameScene extends Pane {
 		if (!isMusicPlaying) {
 			stageMusic.volumeProperty().set(0);
 		}
+		stageMusic.setCycleCount(Integer.MAX_VALUE);
+		stageMusic.setRate(1.02);
 		stageMusic.play();
 		Timeline fadeIn = new Timeline(
 				new KeyFrame(Duration.millis(15000), new KeyValue(stageMusic.volumeProperty(), 1)));
