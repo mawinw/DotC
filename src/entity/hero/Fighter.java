@@ -6,6 +6,8 @@ import entity.property.Attackable;
 import entity.property.HpBar;
 import entity.property.Moveable;
 import environment.GameScene;
+import environment.StatusBar;
+import exception.AttackDeadEntityException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
@@ -80,7 +82,7 @@ public class Fighter extends Novice  {
 		}
 
 		drawDirection();
-		// System.out.println(position.first+" "+position.second);
+
 		if (isDead)
 			return;
 		GameScene.statusBarGroup.getChildren().remove(hpBar.getCanvas());
@@ -89,7 +91,44 @@ public class Fighter extends Novice  {
 		GameScene.statusBarGroup.getChildren().add(hpBar.getCanvas());
 		drawNameAndLv();
 	}
+	public void attack_smash(Entity entity) {
+		if (entity.getIsDead()) {
+			try {
+				throw new AttackDeadEntityException();
+			} catch (AttackDeadEntityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				return;
+			}
+		}
+		isMoveFinished = false;
+		isAttackFinished = false;
+		entity.setMoveFinished(false);
 
+		timer = new Timeline(new KeyFrame(new Duration(750), e -> {
+			double atkDmg = calculateDamage(entity);
+			entity.takeDamage(atkDmg);
+			entity.draw();
+			if (entity.getIsDead()) {
+				exp += ((Monster) entity).getExpGain();
+				checkLevelUp();
+				StatusBar.drawExpBar();
+			}
+		}));
+		timer.setCycleCount(1);
+		timer.play();
+		timer.setOnFinished(e -> {
+			Timeline wait = new Timeline(new KeyFrame(Duration.millis(2000), f -> {
+			}));
+			wait.setCycleCount(1);
+			wait.play();
+			wait.setOnFinished(f -> {
+				isMoveFinished = true;
+				isAttackFinished = true;
+				entity.setMoveFinished(false);
+			});
+		});
+	}
 	public void groundSmash() {
 		for (int i = -1; i < 2; i++) {
 			for (int j = -1; j < 2; j++) {
@@ -97,7 +136,7 @@ public class Fighter extends Novice  {
 						&& position.second + j + 1 < GameScene.HEIGHT) {
 					if (GameScene.getBoard()[(int) position.first + i][(int) (position.second) + j]
 							.getTileType() == TileType.MONSTER) {
-						attack(GameScene.getBoard()[(int) position.first + i][(int) position.second + j].getEntity());
+						attack_smash(GameScene.getBoard()[(int) position.first + i][(int) position.second + j].getEntity());
 					}
 				}
 			}
@@ -137,7 +176,6 @@ public class Fighter extends Novice  {
 	
 
 	protected void drawSkillDirection() {
-		System.out.println("x");
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setStroke(Color.RED);
 		gc.setLineWidth(2);

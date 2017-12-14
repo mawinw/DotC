@@ -150,8 +150,6 @@ public class GameScene extends Pane {
 		Tile tile = new Tile((x + y) % 2 == 0, x, y, entity);
 
 		tile.setTileType(tileType);
-		// System.out.println(x + " " +y);
-		// System.out.println(x + "." + y + "." + tileType);
 		board[x][y] = tile;
 
 	}
@@ -241,7 +239,7 @@ public class GameScene extends Pane {
 		createSlimeAt(1, 1);
 		createSlimeAt(4, 1);
 		createSlimeAt(7, 10);
-		createSlimeKingAt(2, 7);
+		//createSlimeKingAt(2, 7);
 		createProgressedHeroAt(10, 4);
 		this.getChildren().addAll(tileGroup, statusBarGroup, namePane, entityGroup, effectGroup);
 		currentStage = 3;
@@ -255,9 +253,12 @@ public class GameScene extends Pane {
 			createSlimeAt(12, 10 - i);
 		}
 		Random rn = new Random();
-		int rng = rn.nextInt(3) * (clearedCount % 2 == 0 ? -1 : 1);
-		createSlimeKingAt(6, 6 + rng);
-		createProgressedHeroAt(1, 6);
+		int rng = rn.nextInt(3)*(clearedCount%2==0? -1 : 1);
+		Random rn2 = new Random();
+		int rng2 = rn.nextInt(20);
+		if(rng2%4==0) {createProgressedHeroAt(11, 6-rng);}
+		else{createProgressedHeroAt(1, 6+rng);}
+		if(rng2%10==0) {createSlimeKingAt(6,6+rng);}
 		this.getChildren().addAll(tileGroup, statusBarGroup, namePane, entityGroup, effectGroup);
 	}
 
@@ -273,6 +274,7 @@ public class GameScene extends Pane {
 		BG = new Canvas(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
 		this.getChildren().clear();
 		hero.cleanAtkCanvas();
+		hero.cleanLevelUpCanvas();
 
 	}
 
@@ -338,6 +340,8 @@ public class GameScene extends Pane {
 		if (!isMusicPlaying) {
 			stageMusic.volumeProperty().set(0);
 		}
+		stageMusic.setCycleCount(Integer.MAX_VALUE);
+		stageMusic.setRate(1.02);
 		stageMusic.play();
 		Timeline fadeIn = new Timeline(
 				new KeyFrame(Duration.millis(15000), new KeyValue(stageMusic.volumeProperty(), 1)));
@@ -363,6 +367,9 @@ public class GameScene extends Pane {
 
 	public static boolean getIsStageFinished() {
 		return monsterCount <= 0;
+	}
+	public static int getMonsterCount() {
+		return monsterCount;
 	}
 
 	public static int getCurrentStage() {

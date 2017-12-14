@@ -138,11 +138,8 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 		for (int i = 0; i < picWidth; i++) {
 			for (int j = 0; j < picHeight; j++) {
 				GameScene.setBoard(position.add(new Pair(x + i, y + j)), TileType.MONSTER, this);
-				// System.out.println(position.add(new Pair(x+i,y+j)).first+" "+position.add(new
-				// Pair(x+i,y+j)).second);
 			}
 		}
-		// System.out.println();
 		changeDirection(x, y);
 		if (x < 0 && lastLRFaceDirection == Direction.RIGHT) {
 			lastLRFaceDirection = Direction.LEFT;
@@ -164,10 +161,8 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 	}
 
 	protected boolean checkMove(double moveX, double moveY) {
-		// System.out.println(moveX+" "+moveY);
 		if (moveX == 1) {
 			for (int i = 0; i < picHeight; i++) {
-				// System.out.println((moveX+picWidth-1)+" "+i);
 				if (GameScene.getBoard(position.add(new Pair(moveX + picWidth - 1, i))).getEntity() != null) {
 					changeDirection(1, 0);
 					return false;
@@ -239,8 +234,6 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 			moveY = -1;
 			break;
 		}
-		// System.out.println(areaPosition.first+" "+areaWidth+" "+areaHeight+"
-		// "+areaPosition.second);
 		if (1 <= position.first + moveX && position.first + moveX < GameScene.WIDTH -1 && 1 <= position.second + moveY
 				&& position.second + moveY < GameScene.HEIGHT -1) {
 			if (GameScene.getBoard(position.add(new Pair(moveX, moveY))).getEntity() == null)
@@ -251,7 +244,6 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 	public void moveToPlayer() {
 		double moveX = GameScene.getHero().getPosition().first - position.first;
 		double moveY = GameScene.getHero().getPosition().second - position.second;
-		// System.out.println(" "+moveX+" "+moveY);
 		for (int i = 1; i < picWidth; i++) {
 			if (moveX > 0) {
 				moveX = Math.min(moveX, moveX - 1);
@@ -280,7 +272,6 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 				moveY = -1;
 			moveX = 0;
 		}
-		// System.out.println(moveX+" "+moveY);
 		move(moveX, moveY);
 	}
 
@@ -305,7 +296,6 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 	}
 
 	public void takeDamage(double dmg) {
-		// System.out.println(Hp+" "+dmg);
 		if (hp <= dmg) {
 			die();
 		} else {
@@ -317,8 +307,6 @@ public abstract class Monster extends Entity implements Attackable,Moveable {
 		Random rn = new Random();
 		int atkSuccess = rn.nextInt(100);
 		int criSuccess = rn.nextInt(100);
-		// System.out.println(atkSuccess+" "+criSuccess+" "+(this.atk -
-		// entity.getDef()));
 		if (this.acc - entity.getEva() > atkSuccess) {
 			if (this.atk > entity.getDef()) {
 				if (this.dex > criSuccess)
