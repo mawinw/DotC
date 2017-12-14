@@ -188,7 +188,6 @@ public class GameScene extends Pane {
 		}
 	}
 
-
 	public static Novice getHero() {
 		return hero;
 	}
@@ -239,7 +238,7 @@ public class GameScene extends Pane {
 		createSlimeAt(1, 1);
 		createSlimeAt(4, 1);
 		createSlimeAt(7, 10);
-		//createSlimeKingAt(2, 7);
+		// createSlimeKingAt(2, 7);
 		createProgressedHeroAt(10, 4);
 		this.getChildren().addAll(tileGroup, statusBarGroup, namePane, entityGroup, effectGroup);
 		currentStage = 3;
@@ -248,17 +247,32 @@ public class GameScene extends Pane {
 	public void createEndlessStage() {
 		clearScreen();
 		drawBG();
-		for (int i = 0; i < clearedCount; i++) {
-			createSlimeAt(9, i + 1);
-			createSlimeAt(12, 10 - i);
-		}
 		Random rn = new Random();
-		int rng = rn.nextInt(3)*(clearedCount%2==0? -1 : 1);
+		for (int i = 0; i < clearedCount; i++) {
+			if (rn.nextInt(7) < 5) {
+				createSlimeAt(9, (i + 1)%8);
+			}
+			if (rn.nextInt(7) < 5) {
+				createSlimeAt(12, (10 - i)%10);
+			}
+			if (rn.nextInt(7) < 5) {
+				createSlimeAt((i+1)%9, 9);
+			}
+			if (rn.nextInt(7) < 5) {
+				createSlimeAt((10 - i)%11, 11);
+			}
+		}
+		int rng = rn.nextInt(3) * (clearedCount % 2 == 0 ? -1 : 1);
 		Random rn2 = new Random();
 		int rng2 = rn.nextInt(20);
-		if(rng2%4==0) {createProgressedHeroAt(11, 6-rng);}
-		else{createProgressedHeroAt(1, 6+rng);}
-		if(rng2%10==0) {createSlimeKingAt(6,6+rng);}
+		if (rng2 % 4 == 0) {
+			createProgressedHeroAt(11, 6 - rng);
+		} else {
+			createProgressedHeroAt(1, 6 + rng);
+		}
+		if (rng2 % 10 == 0) {
+			createSlimeKingAt(6, 6 + rng);
+		}
 		this.getChildren().addAll(tileGroup, statusBarGroup, namePane, entityGroup, effectGroup);
 	}
 
@@ -368,6 +382,7 @@ public class GameScene extends Pane {
 	public static boolean getIsStageFinished() {
 		return monsterCount <= 0;
 	}
+
 	public static int getMonsterCount() {
 		return monsterCount;
 	}
