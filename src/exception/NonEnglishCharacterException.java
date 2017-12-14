@@ -1,7 +1,7 @@
 package exception;
 
 public class NonEnglishCharacterException extends Exception {
-	public String text;
+	private String text;
 	public NonEnglishCharacterException(String text) {
 		this.text = text;
 	}

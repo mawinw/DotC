@@ -10,20 +10,17 @@ import javafx.scene.shape.Rectangle;
 public class Tile extends Rectangle {
 	private TileType tileType;
 	private Entity entity;
-	private final int offset=GameScene.TILE_SIZE/2;
 
 	public Tile(boolean lightColor, int x, int y, Entity entity) {
 
 		setWidth(GameScene.TILE_SIZE);
 		setHeight(GameScene.TILE_SIZE);
 
-
 		relocate((x * GameScene.TILE_SIZE), (y * GameScene.TILE_SIZE));
 
 		setFill(lightColor ? Color.WHITE : Color.BLACK);
 		setOpacity(0.05);
-		
-		
+
 		// if (entity == null) {
 		// this.entity = null;
 		//// this.tileType = TileType.NONE;

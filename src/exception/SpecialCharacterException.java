@@ -1,7 +1,7 @@
 package exception;
 
 public class SpecialCharacterException extends Exception {
-	public String text;
+	private String text;
 	public SpecialCharacterException(String text) {
 		this.text = text;
 	}

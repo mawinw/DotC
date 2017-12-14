@@ -30,7 +30,6 @@ public final class SceneManager {
 	private static StatusMenu statusMenu = new StatusMenu();
 	private static DeadScene deadScene = new DeadScene();
 	private static Scene mainMenuScene = new Scene(mainMenuCanvas);
-	public static Timeline pauseTimer;
 	public static Pane allPane = new Pane();
 
 
@@ -118,7 +117,7 @@ public final class SceneManager {
 	}
 	
 	
-	public static void putAllPane() {
+	private static void putAllPane() {
 		allPane.getChildren().clear();
 		allPane = new Pane();
 		VBox stage = new VBox();

@@ -26,8 +26,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import utility.ActionResult;
-import utility.ActionType;
 import utility.Pair;
 import utility.Tile;
 import utility.TileType;

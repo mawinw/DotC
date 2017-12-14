@@ -42,7 +42,4 @@ public class Pair {
 
 	}
 
-	public double distance(Pair o) {
-		return Math.sqrt((first - o.first) * (first - o.first) + (second - o.second) * (second - o.second));
-	}
 }

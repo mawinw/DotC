@@ -15,8 +15,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import main.Main;
-import utility.ActionResult;
-import utility.ActionType;
 import utility.Direction;
 import utility.Pair;
 import utility.Tile;
